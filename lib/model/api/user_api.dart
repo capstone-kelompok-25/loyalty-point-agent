@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 class UserAPI {
   static Future<List<UserModel>> getUser() async {
     final response = await Dio().get(
-        "https://my-json-server.typicode.com/nuruslaily/pelatihan/profile");
+        "http://localhost:3000/result");
 
     List<UserModel> user = (response.data as List)
         .map((e) => UserModel(
@@ -20,7 +20,7 @@ class UserAPI {
 
   static Future postUsers(UserModel user) async {
     final response =
-        await Dio().post("http://localhost:3000/profile", data: user.toJson());
+        await Dio().post("http://localhost:3000/result", data: user.toJson());
     print(response);
     return response.data;
   }
