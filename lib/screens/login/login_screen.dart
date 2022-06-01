@@ -1,8 +1,11 @@
+import 'package:capstone/screens/home/bottom_navigation_screen.dart';
 import 'package:capstone/screens/home/home_screen.dart';
 import 'package:capstone/screens/pin/pin_screen.dart';
 import 'package:capstone/screens/register/register_screen.dart';
+import 'package:capstone/view_model/login_view_model.dart';
 import 'package:capstone/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<UserViewModel>(context, listen: false).getAllUser();
+      Provider.of<LoginViewModel>(context, listen: false).getLogin();
     });
   }
 
@@ -80,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserViewModel modelView = Provider.of<UserViewModel>(context);
+    LoginViewModel modelView = Provider.of<LoginViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -158,16 +161,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 16,
               ),
               ElevatedButton(
-                child: const Text(
-                  'Login',
-                  style: TextStyle(fontFamily: 'OpenSans'),
-                ),
-                onPressed: () => getButtonLogin(modelView),
-              ),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(fontFamily: 'OpenSans'),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(pageBuilder:
+                          (context, animation, secondaryAnimation) {
+                        return const BottomNavigationScreen();
+                      }, transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        final tween = Tween(begin: 0.0, end: 1.0);
+                        return FadeTransition(
+                            opacity: animation.drive(tween), child: child);
+                      }),
+                    );
+                  }
+                  // => getButtonLogin(modelView),
+                  ),
               const SizedBox(
                 height: 40,
               ),
-              Text("I'm a new user."),
+              Text(
+                "I'm a new user.",
+                textAlign: TextAlign.center,
+              ),
               TextButton(
                 // style: TextButton.styleFrom(
                 //   textStyle: const TextStyle(fontSize: 20),
@@ -177,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       .push(MaterialPageRoute(builder: (context) {
                     return RegisterScreen(
                       onCreate: (register) {
-                        modelView.postUser(register);
+                        // modelView.postUser(register);
                         print('Posting Data...');
                         Navigator.push(
                           context,
@@ -198,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  getButtonLogin(UserViewModel modelView) {
+  getButtonLogin(LoginViewModel modelView) {
     var statusLogin = false;
     var userValid;
     print('di klik');
@@ -206,29 +226,29 @@ class _LoginScreenState extends State<LoginScreen> {
     email = _emailController.text;
     password = _passwordController.text;
 
-    // for (var users in modelView.user) {
-    //   if (users.email == email && users.password == password) {
-    //     print("berhasil login");
-    //     // simpan data valid user ke storage
-    //     statusLogin = true;
-    //     userValid = users;
-    //   }
-    // }
+    for (var users in modelView.login) {
+      if (users.email == email && users.password == password) {
+        print("berhasil login");
+        // simpan data valid user ke storage
+        statusLogin = true;
+        userValid = users;
+      }
+    }
 
-    // if (statusLogin) {
-    //   setState(() {
-    //     modelView.saveUserinStrorage(userValid);
-    //   });
+    if (statusLogin) {
+      setState(() {
+        modelView.saveUserinStrorage(userValid);
+      });
       Navigator.push(
         context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
-          return const HomeScreen();
+          return const BottomNavigationScreen();
         }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
           final tween = Tween(begin: 0.0, end: 1.0);
           return FadeTransition(opacity: animation.drive(tween), child: child);
         }),
       );
-    // } else {
+    } else {
       // Fluttertoast.showToast(
       //     msg: "invalid email or password",
       //     toastLength: Toast.LENGTH_SHORT,
@@ -237,6 +257,6 @@ class _LoginScreenState extends State<LoginScreen> {
       //     timeInSecForIosWeb: 1,
       //     textColor: Colors.white,
       //     fontSize: 16.0);
-    // }
+    }
   }
 }
