@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'GePo',
+        title: 'GEPO',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
