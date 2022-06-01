@@ -1,78 +1,38 @@
+import 'package:capstone/screens/home/bottom_navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: History',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: QR Code',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: FAQ',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 4: Profile',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        centerTitle: true,
+        title: Text('GePo'),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.question_mark),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: BottomNavigationScreen(),
+      body: HomeList(),
+    );
+  }
+}
+
+class HomeList extends StatefulWidget {
+  const HomeList({Key? key}) : super(key: key);
+
+  @override
+  State<HomeList> createState() => _HomeListState();
+}
+
+class _HomeListState extends State<HomeList> {
+  @override
+  Widget build(BuildContext context) {
+    // PointViewModel viewModel = Provider.of<PointViewModel>(context);
+    return Container(
+      padding: const EdgeInsets.all(16),
+      // child: body(),
     );
   }
 }
