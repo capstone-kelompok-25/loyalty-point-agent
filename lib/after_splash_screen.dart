@@ -1,6 +1,7 @@
 import 'package:capstone/screens/login/login_screen.dart';
 import 'package:capstone/screens/pin/pin_screen.dart';
 import 'package:capstone/screens/register/register_screen.dart';
+import 'package:capstone/view_model/login_view_model.dart';
 import 'package:capstone/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class AfterSplashScreen extends StatefulWidget {
 class _AfterSplashScreenState extends State<AfterSplashScreen> {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
-    primary: Colors.red[800],
+    primary: Colors.blue[800],
     minimumSize: const Size(200, 50),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(
@@ -29,7 +30,7 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<UserViewModel>(context, listen: false).getAllUser();
+      Provider.of<LoginViewModel>(context, listen: false).getLogin();
     });
   }
 
