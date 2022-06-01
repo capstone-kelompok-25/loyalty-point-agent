@@ -15,9 +15,7 @@ class _PinScreenState extends State<PinScreen> {
   TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Buat PIN',
-      home: Scaffold(
+    return Scaffold(
           body: Center(
         child: PinCodeTextField(
           autofocus: true,
@@ -26,8 +24,8 @@ class _PinScreenState extends State<PinScreen> {
           highlight: true,
           hasUnderline: false,
           hideCharacter: true,
-          pinBoxColor: Colors.blue,
-          highlightPinBoxColor: Colors.blue[800],
+          pinBoxColor: Colors.grey,
+          highlightPinBoxColor: Colors.grey[800],
           onDone: (text) {
             print(_textEditingController.text);
             Navigator.of(context).pushReplacement(
@@ -39,7 +37,7 @@ class _PinScreenState extends State<PinScreen> {
           defaultBorderColor: Colors.black,
           maskCharacter: "*",
         ),
-      )),
+      ),
     );
   }
 }
