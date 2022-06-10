@@ -1,6 +1,9 @@
+import 'package:capstone/screens/history/history_view_model.dart';
+import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/splash_screen.dart';
-import 'package:capstone/view_model/login_view_model.dart';
-import 'package:capstone/view_model/user_view_model.dart';
+import 'package:capstone/screens/login/login_view_model.dart';
+import 'package:capstone/screens/login/user_view_model.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,12 +25,18 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => LoginViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => TransactionViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HistoryViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'GEPO',
+        title: 'Point.ID',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: primaryColor,
         ),
         home: const SplashScreen(),
       ),
