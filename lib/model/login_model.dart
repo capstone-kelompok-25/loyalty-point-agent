@@ -4,8 +4,8 @@ class LoginModel with ChangeNotifier {
   final int? id;
   final String email;
   final String password;
-  final num? poin;
-  final num? pin;
+  final int? poin;
+  final int? pin;
 
   LoginModel(
     {this.id, 

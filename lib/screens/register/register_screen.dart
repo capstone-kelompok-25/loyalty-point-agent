@@ -1,6 +1,8 @@
+import 'package:capstone/after_splash_screen.dart';
 import 'package:capstone/model/user_model.dart';
 import 'package:capstone/screens/login/login_screen.dart';
-import 'package:capstone/view_model/user_view_model.dart';
+import 'package:capstone/screens/login/user_view_model.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
@@ -39,6 +41,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _phoneController.dispose();
     super.dispose();
   }
+
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.white,
+    primary: secondaryColor,
+    minimumSize: const Size(250, 45),
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(5)),
+    ),
+  );
 
   void initial() async {
     // Function(UserModel) onCreate;
@@ -92,13 +104,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     UserViewModel modelView = Provider.of<UserViewModel>(context);
-    
+
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
           centerTitle: true,
-          title: const Text(
-            'Register',
-            style: TextStyle(fontFamily: 'Merriweather', fontSize: 17),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                  return const AfterSplashScreen();
+                }, transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                  final tween = Tween(begin: 0.0, end: 1.0);
+                  return FadeTransition(
+                      opacity: animation.drive(tween), child: child);
+                }),
+              );
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
           ),
         ),
         body: Padding(
@@ -109,12 +139,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   key: formKey,
                   child: ListView(
                     children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Image.asset('assets/img/logo.png',
+                          height: 100, width: 200),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Text('Full Name'),
                       TextFormField(
                         controller: _nameController,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.account_circle_rounded),
-                          hintText: 'Username',
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                             borderRadius: BorderRadius.all(
@@ -139,12 +176,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(
                         height: 8,
                       ),
+                      const Text('Phone Number'),
+                      TextFormField(
+                        controller: _phoneController,
+                        cursorColor: Colors.black,
+                        decoration: const InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                        validator: (phone) {
+                          if (phone != null && phone.length <= 12) {
+                            return null;
+                          } else {
+                            return 'Enter max 12 number';
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      const Text('Email address'),
                       TextFormField(
                         controller: _emailController,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          hintText: 'Email',
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                             borderRadius: BorderRadius.all(
@@ -166,16 +229,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
+                      const Text(
+                        "We'll never share your email with anyone else",
+                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                      ),
                       const SizedBox(
                         height: 8,
                       ),
+                      const Text('Password'),
                       TextFormField(
                         controller: _passwordController,
                         cursorColor: Colors.black,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          hintText: 'Password',
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                             borderRadius: BorderRadius.all(
@@ -200,69 +266,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      TextFormField(
-                        controller: _phoneController,
-                        cursorColor: Colors.black,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.call),
-                          hintText: 'Phone',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                        ),
-                        validator: (phone) {
-                          if (phone != null && phone.length <= 12) {
-                            return null;
-                          } else {
-                            return 'Enter max 12 number';
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 16),
                       ElevatedButton(
+                          style: raisedButtonStyle,
                           onPressed: () {
-                            // print(username);
-                            // print(address);
-                            // print(_nameController.text);
                             final userItem = UserModel(
                                 name: _nameController.text,
                                 email: _emailController.text,
                                 password: _passwordController.text,
                                 phone: _phoneController.text);
                             print(userItem);
-                            
+
                             widget.onCreate(userItem);
                           },
                           autofocus: false,
                           child: const Text('Register',
                               style: TextStyle(fontFamily: 'OpenSans'))),
                       const SizedBox(
-                height: 40,
-              ),
-              Text("I'm already a member."),
-              TextButton(
-                // style: TextButton.styleFrom(
-                //   textStyle: const TextStyle(fontSize: 20),
-                // ),
-                onPressed: () {
-                  Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return const LoginScreen();
-        }));
-                },
-                child: const Text('Sign In'),
-              ),
+                        height: 40,
+                      ),
+                      const Text(
+                        "I'm already a member.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      sign_in()
                     ],
                   )),
             )));
+  }
+
+  Widget sign_in() {
+    return TextButton(
+      onPressed: () {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+          return const LoginScreen();
+        }));
+      },
+      child: const Text(
+        'Sign In',
+        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+      ),
+    );
   }
 }

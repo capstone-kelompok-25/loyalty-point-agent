@@ -1,21 +1,16 @@
-import 'package:capstone/screens/home/bottom_navigation_screen.dart';
+import 'package:capstone/screens/home/body_home.dart';
+import 'package:capstone/screens/transaction/transaction_screen.dart';
+import 'package:capstone/screens/transaction/transaction_view_model.dart';
+import 'package:capstone/screens/widget/banner.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('GePo'),
-      ),
-      bottomNavigationBar: BottomNavigationScreen(),
-      body: HomeList(),
-    );
+    return const HomeList();
   }
 }
 
@@ -29,10 +24,8 @@ class HomeList extends StatefulWidget {
 class _HomeListState extends State<HomeList> {
   @override
   Widget build(BuildContext context) {
-    // PointViewModel viewModel = Provider.of<PointViewModel>(context);
-    return Container(
-      padding: const EdgeInsets.all(16),
-      // child: body(),
+    return const Scaffold(
+      body: Body()
     );
   }
 }
