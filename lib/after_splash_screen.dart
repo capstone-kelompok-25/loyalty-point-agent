@@ -1,8 +1,10 @@
+import 'package:capstone/model/login_model.dart';
 import 'package:capstone/screens/login/login_screen.dart';
 import 'package:capstone/screens/pin/pin_screen.dart';
 import 'package:capstone/screens/register/register_screen.dart';
-import 'package:capstone/view_model/login_view_model.dart';
-import 'package:capstone/view_model/user_view_model.dart';
+import 'package:capstone/screens/login/login_view_model.dart';
+import 'package:capstone/screens/login/user_view_model.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,16 +18,14 @@ class AfterSplashScreen extends StatefulWidget {
 class _AfterSplashScreenState extends State<AfterSplashScreen> {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
-    primary: Colors.blue[800],
-    minimumSize: const Size(200, 50),
+    primary: secondaryColor,
+    minimumSize: const Size(300, 45),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(25)),
+      borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
   );
-  final String imagePath =
-      "https://images.unsplash.com/photo-1495521821757-a1efb6729352?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1452&q=80";
-
+  
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -39,34 +39,20 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 30),
-        decoration: BoxDecoration(
-        //   image: DecorationImage(
-        //       colorFilter:
-        //           const ColorFilter.mode(Colors.black, BlendMode.colorDodge),
-        //       opacity: (0.5),
-        //       image: NetworkImage(imagePath),
-        //       fit: BoxFit.cover),
-        ),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               const Spacer(),
-              Icon(Icons.money),
-              const SizedBox(
-                height: 20,
-              ),
-              // welcomeTextWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              // sloganText(),
+              Image.asset('assets/img/logo.png', height: 100, width: 200),
               const SizedBox(
                 height: 40,
               ),
+              welcomeTextWidget(),
+              const Spacer(),
               getLogin(context),
               const SizedBox(
-                height: 40,
+                height: 20,
               ),
               getRegister(context),
               const SizedBox(
@@ -80,36 +66,27 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
   }
 
   Widget welcomeTextWidget() {
-    return Column(
-      children: const [
-        Text(
-          "Welcome",
-          style: TextStyle(
-              fontFamily: 'Merriweather',
-              fontSize: 40,
-              fontWeight: FontWeight.w600,
-              color: Colors.white),
-        ),
-        Text(
-          "to our delivery",
-          style: TextStyle(
-              fontFamily: 'Merriweather',
-              fontSize: 40,
-              fontWeight: FontWeight.w600,
-              color: Colors.white),
-        ),
-      ],
-    );
-  }
-
-  Widget sloganText() {
-    return Text(
-      "home cooking delivery",
-      style: TextStyle(
-          fontFamily: 'OpenSans',
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Colors.white),
+    return Center(
+      child: Column(
+        children: const [
+          Text(
+            "When you shop with Point.ID,",
+            style: TextStyle(
+                fontFamily: 'Merriweather',
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.black),
+          ),
+          Text(
+            "you wll make extra money.",
+            style: TextStyle(
+                fontFamily: 'Merriweather',
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.black),
+          ),
+        ],
+      ),
     );
   }
 
@@ -125,7 +102,6 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
       child: const Text('Sign In',
           style: TextStyle(
             fontFamily: 'Merriweather',
-            // fontWeight: FontWeight.w600,
           )),
     );
   }
@@ -153,7 +129,6 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
       child: const Text('Sign Up',
           style: TextStyle(
             fontFamily: 'Merriweather',
-            // fontWeight: FontWeight.w600,
           )),
     );
   }

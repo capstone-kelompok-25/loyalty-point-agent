@@ -1,11 +1,11 @@
-import 'package:capstone/screens/home/bottom_navigation_screen.dart';
-import 'package:capstone/screens/home/home_screen.dart';
+import 'package:capstone/after_splash_screen.dart';
+import 'package:capstone/model/login_model.dart';
+import 'package:capstone/screens/widget/bottom_navigation_screen.dart';
 import 'package:capstone/screens/pin/pin_screen.dart';
 import 'package:capstone/screens/register/register_screen.dart';
-import 'package:capstone/view_model/login_view_model.dart';
-import 'package:capstone/view_model/user_view_model.dart';
+import 'package:capstone/screens/login/login_view_model.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +21,16 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.white,
+    primary: secondaryColor,
+    minimumSize: const Size(250, 45),
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(5)),
+    ),
+  );
 
   late final SharedPreferences logindata;
   String email = '';
@@ -39,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (newUser == false) {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const BottomNavigationScreen()),
           (route) => false);
     }
   }
@@ -87,37 +97,66 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
         centerTitle: true,
-        title: const Text('Login',
-            style: TextStyle(fontFamily: 'Merriweather', fontSize: 17)),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                return const AfterSplashScreen();
+              }, transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                final tween = Tween(begin: 0.0, end: 1.0);
+                return FadeTransition(
+                    opacity: animation.drive(tween), child: child);
+              }),
+            );
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: Container(
+        width: double.maxFinite,
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Center(
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: formKey,
             child: ListView(children: [
+              const SizedBox(
+                height: 80,
+              ),
+              Image.asset('assets/img/logo.png', height: 100, width: 200),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text('Email address'),
               TextFormField(
                 controller: _emailController,
                 cursorColor: Colors.black,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    hintText: 'Email Address',
+                    // prefixIcon: Icon(Icons.email),
+                    // hintText: 'Email Address',
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10),
+                        Radius.circular(5),
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(10),
+                        Radius.circular(5),
                       ),
                     ),
-                    focusColor: Colors.black),
+                    focusColor: Colors.grey),
                 validator: (email) {
                   if (email != null && EmailValidator.validate(email)) {
                     return null;
@@ -129,27 +168,28 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 8,
               ),
+              const Text('Password'),
               TextFormField(
                   controller: _passwordController,
                   obscureText: true,
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
-                      hintText: 'Password',
+                      // prefixIcon: Icon(Icons.lock),
+                      // hintText: 'Password',
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                          Radius.circular(5),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                          Radius.circular(5),
                         ),
                       ),
-                      focusColor: Colors.black),
+                      focusColor: Colors.grey),
                   validator: (value) {
                     if (value != null && value.length > 5) {
                       return null;
@@ -161,34 +201,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 16,
               ),
               ElevatedButton(
+                style: raisedButtonStyle,
                   child: const Text(
-                    'Login',
+                    'Sign In',
                     style: TextStyle(fontFamily: 'OpenSans'),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(pageBuilder:
-                          (context, animation, secondaryAnimation) {
-                        return const BottomNavigationScreen();
-                      }, transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        final tween = Tween(begin: 0.0, end: 1.0);
-                        return FadeTransition(
-                            opacity: animation.drive(tween), child: child);
-                      }),
-                    );
-                  }
-                  // => getButtonLogin(modelView),
+                  onPressed: () => getButtonLogin(modelView),
                   ),
               const SizedBox(
-                height: 40,
+                height: 100,
               ),
-              Text(
-                "I'm a new user.",
+              // Spacer(),
+              const Text(
+                "I'm a new member.",
                 textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              TextButton(
+              sign_up(),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget sign_up(){
+    return TextButton(
                 // style: TextButton.styleFrom(
                 //   textStyle: const TextStyle(fontSize: 20),
                 // ),
@@ -209,13 +247,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   }));
                 },
-                child: const Text('Sign Up'),
-              ),
-            ]),
-          ),
-        ),
-      ),
-    );
+                child: const Text('Sign Up', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),),
+              );
   }
 
   getButtonLogin(LoginViewModel modelView) {
@@ -223,23 +256,17 @@ class _LoginScreenState extends State<LoginScreen> {
     var userValid;
     print('di klik');
 
-    email = _emailController.text;
-    password = _passwordController.text;
+    try{
+      email = _emailController.text;
+      password = _passwordController.text;
 
-    for (var users in modelView.login) {
-      if (users.email == email && users.password == password) {
-        print("berhasil login");
-        // simpan data valid user ke storage
-        statusLogin = true;
-        userValid = users;
-      }
+
+    final userItem = LoginModel(email: email, password: password);
+    modelView.postLogin(userItem);
+    }catch(e){
+      print("error $e");
     }
-
-    if (statusLogin) {
-      setState(() {
-        modelView.saveUserinStrorage(userValid);
-      });
-      Navigator.push(
+    Navigator.push(
         context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
           return const BottomNavigationScreen();
@@ -248,15 +275,41 @@ class _LoginScreenState extends State<LoginScreen> {
           return FadeTransition(opacity: animation.drive(tween), child: child);
         }),
       );
-    } else {
-      // Fluttertoast.showToast(
-      //     msg: "invalid email or password",
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     // gravity: ToastGravity.CENTER,
-      //     backgroundColor: Colors.black,
-      //     timeInSecForIosWeb: 1,
-      //     textColor: Colors.white,
-      //     fontSize: 16.0);
-    }
+
+    print(modelView.login.length);
+    
   }
 }
+
+// for (var users in modelView.login) { 
+//       if (users.email == email && users.password == password) {
+//         print("berhasil login");
+//         // simpan data valid user ke storage
+//         statusLogin = true;
+//         userValid = users;
+//       }
+//     }
+
+//     if (statusLogin) {
+//       setState(() {
+//         modelView.saveUserinStrorage(userValid);
+//       });
+//       Navigator.push(
+//         context,
+//         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+//           return const HomeScreen();
+//         }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//           final tween = Tween(begin: 0.0, end: 1.0);
+//           return FadeTransition(opacity: animation.drive(tween), child: child);
+//         }),
+//       );
+//     } else {
+//       Fluttertoast.showToast(
+//           msg: "invalid email or password",
+//           toastLength: Toast.LENGTH_SHORT,
+//           // gravity: ToastGravity.CENTER,
+//           backgroundColor: Colors.black,
+//           timeInSecForIosWeb: 1,
+//           textColor: Colors.white,
+//           fontSize: 16.0);
+//     }
