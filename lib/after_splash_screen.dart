@@ -26,13 +26,13 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
     ),
   );
   
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<LoginViewModel>(context, listen: false).getLogin();
-    });
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     Provider.of<LoginViewModel>(context, listen: false).getLogin();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
