@@ -1,10 +1,61 @@
-import 'package:flutter/cupertino.dart';
+class HistoryModel {
+  int? code;
+  String? messages;
+  List<Result>? result;
 
-class HistoryModel with ChangeNotifier{
+  HistoryModel({this.code, this.messages, this.result});
+
+  HistoryModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    messages = json['messages'];
+    if (json['result'] != null) {
+      result = <Result>[];
+      json['result'].forEach((v) {
+        result!.add(new Result.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['messages'] = this.messages;
+    if (this.result != null) {
+      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Result {
   int? id;
-  String tipe_transaksi;
-  String tanggal;
-  String status;
+  String? transactionId;
+  String? keterangan;
+  String? tanggal;
+  String? status;
 
-  HistoryModel({this.id, required this.tipe_transaksi, required this.tanggal, required this.status});
+  Result(
+      {this.id,
+      this.transactionId,
+      this.keterangan,
+      this.tanggal,
+      this.status});
+
+  Result.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    transactionId = json['transaction_id'];
+    keterangan = json['keterangan'];
+    tanggal = json['tanggal'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['transaction_id'] = this.transactionId;
+    data['keterangan'] = this.keterangan;
+    data['tanggal'] = this.tanggal;
+    data['status'] = this.status;
+    return data;
+  }
 }
