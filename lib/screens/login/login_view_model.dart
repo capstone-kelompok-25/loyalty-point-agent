@@ -6,13 +6,13 @@ import 'package:capstone/model/view_state.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginViewModel with ChangeNotifier{
-  List<LoginModel> _login = [];
+  List<Result> _login = [];
 
-  List<LoginModel> get login => _login;
+  List<Result> get login => _login;
 
-  final List<LoginModel> _profile = [];
+  final List<Result> _profile = [];
 
-  List<LoginModel> get profile => _profile;
+  List<Result> get profile => _profile;
 
   ViewState _state = ViewState.none;
   ViewState get state => _state;
@@ -22,26 +22,13 @@ class LoginViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  getLogin() async {
-    // changeState(ViewState.loading);
-
-    try {
-      final l = await LoginAPI.getLogin();
-      _login = l;
-      notifyListeners();
-      changeState(ViewState.none);
-    } catch (e) {
-      changeState(ViewState.error);
-    }
-  }
-
-  postLogin(LoginModel loginModel) async {
+  postLogin(Result login) async {
     // changeState(ViewState.loading);
 
     try {
       print("testpostlogin");
-      final l = await LoginAPI.postLogin(loginModel);
-      _login = l;
+      final l = await LoginAPI.postLogin(login);
+      _login = l as List<Result>;
       notifyListeners();
       changeState(ViewState.none);
     } catch (e) {
@@ -56,10 +43,10 @@ class LoginViewModel with ChangeNotifier{
   //   notifyListeners();
   // }
 
-  void saveUserinStrorage(LoginModel loginModel) {
-    _profile.add(loginModel);
-    notifyListeners();
-  }
+  // void saveUserinStrorage(LoginModel loginModel) {
+  //   _profile.add(loginModel);
+  //   notifyListeners();
+  // }
 
   void logout() {
     _profile.clear();
