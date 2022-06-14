@@ -1,5 +1,6 @@
 import 'package:capstone/screens/faq/faq_screen.dart';
 import 'package:capstone/screens/history/empty_task_screen.dart';
+import 'package:capstone/screens/history/history_list_screen.dart';
 import 'package:capstone/screens/history/history_screen.dart';
 import 'package:capstone/screens/history/history_view_model.dart';
 import 'package:capstone/screens/home/home_screen.dart';
@@ -45,7 +46,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             ),
             icon: Icon(
               Icons.home,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 75, 75, 75),
             ),
           ),
           BottomNavigationBarItem(
@@ -56,7 +57,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             ),
             icon: Icon(
               Icons.history,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 75, 75, 75),
             ),
           ),
           BottomNavigationBarItem(
@@ -67,7 +68,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             ),
             icon: Icon(
               Icons.question_mark,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 75, 75, 75),
             ),
           ),
           BottomNavigationBarItem(
@@ -78,7 +79,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             ),
             icon: Icon(
               Icons.person,
-              color: Colors.grey,
+              color: Color.fromARGB(255, 75, 75, 75),
             ),
           ),
         ],
@@ -92,18 +93,6 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
           });
         },
       ),
-    );
-  }
-
-  Widget buildHistoryScreen() {
-    return Consumer<HistoryViewModel>(
-      builder: (context, modelView, child) {
-        if (modelView.history.isNotEmpty) {
-          return HistoryScreenList(viewModel: modelView);
-        } else {
-          return const EmptyTaskScreen();
-        }
-      },
     );
   }
 }

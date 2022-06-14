@@ -57,26 +57,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
          Card(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => QRCodeScreen()));
-                  } ,
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const QRCodeScreen()));
+                  },
                   child: const ListTile(
-                    title: Text('Tunjukkan QR Code Member', style: const TextStyle(fontSize: 16)),
-                    subtitle: Text('Gunakan saat belanja untuk dapat poin', style: const TextStyle(fontSize: 10)),
+                    title: Text('Tunjukkan QR Code Member', style: TextStyle(fontSize: 16)),
+                    subtitle: Text('Gunakan saat belanja untuk dapat poin', style: TextStyle(fontSize: 10)),
                     trailing: Icon(Icons.qr_code),
                   ),
                 ),
               ),
               const SizedBox(height: 4),
-        const Card(
-                child: ListTile(
-                  title: Text('Profile', style: const TextStyle(fontSize: 16)),
-                  leading: Icon(Icons.person)
+        Card(
+                child: GestureDetector(
+                  onTap: () {
+
+                  },
+                  child: ListTile(
+                    title: Text('Atur Profile', style: TextStyle(fontSize: 16)),
+                    leading: Icon(Icons.person)
+                  ),
                 ),
               ),
         const SizedBox(height: 4),
-        const Card(
+         Card(
                 child: ListTile(
-                  title: Text('Ubah Kode PIN', style: const TextStyle(fontSize: 16)),
+                  title: Text('Ubah Kode PIN', style: TextStyle(fontSize: 16)),
                   leading: Icon(Icons.lock),
                 ),
               ),

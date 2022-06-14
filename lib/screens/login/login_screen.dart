@@ -54,13 +54,13 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<LoginViewModel>(context, listen: false).getLogin();
-    });
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     Provider.of<LoginViewModel>(context, listen: false).getLogin();
+  //   });
+  // }
 
   @override
   void initState() {
@@ -261,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
       password = _passwordController.text;
 
 
-    final userItem = LoginModel(email: email, password: password);
+    final userItem = Result(email: email, password: password);
     modelView.postLogin(userItem);
     }catch(e){
       print("error $e");

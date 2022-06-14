@@ -10,7 +10,7 @@ class HeaderHistoryTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
-      height: size.height * 0.2,
+      height: size.height * 0.2 - 30,
       child: Stack(
         children: <Widget>[
           Container(

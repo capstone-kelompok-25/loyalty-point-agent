@@ -1,5 +1,8 @@
+import 'package:capstone/model/login_model.dart';
+import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/utils/size.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HeaderHomeScreen extends StatelessWidget {
   Size size;
@@ -7,9 +10,12 @@ class HeaderHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginViewModel modelView = Provider.of<LoginViewModel>(context);
+    final userItem = Result();
+    final user = modelView.profile.isNotEmpty ? modelView.profile[modelView.profile.length - 1] : userItem;
     return Container(
-      margin: const EdgeInsets.only(bottom: 5, top: 5),
-      height: size.height * 0.2,
+      margin: const EdgeInsets.only(bottom: 5),
+      height: size.height * 0.2 -30,
       child: Stack(
         children: <Widget>[
           Container(
@@ -24,9 +30,9 @@ class HeaderHomeScreen extends StatelessWidget {
               color: Colors.white,
             ),
             child: Row(
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
-                  'Halo Jack, Selamat Datang',
+                  'Halo ${user.name}, Selamat Datang',
                   // style: Theme.of(context).textTheme.headline5?.copyWith(
                   style: TextStyle(
                       fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
@@ -36,8 +42,8 @@ class HeaderHomeScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.only(top: 50, left: 20),
-            child: const Text(
-              '08120000012',
+            child: Text(
+              '${user.noHp}',
               style: TextStyle(color: Colors.black),
             ),
           ),

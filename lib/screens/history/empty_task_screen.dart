@@ -5,7 +5,10 @@ class EmptyTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Icon(Icons.history));
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: const Center(
+        child: Icon(Icons.history)),
+    );
   }
 }
