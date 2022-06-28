@@ -78,7 +78,7 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
                 color: Colors.black),
           ),
           Text(
-            "you wll make extra money.",
+            "you will make extra money.",
             style: TextStyle(
                 fontFamily: 'Merriweather',
                 fontSize: 20,
