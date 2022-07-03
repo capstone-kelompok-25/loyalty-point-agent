@@ -1,4 +1,6 @@
+import 'package:capstone/model/history_model.dart';
 import 'package:capstone/screens/history/history_view_model.dart';
+import 'package:capstone/screens/register/register_view_model.dart';
 import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/splash_screen.dart';
 import 'package:capstone/screens/login/login_view_model.dart';
@@ -30,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HistoryViewModel(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => RegisterViewModel(),
         ),
       ],
       child: MaterialApp(
