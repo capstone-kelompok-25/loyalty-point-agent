@@ -5,7 +5,7 @@ class HistoryAPI {
   static Future<List<Result>> getHistory(String id) async {
 
     try {
-      final response = await Dio().get("https://api-dummy.herokuapp.com/v1/history/$id");
+      final response = await Dio().get("api-poins-id.herokuapp.com/v1/history/$id");
       final history = HistoryModel.fromJson(response.data);
       return history.result!;
 

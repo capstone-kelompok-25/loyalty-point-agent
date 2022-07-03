@@ -2,19 +2,16 @@ import 'package:capstone/model/transaction_model.dart';
 import 'package:dio/dio.dart';
 
 class TransactionAPI {
-  static Future<List<TransactionModel>> getTransaction() async {
-    final response = await Dio().get("https://api-dummy.herokuapp.com/v1/detailhistory/{id}");
 
-    List<TransactionModel> transaction = (response.data as List)
-        .map((e) => TransactionModel(
-            id: e['id'],
-            jenis_transaction: e['jenis_transaction'],
-            nama_bank: e['nama_bank'],
-            no_rekening: e['no_rekening'],
-            poin_account: e['poin_account'],
-            poin_redeem: e['poin_redeem']))
-        .toList();
-
-    return transaction;
+  static Future<EMoneyModel> redeemEmoney(String customerId, String bankProvider, String nomor, String anRekening, String amount, String poinAccount, String poinRedeem) async {
+    try {
+      final response = await Dio().post("https://api-poins-id.herokuapp.com/v1/emoney", data: {"Customer_id":customerId, "bank_provider":bankProvider, "nomor":nomor, "an_rekening":anRekening, "amount":amount, "poin_account":poinAccount, "poin_redeem":poinRedeem});
+      final emoney = EMoneyModel.fromJson(response.data);
+      return emoney;
+  
+    } on DioError catch (e) {
+      final defaultError = e.response!.data.toString();
+      throw defaultError;
+    }
   }
 }
