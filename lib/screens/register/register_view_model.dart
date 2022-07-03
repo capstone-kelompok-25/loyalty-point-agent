@@ -16,12 +16,12 @@ class RegisterViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<String> postRegister(String email, String password, String fullname, String noHp, String pin) async {
+  Future<String> postRegister(String email, String password, String fullname, String noHp, int pin) async {
     changeState(ViewState.loading);
 
     try {
       print("testpostregister");
-      final r = await RegisterAPI.postRegister(email, password, fullname, noHp, pin);
+      final r = await RegisterAPI.postRegisterAPI(email, password, fullname, noHp, pin);
       _register = r;
       print(_register);
       changeState(ViewState.none);

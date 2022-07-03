@@ -20,7 +20,7 @@ class HistoryViewModel with ChangeNotifier{
 
     try {
       final h = await HistoryAPI.getHistory(id);
-      _history = h;
+      _history = h!;
       notifyListeners();
       changeState(ViewState.none);
     } catch (e) {
