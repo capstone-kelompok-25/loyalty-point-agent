@@ -4,8 +4,20 @@ import 'package:capstone/model/view_state.dart';
 import 'package:flutter/cupertino.dart';
 
 class TransactionViewModel with ChangeNotifier{
-  List<TransactionModel> _transaction = [];
-  List<TransactionModel> get transaction => _transaction;
+  EMoneyModel? _transaction;
+  EMoneyModel? get transaction => _transaction;
+
+  List<String> _emoney = [];
+
+  List<String> get emoney => _emoney;
+
+  List<String> _cashout = [];
+
+  List<String> get cashout => _cashout;
+
+  List<String> _pulsa = [];
+
+  List<String> get pulsa => _pulsa;
 
   ViewState _state = ViewState.none;
   ViewState get state => _state;
@@ -15,16 +27,21 @@ class TransactionViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  getTransaction() async {
-    // changeState(ViewState.loading);
+  Future<String> postTransaction(String customerId, String bankProvider, String nomor, String anRekening, String amount, String poinAccount, String poinRedeem) async {
+    changeState(ViewState.loading);
 
     try {
-      final t = await TransactionAPI.getTransaction();
+      print("testpostredeememoney");
+      final t = await TransactionAPI.redeemEmoney(customerId, bankProvider, nomor, anRekening, amount, poinAccount, poinRedeem);
       _transaction = t;
-      notifyListeners();
       changeState(ViewState.none);
+      notifyListeners();
+      return "";
     } catch (e) {
+      print("testpostredeememoneyerror $e");
       changeState(ViewState.error);
-    }
+      notifyListeners();
+      return "$e";
+    }    
   }
 }
