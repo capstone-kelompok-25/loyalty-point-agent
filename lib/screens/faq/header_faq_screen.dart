@@ -24,17 +24,19 @@ class HeaderFaqScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               color: primaryColor,
             ),
-            child: Row(
-              children: <Widget>[
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'FAQ',
-                  style: Theme.of(context).textTheme.headline5?.copyWith(
-                      fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ],
+            child: Center(
+              child: Row(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'FAQ', 
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                        fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

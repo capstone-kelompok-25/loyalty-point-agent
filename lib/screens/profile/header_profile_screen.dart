@@ -10,7 +10,7 @@ class HeaderProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
-      height: size.height * 0.2,
+      height: size.height * 0.2 - 30,
       child: Stack(
         children: <Widget>[
           Container(
@@ -24,14 +24,16 @@ class HeaderProfileScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               color: primaryColor,
             ),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Profile',
-                  style: Theme.of(context).textTheme.headline5?.copyWith(
-                      fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ],
+            child: Center(
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    'Profile',
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                        fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

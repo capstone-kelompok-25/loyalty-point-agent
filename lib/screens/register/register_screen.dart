@@ -1,7 +1,11 @@
 import 'package:capstone/after_splash_screen.dart';
+import 'package:capstone/model/register_model.dart';
 import 'package:capstone/model/user_model.dart';
 import 'package:capstone/screens/login/login_screen.dart';
 import 'package:capstone/screens/login/user_view_model.dart';
+import 'package:capstone/screens/pin/pin_screen.dart';
+import 'package:capstone/screens/register/register_view_model.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final Function(UserModel) onCreate;
-  const RegisterScreen({Key? key, required this.onCreate}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -25,7 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _phoneController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  String username = '';
+  String name = '';
   String email = '';
   String password = '';
   String phone = '';
@@ -52,36 +55,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ),
   );
 
-  void initial() async {
-    // Function(UserModel) onCreate;
-    // logindata = await SharedPreferences.getInstance();
-    // newUser = logindata.getBool('register') ?? true;
-    // setState(() {
-    //   username = logindata.getString('username').toString();
-    //   email = logindata.getString('email').toString();
-    //   password = logindata.getString('password').toString();
-    //   phone = logindata.getString('phone').toString();
-    //   birth = logindata.getString('birth').toString();
-    //   address = logindata.getString('address').toString();
-    // });
-    // newUser = logindata.getBool('register') ?? true;
-    if (newUser == false) {
-      // Navigator.pushAndRemoveUntil(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => LoginScreen(onCreate: (user) {
+  // void initial() async {
+  // Function(UserModel) onCreate;
+  // logindata = await SharedPreferences.getInstance();
+  // newUser = logindata.getBool('register') ?? true;
+  // setState(() {
+  //   username = logindata.getString('username').toString();
+  //   email = logindata.getString('email').toString();
+  //   password = logindata.getString('password').toString();
+  //   phone = logindata.getString('phone').toString();
+  //   birth = logindata.getString('birth').toString();
+  //   address = logindata.getString('address').toString();
+  // });
+  // newUser = logindata.getBool('register') ?? true;
+  // if (newUser == false) {
+  // Navigator.pushAndRemoveUntil(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => LoginScreen(onCreate: (user) {
 
-      //     },)),
-      //     (route) => false);
-    }
-  }
+  //     },)),
+  //     (route) => false);
+  // }
+  // }
 
   @override
   void initState() {
     super.initState();
-    initial();
+    // initial();
     _nameController.addListener(() {
       setState(() {
-        username = _nameController.text;
+        name = _nameController.text;
       });
     });
     _emailController.addListener(() {
@@ -103,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserViewModel modelView = Provider.of<UserViewModel>(context);
+    RegisterViewModel viewModel = Provider.of<RegisterViewModel>(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -268,31 +271,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       ElevatedButton(
                           style: raisedButtonStyle,
-                          onPressed: () {
-                            final userItem = UserModel(
-                                name: _nameController.text,
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                                phone: _phoneController.text);
-                            print(userItem);
-
-                            widget.onCreate(userItem);
-                          },
-                          autofocus: false,
-                          child: const Text('Register',
+                          onPressed: () => getButtonRegister(viewModel),
+                          // autofocus: false,
+                          child: const Text('Sign Up',
                               style: TextStyle(fontFamily: 'OpenSans'))),
                       const SizedBox(
                         height: 40,
                       ),
-                      const Text(
-                        "I'm already a member.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Wrap(
+                        spacing: 1,
+                        runSpacing: 1,
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
+                        runAlignment: WrapAlignment.center,
+                        children: <Widget>[
+                          TextButton(
+                            onPressed: (){},
+                            child: Text(
+                              "I'am already a member.",
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          TextButton(
+                            child: const Text(
+                              'Sign In',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                return const LoginScreen();
+                              }));
+                            },
+                          )
+                        ],
                       ),
-                      sign_in()
+                      // sign_in()
                     ],
                   )),
             )));
+  }
+
+  getButtonRegister(RegisterViewModel viewModel) async {
+    email = _emailController.text;
+    password = _passwordController.text;
+    name = _nameController.text;
+    phone = _phoneController.text;
+
+    // SharedPref sharedPref = SharedPref();
+    // String? emails = sharedPref.read("email");
+    // String? passwords = sharedPref.read("password");
+    // String? fullname = sharedPref.read("fullname");
+    // String? noHp = sharedPref.read("noHp");
+
+    Navigator.push(
+      context,
+      PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+        return PinScreen(
+            email: email, password: password, name: name, phone: phone);
+      }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final tween = Tween(begin: 0.0, end: 1.0);
+        return FadeTransition(opacity: animation.drive(tween), child: child);
+      }),
+    );
   }
 
   Widget sign_in() {

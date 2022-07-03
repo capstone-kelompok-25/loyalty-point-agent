@@ -12,14 +12,14 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final modelView = Provider.of<HistoryViewModel>(context, listen: false);
+    final modelView = Provider.of<HistoryViewModel>(context, listen: false);
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
       HeaderHistoryTransaction(size: size),
-      buildHistoryScreen(),
+      HistoryScreenList(viewModel: modelView),
     ])));
   }
 

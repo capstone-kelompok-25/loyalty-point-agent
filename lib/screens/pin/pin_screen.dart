@@ -1,56 +1,136 @@
 import 'package:capstone/screens/login/login_screen.dart';
+import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/screens/pin/header_pin_screen.dart';
+import 'package:capstone/screens/register/register_view_model.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:provider/provider.dart';
 
 class PinScreen extends StatefulWidget {
-  const PinScreen({Key? key}) : super(key: key);
+  String email;
+  String password;
+  String name;
+  String phone;
+  PinScreen(
+      {Key? key,
+      required this.email,
+      required this.password,
+      required this.name,
+      required this.phone})
+      : super(key: key);
 
   @override
   State<PinScreen> createState() => _PinScreenState();
 }
 
 class _PinScreenState extends State<PinScreen> {
-  TextEditingController _textEditingController = TextEditingController();
+  final _pinController = TextEditingController();
+  String name = '';
+  String email = '';
+  String password = '';
+  String phone = '';
+  String pin = '';
+
+  Future getData() async {
+    await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String emails = await sharedPref.read("email");
+    String passwords= await sharedPref.read("password");
+    String fullname = await sharedPref.read("fullname");
+    String noHp = await sharedPref.read("noHp");
+    String pins = await sharedPref.read("pin");
+    setState(() {
+      email = emails.replaceAll('"', '');
+      password = passwords.replaceAll('"', '');
+      name = fullname.replaceAll('"', '');
+      phone = noHp.replaceAll('"', '');
+      pin = pins.replaceAll('"', '');
+    });
+    return "done getting data";
+  }
+
+  @override
+  void dispose() {
+    _pinController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _pinController.addListener(() {
+      setState(() {
+        pin = _pinController.text;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    RegisterViewModel modelView = Provider.of<RegisterViewModel>(context);
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                HeaderPinScreen(size: size),
-                const SizedBox(
-                  height: 60,
-                ),
-                PinCodeTextField(
-                autofocus: false,
-                controller: _textEditingController,
-                maxLength: 6,
-                highlight: false,
-                hasUnderline: true,
-                hideCharacter: true,
-                hasTextBorderColor: Colors.grey,
-                pinBoxColor: Colors.transparent,
-                // highlightPinBoxColor: Colors.grey,
-                onDone: (text) {
-                  print(_textEditingController.text);
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                    return const LoginScreen();
-                  }));
-                },
-                // highlightColor: Colors.grey,
-                // defaultBorderColor: Colors.black,
-                maskCharacter: "*",
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            HeaderPinScreen(size: size),
+            const SizedBox(
+              height: 60,
             ),
-          ),
+            PinCodeTextField(
+              autofocus: false,
+              controller: _pinController,
+              maxLength: 6,
+              highlight: false,
+              hasUnderline: true,
+              // hideCharacter: true,
+              hasTextBorderColor: Colors.transparent,
+              pinBoxColor: Colors.transparent,
+              // highlightPinBoxColor: Colors.grey,
+              onDone: (text) => getPINRegister(modelView)
+              // highlightColor: Colors.grey,
+              // defaultBorderColor: Colors.black,
+              // maskCharacter: "*",
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  getPINRegister(RegisterViewModel viewModel) async {
+    
+    // SharedPref sharedPref = SharedPref();
+    // String? email = await sharedPref.read("email");
+    // String? password= await sharedPref.read("password");
+    // String? fullname = await sharedPref.read("fullname");
+    // String? noHp = await sharedPref.read("noHp");
+    // String? pin = await sharedPref.read("pin");
+
+    final message = await viewModel.postRegister(email, password,name, phone, pin);
+    if (message == null) {
+      Navigator.push(
+        context,
+        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+          return const LoginScreen();
+        }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final tween = Tween(begin: 0.0, end: 1.0);
+          return FadeTransition(opacity: animation.drive(tween), child: child);
+        }),
+      );
+    } else {
+      print("error $message");
+      final snackBar = SnackBar(
+        content: Text("$message"),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }

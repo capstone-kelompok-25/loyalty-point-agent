@@ -1,4 +1,5 @@
 import 'package:capstone/after_splash_screen.dart';
+import 'package:capstone/model/api/login_api.dart';
 import 'package:capstone/model/login_model.dart';
 import 'package:capstone/screens/widget/bottom_navigation_screen.dart';
 import 'package:capstone/screens/pin/pin_screen.dart';
@@ -11,7 +12,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
-  // final Function(UserModel) onCreate;
+  // final Function(LoginModel) onCreate;
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late final SharedPreferences logindata;
   String email = '';
   String password = '';
-  late bool newUser;
+  late bool user;
 
   final formKey = GlobalKey<FormState>();
 
@@ -45,12 +46,17 @@ class _LoginScreenState extends State<LoginScreen> {
       email = logindata.getString('email').toString();
       password = logindata.getString('password').toString();
     });
-    newUser = logindata.getBool('login') ?? true;
-    if (newUser == false) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const BottomNavigationScreen()),
-          (route) => false);
+    user = logindata.getBool('login') ?? true;
+    if (user == false) {
+      Navigator.push(
+        context,
+        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+          return const BottomNavigationScreen();
+        }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final tween = Tween(begin: 0.0, end: 1.0);
+          return FadeTransition(opacity: animation.drive(tween), child: child);
+        }),
+      );
     }
   }
 
@@ -202,22 +208,45 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 style: raisedButtonStyle,
-                  child: const Text(
-                    'Sign In',
-                    style: TextStyle(fontFamily: 'OpenSans'),
-                  ),
-                  onPressed: () => getButtonLogin(modelView),
-                  ),
+                child: const Text(
+                  'Sign In',
+                  style: TextStyle(fontFamily: 'OpenSans'),
+                ),
+                onPressed: () => getButtonLogin(modelView),
+              ),
               const SizedBox(
                 height: 100,
               ),
               // Spacer(),
-              const Text(
-                "I'm a new member.",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Wrap(
+                spacing: 1,
+                runSpacing: 1,
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.center,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: (){},
+                    child: Text(
+                      "I'am a new member.",
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  TextButton(
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return const RegisterScreen();
+                      }));
+                    },
+                  )
+                ],
               ),
-              sign_up(),
             ]),
           ),
         ),
@@ -225,48 +254,38 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget sign_up(){
+  Widget sign_up() {
     return TextButton(
-                // style: TextButton.styleFrom(
-                //   textStyle: const TextStyle(fontSize: 20),
-                // ),
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return RegisterScreen(
-                      onCreate: (register) {
-                        // modelView.postUser(register);
-                        print('Posting Data...');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PinScreen(),
-                          ),
-                        );
-                      },
-                    );
-                  }));
-                },
-                child: const Text('Sign Up', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),),
-              );
+      // style: TextButton.styleFrom(
+      //   textStyle: const TextStyle(fontSize: 20),
+      // ),
+      onPressed: () {
+         Navigator.push(
+        context,
+        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+          return RegisterScreen();
+        }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final tween = Tween(begin: 0.0, end: 1.0);
+          return FadeTransition(opacity: animation.drive(tween), child: child);
+        }),
+      );
+      },
+      child: const Text(
+        'Sign Up',
+        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+      ),
+    );
   }
 
-  getButtonLogin(LoginViewModel modelView) {
-    var statusLogin = false;
-    var userValid;
+  getButtonLogin(LoginViewModel modelView) async {
     print('di klik');
 
-    try{
-      email = _emailController.text;
-      password = _passwordController.text;
+    email = _emailController.text;
+    password = _passwordController.text;
 
-
-    final userItem = Result(email: email, password: password);
-    modelView.postLogin(userItem);
-    }catch(e){
-      print("error $e");
-    }
-    Navigator.push(
+    final message = await modelView.postLogin(email, password);
+    if (message == null) {
+      Navigator.push(
         context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
           return const BottomNavigationScreen();
@@ -275,41 +294,12 @@ class _LoginScreenState extends State<LoginScreen> {
           return FadeTransition(opacity: animation.drive(tween), child: child);
         }),
       );
-
-    print(modelView.login.length);
-    
+    }else{
+       print("error $message");
+      final snackBar = SnackBar(
+        content: Text("$message"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 }
-
-// for (var users in modelView.login) { 
-//       if (users.email == email && users.password == password) {
-//         print("berhasil login");
-//         // simpan data valid user ke storage
-//         statusLogin = true;
-//         userValid = users;
-//       }
-//     }
-
-//     if (statusLogin) {
-//       setState(() {
-//         modelView.saveUserinStrorage(userValid);
-//       });
-//       Navigator.push(
-//         context,
-//         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
-//           return const HomeScreen();
-//         }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
-//           final tween = Tween(begin: 0.0, end: 1.0);
-//           return FadeTransition(opacity: animation.drive(tween), child: child);
-//         }),
-//       );
-//     } else {
-//       Fluttertoast.showToast(
-//           msg: "invalid email or password",
-//           toastLength: Toast.LENGTH_SHORT,
-//           // gravity: ToastGravity.CENTER,
-//           backgroundColor: Colors.black,
-//           timeInSecForIosWeb: 1,
-//           textColor: Colors.white,
-//           fontSize: 16.0);
-//     }

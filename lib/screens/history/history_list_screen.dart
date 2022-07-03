@@ -1,6 +1,7 @@
 import 'package:capstone/screens/history/detail_transaction.dart';
 import 'package:capstone/screens/history/header_history_transaction.dart';
 import 'package:capstone/screens/history/history_view_model.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:flutter/material.dart';
 
 class HistoryScreenList extends StatelessWidget {
@@ -22,6 +23,7 @@ class HistoryScreenList extends StatelessWidget {
   Widget build(BuildContext context) {
     final _history = viewModel.history;
     Size size = MediaQuery.of(context).size;
+    
     return Scaffold(
       body: ListView.separated(
               itemCount: viewModel.history.length,
@@ -60,4 +62,14 @@ class HistoryScreenList extends StatelessWidget {
             ),
     );
   }
+
+  fullname()async{
+    SharedPref sharedPref = SharedPref();
+    String? token = await sharedPref.read("token");
+    String? fullname = await sharedPref.read("fullname");
+    String? noHp = await sharedPref.read("no_hp");
+    String? poin = await sharedPref.read("poin");
+    return fullname;
+  }
+  
 }

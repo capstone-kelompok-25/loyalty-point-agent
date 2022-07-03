@@ -1,9 +1,11 @@
 import 'package:capstone/model/login_model.dart';
+import 'package:capstone/model/register_model.dart';
 import 'package:capstone/screens/login/login_screen.dart';
 import 'package:capstone/screens/pin/pin_screen.dart';
 import 'package:capstone/screens/register/register_screen.dart';
 import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/screens/login/user_view_model.dart';
+import 'package:capstone/screens/register/register_view_model.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,13 +21,13 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: secondaryColor,
-    minimumSize: const Size(300, 45),
+    minimumSize: const Size(500, 45),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
   );
-  
+
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
@@ -50,14 +52,40 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
               ),
               welcomeTextWidget(),
               const Spacer(),
-              getLogin(context),
+              getRegister(context),
               const SizedBox(
                 height: 20,
               ),
-              getRegister(context),
-              const SizedBox(
-                height: 40,
+              Wrap(
+                spacing: 1,
+                runSpacing: 1,
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.center,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: (){},
+                    child: Text(
+                      "Already a member?",
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  TextButton(
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return const LoginScreen();
+                      }));
+                    },
+                  )
+                ],
               ),
+              SizedBox(height: 10)
             ],
           ),
         ),
@@ -68,9 +96,10 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
   Widget welcomeTextWidget() {
     return Center(
       child: Column(
-        children: const [
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
           Text(
-            "When you shop with Point.ID,",
+            "When you shop with Point.ID, you ",
             style: TextStyle(
                 fontFamily: 'Merriweather',
                 fontSize: 20,
@@ -78,7 +107,7 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
                 color: Colors.black),
           ),
           Text(
-            "you wll make extra money.",
+            "wll make extra money.",
             style: TextStyle(
                 fontFamily: 'Merriweather',
                 fontSize: 20,
@@ -90,46 +119,35 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
     );
   }
 
-  Widget getLogin(BuildContext context) {
-    return ElevatedButton(
-      style: raisedButtonStyle,
-      onPressed: () {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-          return const LoginScreen();
-        }));
-      },
-      child: const Text('Sign In',
-          style: TextStyle(
-            fontFamily: 'Merriweather',
-          )),
-    );
-  }
+  // Widget getLogin(BuildContext context) {
+  //   return ElevatedButton(
+  //     style: raisedButtonStyle,
+  //     onPressed: () {
+  //       Navigator.of(context)
+  //           .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+  //         return const LoginScreen();
+  //       }));
+  //     },
+  //     child: const Text('Sign In',
+  //         style: TextStyle(
+  //           fontFamily: 'Merriweather',
+  //         )),
+  //   );
+  // }
+
 
   Widget getRegister(BuildContext context) {
-    final modelView = Provider.of<UserViewModel>(context, listen: false);
+    final modelView = Provider.of<RegisterViewModel>(context, listen: false);
     return ElevatedButton(
-      style: raisedButtonStyle,
-      onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return RegisterScreen(
-            onCreate: (register) {
-              modelView.postUser(register);
-              print('Posting Data...');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PinScreen(),
-                ),
-              );
-            },
-          );
-        }));
-      },
-      child: const Text('Sign Up',
-          style: TextStyle(
-            fontFamily: 'Merriweather',
-          )),
-    );
+        style: raisedButtonStyle,
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return RegisterScreen();
+          }));
+        },
+        child: const Text('Join Now!',
+            style: TextStyle(
+              fontFamily: 'Merriweather',
+            )));
   }
 }
