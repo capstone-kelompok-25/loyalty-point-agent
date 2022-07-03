@@ -72,8 +72,24 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/img/banner.png
     - assets/img/logo.png
     - assets/img/coin.png
+    - assets/img/dana.png
+    - assets/img/gopay.png
+    - assets/img/LinkAja.png
+    - assets/img/ovo.png
+    - assets/img/ShopeePay.png
+    - assets/img/bca.png
+    - assets/img/bjb.png
+    - assets/img/bni.png
+    - assets/img/bri.png
+    - assets/img/mandiri.png
+    - assets/img/telkomsel.png
+    - assets/img/indosat.png
+    - assets/img/smartfren.png
+    - assets/img/xl.png
+    - assets/img/axis.png
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
