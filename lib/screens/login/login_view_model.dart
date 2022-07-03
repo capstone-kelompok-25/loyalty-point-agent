@@ -1,14 +1,17 @@
+import 'dart:convert';
+
 import 'package:capstone/model/api/login_api.dart';
-import 'package:capstone/model/api/user_api.dart';
 import 'package:capstone/model/login_model.dart';
-import 'package:capstone/model/user_model.dart';
 import 'package:capstone/model/view_state.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewModel with ChangeNotifier{
-  List<Result> _login = [];
+  Result? _login;
 
-  List<Result> get login => _login;
+  Result? get login => _login;
+
 
   final List<Result> _profile = [];
 
@@ -22,19 +25,30 @@ class LoginViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  postLogin(Result login) async {
-    // changeState(ViewState.loading);
+  Future<String?> postLogin(String email, String password) async {
+    changeState(ViewState.loading);
 
     try {
       print("testpostlogin");
-      final l = await LoginAPI.postLogin(login);
-      _login = l as List<Result>;
-      notifyListeners();
+      final l = await LoginAPI.postLogin(email, password);
+      _login = l;
+      print(_login);
       changeState(ViewState.none);
+      notifyListeners();
+      return null;
     } catch (e) {
       print("testpostloginerror $e");
       changeState(ViewState.error);
+      notifyListeners();
+      return "$e";
     }
+    
+  }
+
+  getDataLogin() async {
+    SharedPref sharedPref = SharedPref();
+    String? email = await sharedPref.read("email");
+    return email;
   }
 
   // postUser(LoginModel loginModel) async {
@@ -48,8 +62,8 @@ class LoginViewModel with ChangeNotifier{
   //   notifyListeners();
   // }
 
-  void logout() {
-    _profile.clear();
-    notifyListeners();
-  }
+  // void logout() {
+  //   _profile.clear();
+  //   notifyListeners();
+  // }
 }

@@ -1,11 +1,11 @@
-class LoginModel {
+class RegisterModel {
   int? code;
   String? messages;
   Result? result;
 
-  LoginModel({this.code, this.messages, this.result});
+  RegisterModel({this.code, this.messages, this.result});
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
+  RegisterModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     messages = json['messages'];
     result =
@@ -24,46 +24,29 @@ class LoginModel {
 }
 
 class Result {
-  int? id;
   String? email;
   String? fullname;
   String? password;
   String? noHp;
-  int? poin;
   int? pin;
-  String? token;
 
-  Result(
-      {this.id,
-      this.email,
-      this.fullname,
-      this.password,
-      this.noHp,
-      this.poin,
-      this.pin,
-      this.token});
+  Result({this.email, this.fullname, this.password, this.noHp, this.pin});
 
   Result.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     email = json['email'];
     fullname = json['fullname'];
     password = json['password'];
     noHp = json['no_hp'];
-    poin = json['poin'];
     pin = json['pin'];
-    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
     data['email'] = this.email;
     data['fullname'] = this.fullname;
     data['password'] = this.password;
     data['no_hp'] = this.noHp;
-    data['poin'] = this.poin;
     data['pin'] = this.pin;
-    data['token'] = this.token;
     return data;
   }
 }
