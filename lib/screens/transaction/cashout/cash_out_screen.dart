@@ -199,43 +199,43 @@ class _CashOutScreenState extends State<CashOutScreen> {
                           SizedBox(height: 5),
                             SingleChildScrollView(
                               child: 
-                                    // GridView.count(
-                                    //   shrinkWrap: true,
-                                    //   crossAxisCount: 2, //jumlah pergrid
-                                    //   scrollDirection: Axis.vertical,
-                                    //   // physics: ScrollPhysics(),
-                                    //   children: List.generate(
-                                    //     8, //ini adalah jumlah total card
-                                    //     (index) {
-                                    //       return GestureDetector(
-                                    //         onTap: () {},
-                                    //         child: Card(
-                                    //             child: ListTile(
-                                    //                 title: Text(cashout[index], style: TextStyle(color: Colors.black)),
-                                    //                 subtitle: Text(poin[index], style: TextStyle(color: Colors.blue))
-                                    //             ),),
-                                    //       );
-                                    //   },
-                                    //   ),
-                                    // ),
-                                    GridView(
-                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        mainAxisSpacing: 16,
-                                        crossAxisSpacing: 16
-                                      ),
+                                    GridView.count(
                                       shrinkWrap: true,
-                                      children: [
-                                        Image.network('https://picsum.photos/250?image=1'),
-                                        Image.network('https://picsum.photos/250?image=2'),
-                                        Image.network('https://picsum.photos/250?image=3'),
-                                        Image.network('https://picsum.photos/250?image=4'),
-                                        Image.network('https://picsum.photos/250?image=1'),
-                                        Image.network('https://picsum.photos/250?image=2'),
-                                        Image.network('https://picsum.photos/250?image=3'),
-                                        Image.network('https://picsum.photos/250?image=4'),
-                                      ]
-                                    )
+                                      crossAxisCount: 2, //jumlah pergrid
+                                      scrollDirection: Axis.vertical,
+                                      physics: ScrollPhysics(),
+                                      children: List.generate(
+                                        8, //ini adalah jumlah total card
+                                        (index) {
+                                          return GestureDetector(
+                                            onTap: () {},
+                                            child: Card(
+                                                child: ListTile(
+                                                    title: Text(cashout[index], style: TextStyle(color: Colors.black)),
+                                                    subtitle: Text(poin[index], style: TextStyle(color: Colors.blue))
+                                                ),),
+                                          );
+                                      },
+                                      ),
+                                    ),
+                                    // GridView(
+                                    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    //     crossAxisCount: 2,
+                                    //     mainAxisSpacing: 16,
+                                    //     crossAxisSpacing: 16
+                                    //   ),
+                                    //   shrinkWrap: true,
+                                    //   children: [
+                                    //     Image.network('https://picsum.photos/250?image=1'),
+                                    //     Image.network('https://picsum.photos/250?image=2'),
+                                    //     Image.network('https://picsum.photos/250?image=3'),
+                                    //     Image.network('https://picsum.photos/250?image=4'),
+                                    //     Image.network('https://picsum.photos/250?image=1'),
+                                    //     Image.network('https://picsum.photos/250?image=2'),
+                                    //     Image.network('https://picsum.photos/250?image=3'),
+                                    //     Image.network('https://picsum.photos/250?image=4'),
+                                    //   ]
+                                    // )
                             ),
                           SizedBox(height: 5),
                           Divider(),
