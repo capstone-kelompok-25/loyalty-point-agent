@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 final List<String> imgList = [
-  'assets/img/banner.png',
-  'assets/img/banner.png',
+  "assets/img/banner.png",
+  "assets/img/banner.png",
 ];
 
 final List<Widget> imageSliders = imgList
@@ -14,7 +14,7 @@ final List<Widget> imageSliders = imgList
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           child: Stack(
             children: <Widget>[
-              Image.network(item, fit: BoxFit.cover, width: 1000.0,),
+              Image.asset(item, fit: BoxFit.cover, width: 1000.0,),
             ],
           )),
     ))

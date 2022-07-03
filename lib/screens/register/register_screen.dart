@@ -3,7 +3,7 @@ import 'package:capstone/model/register_model.dart';
 import 'package:capstone/model/user_model.dart';
 import 'package:capstone/screens/login/login_screen.dart';
 import 'package:capstone/screens/login/user_view_model.dart';
-import 'package:capstone/screens/pin/pin_screen.dart';
+import 'package:capstone/screens/pin/register_pin_screen.dart';
 import 'package:capstone/screens/register/register_view_model.dart';
 import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
@@ -320,12 +320,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     password = _passwordController.text;
     name = _nameController.text;
     phone = _phoneController.text;
-
-    // SharedPref sharedPref = SharedPref();
-    // String? emails = sharedPref.read("email");
-    // String? passwords = sharedPref.read("password");
-    // String? fullname = sharedPref.read("fullname");
-    // String? noHp = sharedPref.read("noHp");
 
     Navigator.push(
       context,

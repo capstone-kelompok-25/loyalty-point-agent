@@ -6,7 +6,7 @@ import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/screens/qrcode/qrcode_screen.dart';
 import 'package:capstone/screens/transaction/cashout/cash_out_screen.dart';
 import 'package:capstone/screens/transaction/emoney/emoney_screen.dart';
-import 'package:capstone/screens/transaction/pulsa/isi_pulsa_screen.dart';
+import 'package:capstone/screens/transaction/pulsa/pulse_screen.dart';
 import 'package:capstone/screens/widget/banner.dart';
 import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
@@ -93,7 +93,7 @@ class _BodyState extends State<Body> {
               ),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PulsaScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Pulse_Screen()));
                 },
                 child: Card(
                   child: ListTile(

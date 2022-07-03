@@ -1,4 +1,5 @@
 import 'package:capstone/screens/login/login_view_model.dart';
+import 'package:capstone/screens/transaction/emoney/detail_emoney_screen.dart';
 import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,7 +33,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
     "assets/img/ShopeePay.png",
     "assets/img/gopay.png",
     "assets/img/LinkAja.png"
-    "assets/img/dana.png",
+        "assets/img/dana.png",
     "assets/img/ovo.png"
   ];
 
@@ -130,10 +131,24 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
                               ],
                             ),
                           ),
-                           const Spacer(),
+                          const Spacer(),
                           ElevatedButton(
                               style: raisedButtonStyle,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(pageBuilder:
+                                      (context, animation, secondaryAnimation) {
+                                    return DetailEMoneyScreen();
+                                  }, transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    final tween = Tween(begin: 0.0, end: 1.0);
+                                    return FadeTransition(
+                                        opacity: animation.drive(tween),
+                                        child: child);
+                                  }),
+                                );
+                              },
                               child: Text("Next"))
                         ])))));
   }
@@ -146,10 +161,12 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
       'assets/img/ShopeePay.png',
       'assets/img/gopay.png',
       'assets/img/LinkAja.png',
-          'assets/img/dana.png',
+      'assets/img/dana.png',
       'assets/img/ovo.png'
     ];
-    var emoneyChoice = (viewModel.emoney.length > 0) ? emoney[viewModel.emoney.length - 1] : [];
+    var emoneyChoice = (viewModel.emoney.length > 0)
+        ? emoney[viewModel.emoney.length - 1]
+        : [];
     print(emoneyChoice);
     print(emoney.length);
 

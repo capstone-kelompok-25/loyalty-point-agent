@@ -47,7 +47,7 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
         children: [
           Container(
             padding: const EdgeInsets.only(
-              top: defaultPadding,
+              // top: defaultPadding,
               left: defaultPadding,
               right: defaultPadding,
               bottom: 30 + defaultPadding,
