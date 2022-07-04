@@ -40,15 +40,17 @@ class _ConfirmPinScreenCashOutState extends State<ConfirmPinScreenCashOut> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(
               height: 60,
             ),
+            Text("Masukkan PIN", style: TextStyle(fontSize: 16)),
+              SizedBox(height:20),
             PinCodeTextField(
               autofocus: false,
               controller: _pinController,
-              maxLength: 6,
+              maxLength: 4,
               highlight: false,
               hasUnderline: true,
               // hideCharacter: true,

@@ -4,6 +4,8 @@ import 'package:capstone/screens/login/user_view_model.dart';
 import 'package:capstone/screens/pin/edit_pin_screen.dart';
 import 'package:capstone/screens/profile/atur_profile_screen.dart';
 import 'package:capstone/screens/profile/header_profile_screen.dart';
+import 'package:capstone/screens/profile/kebijakan_screen.dart';
+import 'package:capstone/screens/profile/syarat_screen.dart';
 import 'package:capstone/screens/qrcode/qrcode_screen.dart';
 import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/splash_screen.dart';
@@ -103,9 +105,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const EditPINScreen()));
+                  context,
+                  PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                    return const EditPINScreen();
+                  }, transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                    final tween = Tween(begin: 0.0, end: 1.0);
+                    return FadeTransition(
+                        opacity: animation.drive(tween), child: child);
+                  }),
+                );
               },
               child: ListTile(
                 iconColor: Color.fromARGB(255, 75, 75, 75),
@@ -116,23 +126,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 4),
-          const Card(
-            child: ListTile(
-              iconColor: Color.fromARGB(255, 75, 75, 75),
-              textColor: Color.fromARGB(255, 75, 75, 75),
-              title: Text('Syarat & Ketentuan',
-                  style: const TextStyle(fontSize: 16)),
-              leading: Icon(Icons.library_books),
+          Card(
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                    return const SyaratScreen();
+                  }, transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                    final tween = Tween(begin: 0.0, end: 1.0);
+                    return FadeTransition(
+                        opacity: animation.drive(tween), child: child);
+                  }),
+                );
+              },
+              child: ListTile(
+                iconColor: Color.fromARGB(255, 75, 75, 75),
+                textColor: Color.fromARGB(255, 75, 75, 75),
+                title: Text('Syarat & Ketentuan',
+                    style: const TextStyle(fontSize: 16)),
+                leading: Icon(Icons.library_books),
+              ),
             ),
           ),
           const SizedBox(height: 4),
-          const Card(
-            child: ListTile(
-              iconColor: Color.fromARGB(255, 75, 75, 75),
-              textColor: Color.fromARGB(255, 75, 75, 75),
-              title: Text('Kebijakan & Privasi',
-                  style: const TextStyle(fontSize: 16)),
-              leading: Icon(Icons.shield),
+          Card(
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                    return const KebijakanScreen();
+                  }, transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                    final tween = Tween(begin: 0.0, end: 1.0);
+                    return FadeTransition(
+                        opacity: animation.drive(tween), child: child);
+                  }),
+                );
+              },
+              child: ListTile(
+                iconColor: Color.fromARGB(255, 75, 75, 75),
+                textColor: Color.fromARGB(255, 75, 75, 75),
+                title: Text('Kebijakan & Privasi',
+                    style: const TextStyle(fontSize: 16)),
+                leading: Icon(Icons.shield),
+              ),
             ),
           ),
           const SizedBox(

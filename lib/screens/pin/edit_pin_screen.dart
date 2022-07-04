@@ -103,7 +103,7 @@ class _EditPINScreenState extends State<EditPINScreen> {
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(
                         // prefixIcon: Icon(Icons.newpin),
-                        hintText: 'Masukkan 6 digit Kode PIN Saat Ini',
+                        hintText: 'Masukkan 4 digit Kode PIN Saat Ini',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.all(
@@ -119,11 +119,11 @@ class _EditPINScreenState extends State<EditPINScreen> {
                         focusColor: Colors.grey),
                     validator: (value) {
                       if (value != null &&
-                          value.length > 5 &&
-                          value.length < 7) {
+                          value.length > 3 &&
+                          value.length < 5) {
                         return null;
                       } else {
-                        return 'Masukkan 6 digit Kode PIN Saat Ini';
+                        return 'Masukkan 4 digit Kode PIN Saat Ini';
                       }
                     },
                   ),
@@ -137,7 +137,7 @@ class _EditPINScreenState extends State<EditPINScreen> {
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(
                         // prefixIcon: Icon(Icons.newpin),
-                        hintText: 'Masukkan 6 digit Kode PIN Baru',
+                        hintText: 'Masukkan 4 digit Kode PIN Baru',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.all(
@@ -153,11 +153,11 @@ class _EditPINScreenState extends State<EditPINScreen> {
                         focusColor: Colors.grey),
                     validator: (newpin) {
                       if (newpin != null &&
-                          newpin.length > 5 &&
-                          newpin.length < 7) {
+                          newpin.length > 3 &&
+                          newpin.length < 5) {
                         return null;
                       } else {
-                        return 'Masukkan 6 digit Kode PIN';
+                        return 'Masukkan 4 digit Kode PIN';
                       }
                     },
                   ),
@@ -188,8 +188,8 @@ class _EditPINScreenState extends State<EditPINScreen> {
                           focusColor: Colors.grey),
                       validator: (value) {
                         if (value != null &&
-                            value.length > 5 &&
-                            value.length < 7) {
+                            value.length > 3 &&
+                            value.length < 5) {
                           return null;
                         } else {
                           return 'Masukkan 6 digit Kode PIN';

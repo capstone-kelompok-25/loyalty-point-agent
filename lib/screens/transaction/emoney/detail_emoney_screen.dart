@@ -25,6 +25,7 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             // key: formKey,
             child: Container(
+              padding: EdgeInsets.all(8),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -41,7 +41,7 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 5),
+      margin: const EdgeInsets.only(bottom: 8),
       height: widget.size.height * 0.2 - 30,
       child: Stack(
         children: [

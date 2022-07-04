@@ -59,7 +59,7 @@ class _PinScreenState extends State<PinScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             HeaderPinScreen(size: size),
             const SizedBox(
@@ -68,7 +68,7 @@ class _PinScreenState extends State<PinScreen> {
             PinCodeTextField(
               autofocus: false,
               controller: _pinController,
-              maxLength: 6,
+              maxLength: 4,
               highlight: false,
               hasUnderline: true,
               // hideCharacter: true,

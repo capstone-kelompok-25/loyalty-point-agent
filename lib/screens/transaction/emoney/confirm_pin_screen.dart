@@ -39,28 +39,32 @@ class _ConfirmPinScreenEMoneyState extends State<ConfirmPinScreenEMoney> {
         style: TextStyle(fontSize: 17),),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(
-              height: 60,
-            ),
-            PinCodeTextField(
-              autofocus: false,
-              controller: _pinController,
-              maxLength: 6,
-              highlight: false,
-              hasUnderline: true,
-              // hideCharacter: true,
-              hasTextBorderColor: Colors.transparent,
-              pinBoxColor: Colors.transparent,
-              // highlightPinBoxColor: Colors.grey,
-              onDone: (text) => getPIN()
-              // highlightColor: Colors.grey,
-              // defaultBorderColor: Colors.black,
-              // maskCharacter: "*",
-            ),
-          ],
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(
+                height: 60,
+              ),
+              Text("Masukkan PIN", style: TextStyle(fontSize: 16)),
+              SizedBox(height:20),
+              PinCodeTextField(
+                autofocus: false,
+                controller: _pinController,
+                maxLength: 4,
+                highlight: false,
+                hasUnderline: true,
+                // hideCharacter: true,
+                hasTextBorderColor: Colors.transparent,
+                pinBoxColor: Colors.transparent,
+                // highlightPinBoxColor: Colors.grey,
+                onDone: (text) => getPIN()
+                // highlightColor: Colors.grey,
+                // defaultBorderColor: Colors.black,
+                // maskCharacter: "*",
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -68,7 +72,7 @@ class _ConfirmPinScreenEMoneyState extends State<ConfirmPinScreenEMoney> {
   getPIN() async {
     pin = _pinController.text;
 
-    if (pin == true) {
+    if (pin != null) {
       Navigator.push(
         context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {

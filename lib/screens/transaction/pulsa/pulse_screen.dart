@@ -55,6 +55,7 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
       body: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Container(
+          padding: EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

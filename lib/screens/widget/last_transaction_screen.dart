@@ -14,23 +14,19 @@ class LastTransactionScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Spacer(
-              flex: 10,
-            ),
-            const Icon(Icons.check_circle, size: 20, color: Colors.green),
-            // SvgPicture.asset("assets/icons/order_accepted_icon.svg"),
-            const Spacer(
-              flex: 8,
+            SizedBox(
+              height: 40
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
                 "Transaksi Sedang di Proses",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+               style: TextStyle(color: Colors.black, fontSize: 16)),
               ),
+              SizedBox(
+              height: 10
             ),
-            const Spacer(),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
@@ -38,18 +34,14 @@ class LastTransactionScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff7C7C7C),
+                    color: Colors.black,
                     fontWeight: FontWeight.w600),
               ),
             ),
-
+            SizedBox(height: 20,),
+            Image.asset("assets/img/State7.png"),
             const Spacer(
               flex: 8,
-            ),
-            Center(
-                child: Image.asset("assets/img/State7.png")),
-            const Spacer(
-              flex: 2,
             ),
           ]
     ),
