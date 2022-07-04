@@ -1,6 +1,3 @@
-import 'package:capstone/model/user_model.dart';
-import 'package:capstone/screens/login/login_screen.dart';
-import 'package:capstone/screens/login/user_view_model.dart';
 import 'package:capstone/screens/pin/edit_pin_screen.dart';
 import 'package:capstone/screens/profile/atur_profile_screen.dart';
 import 'package:capstone/screens/profile/header_profile_screen.dart';
@@ -11,8 +8,6 @@ import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/splash_screen.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   // final int id;
@@ -36,24 +31,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserViewModel modelView = Provider.of<UserViewModel>(context);
-    final userItem = UserModel(name: '', email: '', password: '', phone: '');
-    final user = modelView.profile.isNotEmpty
-        ? modelView.profile[modelView.profile.length - 1]
-        : userItem;
 
     // final user = UserPreferences.myUser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: ListView(children: [
         HeaderProfileScreen(size: size),
-        buildProfile(user, context),
+        buildProfile(context),
         const SizedBox(height: 24),
       ]),
     );
   }
 
-  Widget buildProfile(UserModel user, BuildContext context) {
+  Widget buildProfile(BuildContext context) {
     // final user = viewModel.profile;
     return Container(
       padding: const EdgeInsets.all(8),

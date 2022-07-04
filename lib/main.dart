@@ -1,10 +1,8 @@
-import 'package:capstone/model/history_model.dart';
 import 'package:capstone/screens/history/history_view_model.dart';
 import 'package:capstone/screens/register/register_view_model.dart';
 import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/splash_screen.dart';
 import 'package:capstone/screens/login/login_view_model.dart';
-import 'package:capstone/screens/login/user_view_model.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,9 +19,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserViewModel(),
-        ),
         ChangeNotifierProvider(
           create: (context) => LoginViewModel(),
         ),

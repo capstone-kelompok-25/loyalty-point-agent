@@ -1,10 +1,5 @@
-import 'package:capstone/model/login_model.dart';
-import 'package:capstone/model/register_model.dart';
 import 'package:capstone/screens/login/login_screen.dart';
-import 'package:capstone/screens/pin/register_pin_screen.dart';
 import 'package:capstone/screens/register/register_screen.dart';
-import 'package:capstone/screens/login/login_view_model.dart';
-import 'package:capstone/screens/login/user_view_model.dart';
 import 'package:capstone/screens/register/register_view_model.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';

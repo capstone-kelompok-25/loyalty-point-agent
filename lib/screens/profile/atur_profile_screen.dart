@@ -1,5 +1,6 @@
 import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/screens/profile/profile_screen.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +34,27 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
   String email = '';
   String telp = '';
 
+  Future getData() async {
+    await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String fname = await sharedPref.read("fullname");
+    String emails = await sharedPref.read("email");
+    String noPhone = await sharedPref.read("no_hp");
+    setState(() {
+      nama = fname.replaceAll('"', '');
+      email = emails.replaceAll('"', '');
+      telp =  noPhone.replaceAll('"', '');
+    });
+    return "done getting data";
+  }
+
   @override
   void initState() {
     super.initState();
+
+    getData().then((value){
+      print(value);
+    });
 
     _namaController.addListener(() {
       setState(() {
@@ -73,7 +92,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("Atur Profile",
-        style: TextStyle(fontSize: 17, fontFamily: 'Merriweather'),),
+        style: TextStyle(fontSize: 17),),
       ),
       body: Container(
         width: double.maxFinite,
@@ -87,7 +106,8 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
                 SizedBox(height: 20,),
                  const Text('Nama Lengkap'),
               TextFormField(
-                controller: _namaController..text = "${userItem!.fullname}",
+                controller: _namaController..text = nama,
+                initialValue: nama,
                 cursorColor: Colors.black,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
@@ -116,7 +136,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
               ),
                 const Text('Email'),
               TextFormField(
-                controller: _emailController..text = "${userItem.email}",
+                controller: _emailController..text = email,
                 cursorColor: Colors.black,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
@@ -148,7 +168,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
               ),
               const Text('Nomor Handphone'),
               TextFormField(
-                  controller: _telpController..text = "${userItem.noHp}",
+                  controller: _telpController..text = telp,
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(

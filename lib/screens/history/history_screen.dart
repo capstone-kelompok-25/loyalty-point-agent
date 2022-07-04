@@ -17,21 +17,22 @@ class HistoryScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: SingleChildScrollView(
-            child: Column(children: <Widget>[
-      HeaderHistoryTransaction(size: size),
-      HistoryScreenList(viewModel: modelView),
-    ])));
+          child: Column(children: <Widget>[
+              HeaderHistoryTransaction(size: size),
+              HistoryScreenList(),
+            ]),
+        ));
   }
 
-  Widget buildHistoryScreen() {
-    return Consumer<HistoryViewModel>(
-      builder: (context, modelView, child) {
-        if (modelView.history.isNotEmpty) {
-          return HistoryScreenList(viewModel: modelView);
-        } else {
-          return const EmptyTaskScreen();
-        }
-      },
-    );
-  }
+  // Widget buildHistoryScreen() {
+  //   return Consumer<HistoryViewModel>(
+  //     builder: (context, modelView, child) {
+  //       if (modelView.history.isNotEmpty) {
+  //         return HistoryScreenList(viewModel: modelView);
+  //       } else {
+  //         return const EmptyTaskScreen();
+  //       }
+  //     },
+  //   );
+  // }
 }

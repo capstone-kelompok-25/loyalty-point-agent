@@ -1,18 +1,11 @@
 import 'package:capstone/after_splash_screen.dart';
-import 'package:capstone/model/register_model.dart';
-import 'package:capstone/model/user_model.dart';
 import 'package:capstone/screens/login/login_screen.dart';
-import 'package:capstone/screens/login/user_view_model.dart';
 import 'package:capstone/screens/pin/register_pin_screen.dart';
 import 'package:capstone/screens/register/register_view_model.dart';
-import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

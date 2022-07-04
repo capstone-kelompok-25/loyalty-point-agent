@@ -34,7 +34,6 @@ class _DaftarBankState extends State<DaftarBank> {
           style: TextStyle(
             fontSize: 20,
             color: Colors.black,
-            fontWeight: FontWeight.bold,
             
           ),
         ),
