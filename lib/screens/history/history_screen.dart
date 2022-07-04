@@ -16,12 +16,14 @@ class HistoryScreen extends StatelessWidget {
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        body: SingleChildScrollView(
+        body: Container(
           child: Column(children: <Widget>[
-              HeaderHistoryTransaction(size: size),
-              HistoryScreenList(),
-            ]),
-        ));
+                HeaderHistoryTransaction(size: size),
+                SizedBox(height:10),
+                HistoryScreenList(),
+              ]),
+        ),
+        );
   }
 
   // Widget buildHistoryScreen() {

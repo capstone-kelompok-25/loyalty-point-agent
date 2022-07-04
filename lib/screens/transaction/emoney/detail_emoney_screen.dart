@@ -4,13 +4,34 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class DetailEMoneyScreen extends StatefulWidget {
-  const DetailEMoneyScreen({Key? key}) : super(key: key);
+  String emoney;
+  String noTelp;
+  String icons;
+  DetailEMoneyScreen({Key? key, required this.emoney, required this.noTelp, required this.icons}) : super(key: key);
 
   @override
   State<DetailEMoneyScreen> createState() => _DetailEMoneyScreenState();
 }
 
 class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
+
+  String cashouts = '';
+  String poins = '';
+
+  void _updateCashout(String cashout) {
+    setState(() {
+      cashouts = cashout;
+    });
+    print(cashouts);
+  }
+
+  void _updatePoin(String poin) {
+    setState(() {
+      poins = poin;
+    });
+    print(poin);
+  }
+                  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,13 +59,13 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
                     ),
                     ListTile(
                       title: Text('Jack Brown'),
-                      subtitle: Text('Shopeepay - 081288812345'),
-                      leading: Image.asset("assets/img/ShopeePay.png")
+                      subtitle: Text('${widget.emoney} - ${widget.noTelp}'),
+                      leading: Image.asset(widget.icons)
                     ),
                     SizedBox(height: 10),
                     Text("Nominal"),
                     SizedBox(height: 10),
-                    Expanded(child: GridEMoney()),
+                    Expanded(child: GridEMoney(updateCashout: _updateCashout, updatePoin: _updatePoin)),
                     SizedBox(height: 10),
                     Divider(),
                     Container(
@@ -52,14 +73,15 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
                         textColor: Color.fromARGB(255, 75, 75, 75),
                         title: Text('Total Penukaran',
                             style: TextStyle(fontSize: 16)),
-                        subtitle: Text("Rp. 300.000"),
-                        trailing: ElevatedButton(
+                        subtitle: Text("$cashouts", style: TextStyle(color: Colors.black),),  
+                        trailing: (cashouts == '' && poins == '') ? ElevatedButton(onPressed: (){}, child: Text("Next"),) : 
+                        ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   PageRouteBuilder(pageBuilder:
                                       (context, animation, secondaryAnimation) {
-                                    return DetailTransactionEMoneyScreen();
+                                    return DetailTransactionEMoneyScreen(emoney: widget.emoney, noTelp: widget.noTelp, poin: poins,);
                                   }, transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     final tween = Tween(begin: 0.0, end: 1.0);
@@ -77,13 +99,19 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
 }
 
 class GridEMoney extends StatefulWidget {
-  const GridEMoney({Key? key}) : super(key: key);
+  final ValueChanged<String> updateCashout;
+  final ValueChanged<String> updatePoin;
+  GridEMoney({Key? key, required this.updateCashout, required this.updatePoin}) : super(key: key);
 
   @override
   State<GridEMoney> createState() => _GridEMoneyState();
 }
 
 class _GridEMoneyState extends State<GridEMoney> {
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.white,
+    primary: Colors.white
+  );
   List<String> cashout = [
     'Rp. 50.000',
     'Rp. 100.000',
@@ -120,15 +148,19 @@ class _GridEMoneyState extends State<GridEMoney> {
                     childAspectRatio: 2),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Card(
-                      child: ListTile(
+                  return ElevatedButton(
+                    style: raisedButtonStyle,
+                    onPressed: () {
+                      widget.updateCashout(cashout[index]);
+                      widget.updatePoin(poin[index]);
+                      
+                    },
+                    child:  ListTile(
                           title: Text(cashout[index],
                               style: TextStyle(color: Colors.black)),
                           subtitle: Text(poin[index],
                               style: TextStyle(color: Colors.blue))),
-                    ),
+
                   );
                 },
               )

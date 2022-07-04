@@ -1,9 +1,40 @@
 import 'package:capstone/screens/transaction/emoney/confirm_pin_screen.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 
-class DetailTransactionEMoneyScreen extends StatelessWidget {
-  const DetailTransactionEMoneyScreen({Key? key}) : super(key: key);
+class DetailTransactionEMoneyScreen extends StatefulWidget {
+  String emoney;
+  String noTelp;
+  String poin;
+
+  DetailTransactionEMoneyScreen({Key? key, required this.emoney, required this.noTelp, required this.poin }): super(key: key);
+
+  @override
+  State<DetailTransactionEMoneyScreen> createState() => _DetailTransactionEMoneyScreenState();
+}
+
+class _DetailTransactionEMoneyScreenState extends State<DetailTransactionEMoneyScreen> {
+  String poins = "";
+  
+  Future getData() async {
+    await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String poin = await sharedPref.read("poin");
+    setState(() {
+      poins = poin.replaceAll('"', '');
+    });
+    return "done getting data";
+  }
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData().then((value) {
+      print(value);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +73,6 @@ class DetailTransactionEMoneyScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold))),
                   SizedBox(height: 10),
-                  // Center(
-                  //     child: Text('29 MEI 2022 03.00 WIB',
-                  //         style: TextStyle(color: Colors.grey,fontSize: 12))),
                   SizedBox(height: 20),
                   Text('Transaksi Berlangsung',
                         style: TextStyle(color: Colors.blue, fontSize: 16)),
@@ -59,12 +87,12 @@ class DetailTransactionEMoneyScreen extends StatelessWidget {
                           runSpacing: 260,
                           alignment: WrapAlignment.spaceEvenly,
                           runAlignment: WrapAlignment.spaceEvenly,
-                          children: const [
+                          children: [
                           Text('E-Money', 
                               style: TextStyle( 
                                   fontSize: 16)),
                             
-                          Text('ShopeePay',
+                          Text('${widget.emoney}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
@@ -73,11 +101,11 @@ class DetailTransactionEMoneyScreen extends StatelessWidget {
                           runSpacing: 200,
                           alignment: WrapAlignment.spaceEvenly,
                           runAlignment: WrapAlignment.spaceEvenly,
-                          children: const [
+                          children: [
                           Text('Nomor Pengguna', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16)),
-                          Text('081288812345',
+                          Text('${widget.noTelp}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
@@ -97,11 +125,11 @@ class DetailTransactionEMoneyScreen extends StatelessWidget {
                           runSpacing: 240,
                           alignment: WrapAlignment.spaceBetween,
                           runAlignment: WrapAlignment.spaceBetween,
-                          children: const [
+                          children: [
                           Text('POIN Kamu', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text('1.234.000',
+                          Text(poins,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),
@@ -110,11 +138,11 @@ class DetailTransactionEMoneyScreen extends StatelessWidget {
                           runSpacing: 160,
                           alignment: WrapAlignment.spaceBetween,
                           runAlignment: WrapAlignment.spaceBetween,
-                          children: const [
+                          children: [
                           Text('Total Poin yang ditukar', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16)),
-                          Text('300.000',
+                          Text('${widget.poin}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
@@ -123,11 +151,11 @@ class DetailTransactionEMoneyScreen extends StatelessWidget {
                           runSpacing: 250,
                           alignment: WrapAlignment.spaceBetween,
                           runAlignment: WrapAlignment.spaceBetween,
-                          children: const [
+                          children: [
                           Text('Sisa POIN', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text('934.000',
+                          Text('${(int.parse(poins) - int.parse(widget.poin))}',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),

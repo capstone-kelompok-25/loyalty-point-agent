@@ -32,9 +32,7 @@ class HistoryScreenList extends StatelessWidget {
     // final _history = viewModel.history;
     // Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
+    return Container(
               padding: EdgeInsets.all(8),
               child: Column(
           children: [
@@ -80,8 +78,7 @@ class HistoryScreenList extends StatelessWidget {
             ),
           ],
               ),
-            ),
-        ));
+        );
   }
 
   fullname() async {

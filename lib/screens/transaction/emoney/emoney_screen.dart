@@ -28,14 +28,8 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
   );
   final _telpController = TextEditingController();
   String telp = '';
-  List<String> emoney = ['Shopeepay', 'Gopay', 'Link Aja!', 'Dana', 'OVO'];
-  List<String> icon = [
-    "assets/img/ShopeePay.png",
-    "assets/img/gopay.png",
-    "assets/img/LinkAja.png"
-        "assets/img/dana.png",
-    "assets/img/ovo.png"
-  ];
+  String emoney = '';
+  String icon = '';
 
   @override
   void initState() {
@@ -132,6 +126,9 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
                             ),
                           ),
                           const Spacer(),
+                          
+                          (emoney == '' && telp == '') ?
+                          ElevatedButton(style: raisedButtonStyle, onPressed: (){}, child: Text("Next")) :
                           ElevatedButton(
                               style: raisedButtonStyle,
                               onPressed: () {
@@ -139,7 +136,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
                                   context,
                                   PageRouteBuilder(pageBuilder:
                                       (context, animation, secondaryAnimation) {
-                                    return DetailEMoneyScreen();
+                                    return DetailEMoneyScreen(emoney: emoney, noTelp: telp, icons: icon);
                                   }, transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     final tween = Tween(begin: 0.0, end: 1.0);
@@ -154,31 +151,24 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
   }
 
   Widget _buildChips() {
-    List<String> emoney = ['Shopeepay', 'Gopay', 'Link Aja!', 'Dana', 'OVO'];
-    TransactionViewModel viewModel = Provider.of<TransactionViewModel>(context);
+    List<String> emoneyList = ['Shopeepay', 'Gopay', 'Link Aja!', 'Dana', 'OVO'];
     List<Widget> chips = [];
-    List<String> icon = [
+    List<String> iconList = [
       'assets/img/ShopeePay.png',
       'assets/img/gopay.png',
       'assets/img/LinkAja.png',
       'assets/img/dana.png',
       'assets/img/ovo.png'
     ];
-    var emoneyChoice = (viewModel.emoney.length > 0)
-        ? emoney[viewModel.emoney.length - 1]
-        : [];
-    print(emoneyChoice);
-    print(emoney.length);
 
-    for (int i = 0; i < emoney.length; i++) {
-      print(emoney[i]);
+    for (int i = 0; i < emoneyList.length; i++) {
       ChoiceChip choiceChip = ChoiceChip(
-        selected: emoneyChoice == emoney[i],
+        selected: emoney == emoneyList[i],
         label:
-            Text(emoney[i].toString(), style: TextStyle(color: Colors.black)),
+            Text(emoneyList[i].toString(), style: TextStyle(color: Colors.black)),
         avatar: CircleAvatar(
           backgroundColor: Colors.white,
-          child: Image.asset(icon[i]),
+          child: Image.asset(iconList[i]),
         ),
         elevation: 10,
         pressElevation: 5,
@@ -188,12 +178,13 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
         onSelected: (bool selected) {
           setState(() {
             if (selected) {
-              viewModel.emoney.add(emoney[i]);
+              // viewModel.emoney.add(emoney[i]);
+              emoney = emoneyList[i];
+              icon = iconList[i];
               _selectedIndex = i;
             }
           });
-
-          print(viewModel.emoney[viewModel.emoney.length - 1]);
+          print(emoney);
         },
       );
 

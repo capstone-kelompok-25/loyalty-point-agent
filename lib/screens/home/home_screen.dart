@@ -1,8 +1,6 @@
 import 'package:capstone/screens/history/empty_task_screen.dart';
 import 'package:capstone/screens/home/body_home.dart';
 import 'package:capstone/screens/login/login_view_model.dart';
-import 'package:capstone/screens/transaction/transaction_screen.dart';
-import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/screens/widget/banner.dart';
 import 'package:capstone/screens/widget/bottom_navigation_screen.dart';
 import 'package:flutter/material.dart';
