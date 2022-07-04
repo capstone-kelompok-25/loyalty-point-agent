@@ -17,7 +17,7 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
         appBar: AppBar(
           title: Text(
             'E-Money',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontSize: 17),
           ),
           centerTitle: true,
         ),

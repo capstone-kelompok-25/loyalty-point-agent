@@ -5,9 +5,8 @@ import 'package:capstone/screens/widget/preferences.dart';
 import 'package:flutter/material.dart';
 
 class HistoryScreenList extends StatelessWidget {
-  final HistoryViewModel viewModel;
 
-   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+  final ButtonStyle pendingButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: Colors.red,
     minimumSize: const Size(50, 30),
@@ -17,53 +16,75 @@ class HistoryScreenList extends StatelessWidget {
     ),
   );
 
-   HistoryScreenList({Key? key, required this.viewModel})
-      : super(key: key);
+  final ButtonStyle successButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.white,
+    primary: Colors.green,
+    minimumSize: const Size(50, 30),
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(5)),
+    ),
+  );
+
+  HistoryScreenList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final _history = viewModel.history;
-    Size size = MediaQuery.of(context).size;
-    
+    // final _history = viewModel.history;
+    // Size size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: ListView.separated(
-              itemCount: viewModel.history.length,
-              itemBuilder: (context, index) {
-                final history = viewModel.history[index];
-                return
-            GestureDetector(
-              key: Key(history.id.toString()),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DetailScreen()),
-                );
-              },
-              child: Card(
+        body: SingleChildScrollView(
+          child: Container(
+              padding: EdgeInsets.all(8),
+              child: Column(
+          children: [
+            Card(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const DetailScreen()),
+                  );
+                },
                 child: ListTile(
-                  title: Text(_history[index].keterangan!, style: TextStyle(fontSize: 16)),
-                  subtitle: Text(_history[index].tanggal!, style: TextStyle(fontSize: 15)),
+                  title: Text("Reedem Cash Out", style: TextStyle(fontSize: 16)),
+                  subtitle: Text("29 Mei 2022", style: TextStyle(fontSize: 15)),
                   leading: Icon(Icons.payment),
                   trailing: ElevatedButton(
-                    style: raisedButtonStyle,
-                    onPressed: (){},
-                    child: Text(_history[index].status!),
+                    style: pendingButtonStyle,
+                    onPressed: () {},
+                    child: Text("Pending"),
                   ),
-                  // Text('Sukses',
-                  //     style: TextStyle(fontSize: 10)),
                 ),
               ),
-            );
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: 1,
-              );
-            },
             ),
-    );
+            Card(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const DetailScreen()),
+                  );
+                },
+                child: ListTile(
+                  title: Text("Reedem Pulsa", style: TextStyle(fontSize: 16)),
+                  subtitle: Text("29 Mei 2022", style: TextStyle(fontSize: 15)),
+                  leading: Icon(Icons.payment),
+                  trailing: ElevatedButton(
+                    style: successButtonStyle,
+                    onPressed: () {},
+                    child: Text("Success"),
+                  ),
+                ),
+              ),
+            ),
+          ],
+              ),
+            ),
+        ));
   }
 
-  fullname()async{
+  fullname() async {
     SharedPref sharedPref = SharedPref();
     String? token = await sharedPref.read("token");
     String? fullname = await sharedPref.read("fullname");
@@ -71,5 +92,4 @@ class HistoryScreenList extends StatelessWidget {
     String? poin = await sharedPref.read("poin");
     return fullname;
   }
-  
 }

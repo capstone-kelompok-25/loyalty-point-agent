@@ -1,4 +1,5 @@
 import 'package:capstone/screens/transaction/pulsa/daftar_provider_widget.dart';
+import 'package:capstone/screens/transaction/pulsa/detail_paket_data.dart';
 import 'package:capstone/screens/transaction/pulsa/detail_transaction_pulse.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
         title: Text('Isi Pulsa',
             style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.bold,
+              fontSize: 17,
             )),
         centerTitle: true,
       ),
@@ -155,22 +156,22 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
                   title:
                       Text('Total Penukaran', style: TextStyle(fontSize: 16)),
                   subtitle: Text("Rp. 300.000"),
-                  trailing:
-                      ElevatedButton(onPressed: () {
+                  trailing: ElevatedButton(
+                      onPressed: () {
                         Navigator.push(
-                                  context,
-                                  PageRouteBuilder(pageBuilder:
-                                      (context, animation, secondaryAnimation) {
-                                    return DetailTransactionPulseScreen();
-                                  }, transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    final tween = Tween(begin: 0.0, end: 1.0);
-                                    return FadeTransition(
-                                        opacity: animation.drive(tween),
-                                        child: child);
-                                  }),
-                                );
-                      }, child: Text("Next")),
+                          context,
+                          PageRouteBuilder(pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return DetailTransactionPulseScreen();
+                          }, transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            final tween = Tween(begin: 0.0, end: 1.0);
+                            return FadeTransition(
+                                opacity: animation.drive(tween), child: child);
+                          }),
+                        );
+                      },
+                      child: Text("Next")),
                 ),
               ),
             ],
@@ -258,41 +259,79 @@ class _PaketData_ScreenState extends State<PaketData_Screen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: new Container(
-        child: new Center(
-          child: Column(
-            children: <Widget>[
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {},
-                      child: Card(
-                        child: Column(children: [
-                          TextButton(
-                            child: Text('Internet',
-                                style: TextStyle(color: Colors.black)),
-                            onPressed: () {},
-                          ),
-                          TextButton(
-                              child: Text('Lihat Detail',
-                                  style: TextStyle(color: Colors.blue)),
-                              onPressed: () {}),
-                          Text(
-                            paketData[index],
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Text(
-                            poinPaketData[index],
-                            style: TextStyle(color: Colors.blue),
-                          )
-                        ]),
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: 2,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    child: Text('Internet',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 16)),
+                                    onPressed: () {},
+                                  ),
+                                  TextButton(
+                                      child: Text('Lihat Detail',
+                                          style: TextStyle(color: Colors.blue)),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(pageBuilder:
+                                              (context, animation,
+                                                  secondaryAnimation) {
+                                            return const DetailPaketData();
+                                          }, transitionsBuilder: (context,
+                                              animation,
+                                              secondaryAnimation,
+                                              child) {
+                                            final tween =
+                                                Tween(begin: 0.0, end: 1.0);
+                                            return FadeTransition(
+                                                opacity: animation.drive(tween),
+                                                child: child);
+                                          }),
+                                        );
+                                      }),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  paketData[index],
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  poinPaketData[index],
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              )
+                            ]),
                       ),
-                    );
-                  })
-            ],
-          ),
+                    ),
+                  );
+                })
+          ],
         ),
       ),
     );

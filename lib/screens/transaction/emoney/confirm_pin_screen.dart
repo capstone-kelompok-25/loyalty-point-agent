@@ -72,7 +72,7 @@ class _ConfirmPinScreenEMoneyState extends State<ConfirmPinScreenEMoney> {
   getPIN() async {
     pin = _pinController.text;
 
-    if (pin != null) {
+    if (pin != false) {
       Navigator.push(
         context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {

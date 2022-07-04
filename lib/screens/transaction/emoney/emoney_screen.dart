@@ -60,7 +60,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
           title: Text(
             'E-Money',
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                color: Colors.white, fontSize: 17),
           ),
           centerTitle: true,
         ),

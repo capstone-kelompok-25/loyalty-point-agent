@@ -1,3 +1,4 @@
+import 'package:capstone/screens/transaction/pulsa/pulse_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -20,7 +21,18 @@ class _DaftarProviderState extends State<DaftarProvider> {
         centerTitle: true,
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.push(
+                      context,
+                      PageRouteBuilder(pageBuilder:
+                          (context, animation, secondaryAnimation) {
+                        return const Pulse_Screen();
+                      }, transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        final tween = Tween(begin: 0.0, end: 1.0);
+                        return FadeTransition(
+                            opacity: animation.drive(tween), child: child);
+                      }),
+                    );
           },
           child: const Icon(
             Icons.close,
@@ -32,7 +44,6 @@ class _DaftarProviderState extends State<DaftarProvider> {
           style: TextStyle(
             fontSize: 20,
             color: Colors.black,
-            fontWeight: FontWeight.bold,
             
           ),
         ),

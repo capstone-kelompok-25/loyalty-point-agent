@@ -57,7 +57,7 @@ class _CashOutScreenState extends State<CashOutScreen> {
         appBar: AppBar(
           title: Text(
             'Cash Out',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontSize: 17),
           ),
           centerTitle: true,
         ),

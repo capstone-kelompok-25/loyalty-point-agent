@@ -50,7 +50,7 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
               // top: defaultPadding,
               left: defaultPadding,
               right: defaultPadding,
-              bottom: 30 + defaultPadding,
+              bottom: defaultPadding,
             ),
             height: widget.size.height * 0.2 - 27,
             decoration: const BoxDecoration(
@@ -58,6 +58,7 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
             ),
             child: Row(
               children: <Widget>[
+                SizedBox(height:10),
                 Text(
                   "Halo $fullname, Selamat Datang",
                   // style: Theme.of(context).textTheme.headline5?.copyWith(
@@ -73,6 +74,7 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
             padding: const EdgeInsets.only(top: 50, left: 20),
             child: Row(
               children: <Widget> [
+                SizedBox(height:5),
                 Text(
                   noHp,
                   style: TextStyle(color: Colors.black),
@@ -84,30 +86,5 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
       ),
     );
   }
-
-  // Widget fname() {
-    // Future fullname = getData("fullname");
-    // return Text(
-    //               'Halo $fullname, Selamat Datang',
-    //               // style: Theme.of(context).textTheme.headline5?.copyWith(
-    //               style: TextStyle(
-    //                   fontSize: 18,
-    //                   color: Colors.black,
-    //                   fontWeight: FontWeight.bold),
-    //             );
-    // SharedPref sharedPref = SharedPref();
-    // String? fullname = await sharedPref.read("fullname");
-    // Future<String?> fullname = getData("fullname");
-    // print("fullname: $fullname");
-    // return fullname;
-  // }
-
-  // noHp() {
-    // SharedPref sharedPref = SharedPref();
-    // Future<String?> noHp = getData("no_hp");
-    // print("no hp: $noHp");
-    // return noHp;
-  // }
-
   
 }

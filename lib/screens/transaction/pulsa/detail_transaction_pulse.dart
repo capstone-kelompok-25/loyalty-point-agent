@@ -30,10 +30,11 @@ class DetailTransactionPulseScreen extends StatelessWidget {
               const EdgeInsets.only(bottom: 80, top: 20, left: 20, right: 20),
           child: Column(
             children: [
-              Card(
+             Card(
                 child:
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding:
+              const EdgeInsets.all(8),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   SizedBox(height: 20),
                   Center(
@@ -49,15 +50,10 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.blue, fontSize: 16)),
                   SizedBox(height: 20),
                   Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Wrap(
-                          spacing: 260,
-                          runSpacing: 260,
-                          alignment: WrapAlignment.spaceEvenly,
-                          runAlignment: WrapAlignment.spaceEvenly,
+                          spacing: 200,
+                          runSpacing: 200,
                           children: const [
                           Text('Paket Data', 
                               style: TextStyle( 
@@ -70,8 +66,6 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                         Wrap(
                           spacing: 200,
                           runSpacing: 200,
-                          alignment: WrapAlignment.spaceEvenly,
-                          runAlignment: WrapAlignment.spaceEvenly,
                           children: const [
                           Text('Nomor Ponsel', textAlign: TextAlign.justify,
                               style: TextStyle( 
@@ -94,8 +88,6 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                         Wrap(
                           spacing: 240,
                           runSpacing: 240,
-                          alignment: WrapAlignment.spaceBetween,
-                          runAlignment: WrapAlignment.spaceBetween,
                           children: const [
                           Text('POIN Kamu', textAlign: TextAlign.justify,
                               style: TextStyle( 
@@ -107,8 +99,6 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                         Wrap(
                           spacing: 160,
                           runSpacing: 160,
-                          alignment: WrapAlignment.spaceBetween,
-                          runAlignment: WrapAlignment.spaceBetween,
                           children: const [
                           Text('Total Poin yang ditukar', textAlign: TextAlign.justify,
                               style: TextStyle( 
@@ -120,13 +110,11 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                         Wrap(
                           spacing: 250,
                           runSpacing: 250,
-                          alignment: WrapAlignment.spaceBetween,
-                          runAlignment: WrapAlignment.spaceBetween,
                           children: const [
                           Text('Sisa POIN', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text('1184.000',
+                          Text('1.184.000',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),
