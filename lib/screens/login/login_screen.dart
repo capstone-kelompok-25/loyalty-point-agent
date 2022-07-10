@@ -150,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const InputDecoration(
                     // prefixIcon: Icon(Icons.email),
                     // hintText: 'Email Address',
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(
@@ -178,11 +179,13 @@ class _LoginScreenState extends State<LoginScreen> {
               TextFormField(
                   controller: _passwordController,
                   obscureText: true,
+                  // maxLines: maxLines,
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
                       // prefixIcon: Icon(Icons.lock),
                       // hintText: 'Password',
+                      contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
                         borderRadius: BorderRadius.all(

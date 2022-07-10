@@ -17,7 +17,7 @@ class HeaderPinScreen extends StatelessWidget {
               top: defaultPadding,
               left: defaultPadding,
               right: defaultPadding,
-              bottom: 30 + defaultPadding,
+              bottom:  defaultPadding,
             ),
             height: size.height * 0.2 - 27,
             decoration: const BoxDecoration(

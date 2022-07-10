@@ -41,13 +41,13 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 5),
       height: widget.size.height * 0.2 - 30,
       child: Stack(
         children: [
           Container(
             padding: const EdgeInsets.only(
-              // top: defaultPadding,
+              top: defaultPadding,
               left: defaultPadding,
               right: defaultPadding,
               bottom: defaultPadding,
@@ -58,7 +58,6 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
             ),
             child: Row(
               children: <Widget>[
-                SizedBox(height:10),
                 Text(
                   "Halo $fullname, Selamat Datang",
                   // style: Theme.of(context).textTheme.headline5?.copyWith(
@@ -66,15 +65,16 @@ class _HeaderHomeScreenState extends State<HeaderHomeScreen> {
                       fontSize: 18,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
-                )
+                ), 
+                SizedBox(height: 10),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 50, left: 20),
+            padding: const EdgeInsets.only(top: 70, left: 20),
             child: Row(
               children: <Widget> [
-                SizedBox(height:5),
+                SizedBox(height:15),
                 Text(
                   noHp,
                   style: TextStyle(color: Colors.black),

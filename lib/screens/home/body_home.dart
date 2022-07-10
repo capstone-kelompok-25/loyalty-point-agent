@@ -48,10 +48,8 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     
-    return SingleChildScrollView(
-        child: Container(
-          color: backgroundColor,
-          child: Column(
+    return Scaffold(
+          body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               HeaderHomeScreen(size: size),
@@ -73,6 +71,7 @@ class _BodyState extends State<Body> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const EMoneyScreen()));
                 },
                 child: Card(
+                  margin: EdgeInsets.only(left: 8, right:8, bottom: 5),
                   shadowColor: Colors.black,
                   child: ListTile(
                     leading: Icon(Icons.payment, color: Color.fromARGB(255, 75, 75, 75),),
@@ -82,9 +81,10 @@ class _BodyState extends State<Body> {
               ),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CashOutScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CashOutScreen(choiceBank: 'bni',)));
                 },
                 child: Card(
+                  margin: EdgeInsets.only(left: 8, right:8, bottom: 5),
                   child: ListTile(
                     leading: Icon(Icons.wallet, color: Color.fromARGB(255, 75, 75, 75)),
                     title: Text('Redeem for Cash out', style: TextStyle(fontSize: 16, color: textColor)),
@@ -93,9 +93,10 @@ class _BodyState extends State<Body> {
               ),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Pulse_Screen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Pulse_Screen(choiceProvider: 'telkomsel',)));
                 },
                 child: Card(
+                  margin: EdgeInsets.only(left: 8, right:8, bottom: 5),
                   child: ListTile(
                     leading: Icon(Icons.phone_android, color: Color.fromARGB(255, 75, 75, 75)),
                     title: Text('Redeem for Pulsa/Paket Data', style: TextStyle(fontSize: 16, color: textColor)),
@@ -104,7 +105,6 @@ class _BodyState extends State<Body> {
               ),
             ],
           ),
-        ),
       );
   }
   

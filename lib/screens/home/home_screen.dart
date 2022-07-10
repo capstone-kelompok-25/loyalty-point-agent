@@ -3,6 +3,7 @@ import 'package:capstone/screens/home/body_home.dart';
 import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/screens/widget/banner.dart';
 import 'package:capstone/screens/widget/bottom_navigation_screen.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

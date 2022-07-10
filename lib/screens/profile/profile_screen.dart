@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: secondaryColor,
-    minimumSize: const Size(250, 45),
+    minimumSize: const Size(350, 45),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -35,10 +35,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // final user = UserPreferences.myUser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: ListView(children: [
+      body: Column(
+        children: <Widget>[
         HeaderProfileScreen(size: size),
         buildProfile(context),
-        const SizedBox(height: 24),
       ]),
     );
   }
@@ -168,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(
-            height: 40,
+            height: 140,
           ),
           ElevatedButton(
               style: raisedButtonStyle,

@@ -12,11 +12,6 @@ class LoginViewModel with ChangeNotifier{
 
   Result? get login => _login;
 
-
-  final List<Result> _profile = [];
-
-  List<Result> get profile => _profile;
-
   ViewState _state = ViewState.none;
   ViewState get state => _state;
 
@@ -50,20 +45,4 @@ class LoginViewModel with ChangeNotifier{
     String? email = await sharedPref.read("email");
     return email;
   }
-
-  // postUser(LoginModel loginModel) async {
-  //   await LoginAPI.postUsers(loginModel);
-  //   // _register.add(userModel);
-  //   notifyListeners();
-  // }
-
-  // void saveUserinStrorage(LoginModel loginModel) {
-  //   _profile.add(loginModel);
-  //   notifyListeners();
-  // }
-
-  // void logout() {
-  //   _profile.clear();
-  //   notifyListeners();
-  // }
 }

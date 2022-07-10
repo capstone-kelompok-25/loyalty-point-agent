@@ -51,8 +51,7 @@ class _FAQScreenState extends State<FAQScreen> {
           },
           backgroundColor: secondaryColor,
           child: const Icon(Icons.email)),
-      body: SingleChildScrollView(
-          child: Container(
+      body:  Container(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -110,18 +109,8 @@ class _FAQScreenState extends State<FAQScreen> {
                   ),
                 ]),
               ),
-            ]),
-      )),
+            ])
+      )
     );
   }
-
-  // fullname() async {
-  //   SharedPref sharedPref = SharedPref();
-  //   String? fullname = await sharedPref.read("fullname");
-  //   return Text(
-  //     "Hai $fullname, cari solusi untukmu disini",
-  //     textAlign: TextAlign.left,
-  //     style: TextStyle(fontSize: 16),
-  //   );
-  // }
 }

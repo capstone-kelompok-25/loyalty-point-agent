@@ -18,21 +18,20 @@ class HeaderProfileScreen extends StatelessWidget {
               top: defaultPadding,
               left: defaultPadding,
               right: defaultPadding,
-              bottom: 30 + defaultPadding,
+              bottom: defaultPadding,
             ),
             height: size.height * 0.2 - 27,
             decoration: const BoxDecoration(
               color: primaryColor,
             ),
             child: Center(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'Profile',
-                    style: Theme.of(context).textTheme.headline5?.copyWith(
-                        fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              child: Text(
+                'Profile',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline5?.copyWith(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
