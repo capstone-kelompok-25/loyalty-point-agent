@@ -137,13 +137,7 @@ class _GridEMoneyState extends State<GridEMoney> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-      child: Container(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              GridView.builder(
+    return GridView.builder(
                 itemCount: 8,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -166,11 +160,6 @@ class _GridEMoneyState extends State<GridEMoney> {
 
                   );
                 },
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

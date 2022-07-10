@@ -88,12 +88,14 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
         ),
         body: Container(
             padding: const EdgeInsets.all(8),
-            child: Center(
                 child: Form(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     // key: formKey,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        runAlignment: WrapAlignment.spaceBetween,
+                        spacing: 10,
+                        runSpacing: 10,
                         children: <Widget>[
                           SizedBox(
                             height: 10,
@@ -172,7 +174,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
                             },
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 5,
                           ),
                           Container(
                             child: ListTile(
@@ -191,7 +193,9 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
                               ],
                             ),
                           ),
-                          const Spacer(),
+                          SizedBox(
+                            height: 140,
+                          ),
                           (emoney == '' && telp == '')
                               ? ElevatedButton(
                                   style: raisedButtonStyle,
@@ -222,7 +226,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
                                     );
                                   },
                                   child: Text("Next"))
-                        ])))));
+                        ]))));
   }
 
   Widget _buildChips() {
@@ -264,7 +268,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
       );
 
       chips.add(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: choiceChip));
     }
     return Wrap(

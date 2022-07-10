@@ -280,13 +280,7 @@ class _Pulsa_ScreenState extends State<Pulsa_Screen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-      child: Container(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              GridView.builder(
+    return GridView.builder(
                 itemCount: 8,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -308,11 +302,6 @@ class _Pulsa_ScreenState extends State<Pulsa_Screen> {
                             style: TextStyle(color: Colors.blue))),
                   );
                 },
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
@@ -335,12 +324,7 @@ class _PaketData_ScreenState extends State<PaketData_Screen> {
   List<String> poinPaketData = ['15000', '15000'];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            ListView.builder(
+    return ListView.builder(
                 shrinkWrap: true,
                 itemCount: 2,
                 itemBuilder: (context, index) {
@@ -408,10 +392,7 @@ class _PaketData_ScreenState extends State<PaketData_Screen> {
                           ]),
                     ),
                   );
-                })
-          ],
-        ),
-      ),
+                }
     );
   }
 }

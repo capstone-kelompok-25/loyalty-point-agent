@@ -281,16 +281,7 @@ class _GridCashOutState extends State<GridCashOut> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      controller: ScrollController(),
-      scrollDirection: Axis.vertical,
-      physics: ScrollPhysics(),
-      child: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            verticalDirection: VerticalDirection.down,
-            children: <Widget>[
-              GridView.builder(
+    return GridView.builder(
                 itemCount: 8,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -312,11 +303,6 @@ class _GridCashOutState extends State<GridCashOut> {
                               style: TextStyle(color: Colors.blue))),
                   );
                 },
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
