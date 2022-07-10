@@ -99,7 +99,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
                             height: 10,
                           ),
                           const Text(
-                            'Nama',
+                            'Username E-wallet',
                             style: TextStyle(
                                 color: Color.fromARGB(255, 75, 75, 75)),
                           ),
@@ -242,14 +242,14 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
         label: Text(emoneyList[i].toString(),
             style: TextStyle(color: Colors.black)),
         avatar: CircleAvatar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           child: Image.asset(iconList[i]),
         ),
         // elevation: 10,
         // pressElevation: 10,
         backgroundColor: Colors.transparent,
         selectedColor: Colors.blue,
-        // side: BorderSide(color: Colors.grey),
+        side: BorderSide(color: Colors.grey, style:BorderStyle.solid),
         onSelected: (bool selected) {
           setState(() {
             if (selected) {
@@ -264,7 +264,7 @@ class _EMoneyScreenState extends State<EMoneyScreen> {
       );
 
       chips.add(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: choiceChip));
     }
     return Wrap(

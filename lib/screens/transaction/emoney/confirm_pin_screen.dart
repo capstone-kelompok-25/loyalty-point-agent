@@ -106,8 +106,8 @@ class _ConfirmPinScreenEMoneyState extends State<ConfirmPinScreenEMoney> {
   getPIN(TransactionViewModel viewModel) async {
 
     pin = _pinController.text;
-    if (pin != false) {
-      final result = await viewModel.postEMoney(id, widget.choiceProvider, widget.nomor, widget.nama, widget.amount, widget.amount, token);
+    if (pin != '') {
+      final result = await viewModel.postEMoney(id, widget.choiceProvider, widget.nomor, widget.nama, widget.amount, widget.amount, token, pin);
       
       print('transaksi code : $result');
 

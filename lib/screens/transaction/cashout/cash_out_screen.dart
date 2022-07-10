@@ -288,6 +288,7 @@ class _GridCashOutState extends State<GridCashOut> {
       child: Center(
         child: SingleChildScrollView(
           child: Column(
+            verticalDirection: VerticalDirection.down,
             children: <Widget>[
               GridView.builder(
                 itemCount: 8,

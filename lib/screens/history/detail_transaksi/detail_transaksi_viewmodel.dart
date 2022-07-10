@@ -21,10 +21,10 @@ class DetailHistoryViewModel with ChangeNotifier{
 
     try {
       final dh = await DetailHistoryAPI.detailHistory(idTransaction, token);
-      _detailHistory = dh!;
+      _detailHistory = dh;
       changeState(ViewState.none);
       notifyListeners();
-      // return h;
+      return dh;
     } catch (e) {
       changeState(ViewState.error);
       notifyListeners();

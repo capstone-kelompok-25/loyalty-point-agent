@@ -23,19 +23,19 @@ class _ConfirmPinScreenPulseState extends State<ConfirmPinScreenPulse> {
   final _pinController = TextEditingController();
   String pin = '';
   String id = '';
-  String poinAcc = "0";
+  // String poinAcc = "0";
   String token = '';
 
   Future getData() async {
     // await Future.delayed(Duration(seconds: 2));
     SharedPref sharedPref = SharedPref();
     String idUser = await sharedPref.read("id");
-    String poin = await sharedPref.read("poin");
+    // String poin = await sharedPref.read("poin");
     String tokens = await sharedPref.read("token");
 
     setState(() {
       id = idUser.replaceAll('"', '');
-      poinAcc = poin.replaceAll('"', '');
+      // poinAcc = poin.replaceAll('"', '');
       token = tokens.replaceAll('"', '');
     });
     return "done getting data";
@@ -105,9 +105,9 @@ class _ConfirmPinScreenPulseState extends State<ConfirmPinScreenPulse> {
   getPIN(TransactionViewModel viewModel) async {
     pin = _pinController.text;
 
-    if (pin != false) {
+    if (pin != '') {
 
-      final result = await viewModel.postPulsa(id, widget.choiceProvider, widget.nomor, widget.amount, poinAcc, widget.amount, token);
+      final result = await viewModel.postPulsa(id, widget.choiceProvider, widget.nomor, widget.amount, widget.amount, token, pin);
 
       if(result == "200") {
         Navigator.push(

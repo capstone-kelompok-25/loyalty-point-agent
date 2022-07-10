@@ -31,12 +31,12 @@ class TransactionViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<String> postEMoney(String customerId, String bankProvider, String nomor, String anRekening, String amount, String poinRedeem, String token) async {
+  Future<String> postEMoney(String customerId, String bankProvider, String nomor, String anRekening, String amount, String poinRedeem, String token, String pin) async {
     changeState(ViewState.loading);
 
     try {
       print("testpostredeememoney");
-      final e = await TransactionAPI.redeemEMoney(customerId, bankProvider, nomor, anRekening, amount, poinRedeem, token);
+      final e = await TransactionAPI.redeemEMoney(customerId, bankProvider, nomor, anRekening, amount, poinRedeem, token, pin);
       // _transaction = e;
       changeState(ViewState.none);
       notifyListeners();
@@ -49,12 +49,12 @@ class TransactionViewModel with ChangeNotifier{
     }    
   }
 
-  Future<String> postPulsa(String customerId, String bankProvider, String nomor, String amount, String poinAccount, String poinRedeem, String token) async {
+  Future<String> postPulsa(String customerId, String bankProvider, String nomor, String amount, String poinRedeem, String token, String pin) async {
     changeState(ViewState.loading);
 
     try {
       print("testpostredeempulsa");
-      final t = await TransactionAPI.redeemPulsa(customerId, bankProvider, nomor, amount, poinAccount, poinRedeem, token);
+      final t = await TransactionAPI.redeemPulsa(customerId, bankProvider, nomor, amount, poinRedeem, token, pin);
       // _transaction = t;
       changeState(ViewState.none);
       notifyListeners();
@@ -67,12 +67,12 @@ class TransactionViewModel with ChangeNotifier{
     }    
   }
 
-  Future<String> postPaketData(String customerId, String bankProvider, String nomor, String poinAccount, String poinRedeem, String amount, String token) async {
+  Future<String> postPaketData(String customerId, String bankProvider, String nomor, String poinRedeem, String amount, String token, String pin) async {
     changeState(ViewState.loading);
 
     try {
       print("testpostredeempaketdata");
-      final t = await TransactionAPI.redeemPaketData(customerId, bankProvider, nomor, poinAccount, poinRedeem,  amount, token);
+      final t = await TransactionAPI.redeemPaketData(customerId, bankProvider, nomor, poinRedeem,  amount, token, pin);
       // _transaction = t;
       changeState(ViewState.none);
       notifyListeners();

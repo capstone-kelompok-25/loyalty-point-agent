@@ -1,3 +1,4 @@
+import 'package:capstone/model/detail_history_model.dart';
 import 'package:capstone/screens/history/detail_transaksi/detail_transaksi_viewmodel.dart';
 import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
@@ -7,41 +8,39 @@ import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   String idTransaction;
-  DetailScreen({Key? key, required this.idTransaction}) : super(key: key);
+  String token;
+  DetailScreen({Key? key, required this.idTransaction, required this.token}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  String token = '';
 
-  Future getData() async {
-    // await Future.delayed(Duration(seconds: 2));
-    SharedPref sharedPref = SharedPref();
-    String tokens = await sharedPref.read("token");
-
-    setState(() {
-      token = tokens.replaceAll('"', '');
-    });
-
-    return "done getting history";
-  }
+    String transactionId = '';
+    String transactionType = '';
+    String createdat = '2022-07-02T05:37:55.315318Z';
+    String bankProvider = '';
+    String nomor = '';
+    String amount = '';
+    String poinAccount = '';
+    String poinRedeem = '';
+    String description = '';
+    String statusTransaction = '';
 
   @override
-  void initState() {
-    // TODO: implement initState
-    getData().then((value){
-      print(value);
-    });
-    super.initState();
-  }
-
+    void initState() {
+      // TODO: implement initState
+      Future.delayed(Duration(seconds: 2));
+      super.initState();
+    }
+  
   @override
   Widget build(BuildContext context) {
-    DetailHistoryViewModel modelView =
-        Provider.of<DetailHistoryViewModel>(context);
-    String date = "${modelView.detailHistory!.createdat}";
+    DetailHistoryViewModel modelView = Provider.of<DetailHistoryViewModel>(context);
+    String date = createdat;
+
+    getDetailTransaction(modelView);
     DateTime parseDate =
         new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date);
     var inputDate = DateTime.parse(parseDate.toString());
@@ -55,6 +54,7 @@ class _DetailScreenState extends State<DetailScreen> {
             "Detail Transaction",
             style: TextStyle(fontSize: 17, fontFamily: 'Merriweather'),
           ),
+          centerTitle: true
         ),
         body: Container(
           padding:
@@ -67,9 +67,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   children: [
                     SizedBox(height: 20),
                     Center(
-                        child: Text(
-                            modelView.detailHistory!.statusTransaction
-                                .toString(),
+                        child: Text(statusTransaction,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold))),
                     SizedBox(height: 10),
@@ -102,16 +100,15 @@ class _DetailScreenState extends State<DetailScreen> {
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 16)),
                           Spacer(),
-                          Text(
-                              modelView.detailHistory!.transactionType
-                                  .toString(),
+                          Text(transactionType,
                               style: TextStyle(fontSize: 16)),
                         ]),
                         Row(children: [
                           Text('Nama Bank',
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 16)),
-                          Text(modelView.detailHistory!.description.toString(),
+                              Spacer(),
+                          Text(bankProvider,
                               style: TextStyle(fontSize: 16)),
                         ]),
                         Row(children: [
@@ -119,7 +116,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 16)),
                           Spacer(),
-                          Text(modelView.detailHistory!.nomor.toString(),
+                          Text(nomor,
                               style: TextStyle(fontSize: 16)),
                         ]),
                       ],
@@ -136,7 +133,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                           Spacer(),
-                          Text(modelView.detailHistory!.poinAccount.toString(),
+                          Text(poinAccount,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),
@@ -144,7 +141,8 @@ class _DetailScreenState extends State<DetailScreen> {
                           Text('Total Poin yang ditukar',
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 16)),
-                          Text(modelView.detailHistory!.poinRedeem.toString(),
+                              Spacer(),
+                          Text(poinRedeem,
                               style: TextStyle(fontSize: 16)),
                         ]),
                         Row(children: [
@@ -152,15 +150,16 @@ class _DetailScreenState extends State<DetailScreen> {
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 16)),
                           Spacer(),
-                          Text(modelView.detailHistory!.amount.toString(),
+                          Text(amount,
                               style: TextStyle(fontSize: 16)),
                         ]),
                         Row(children: [
                           Text('Sisa POIN  ',
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 16)),
+                              Spacer(),
                           Text(
-                              '${(modelView.detailHistory!.poinRedeem! - modelView.detailHistory!.amount!)}',
+                              '${int.parse(poinAccount) - int.parse(poinRedeem)}',
                               style: TextStyle(fontSize: 16)),
                         ]),
                         SizedBox(
@@ -172,5 +171,22 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ),
         ));
+  }
+
+  getDetailTransaction(DetailHistoryViewModel viewModel) async {
+    Result result = await viewModel.getDetailHistory(widget.idTransaction, widget.token);
+    setState(() {
+          transactionId = result.transactionId!;
+          transactionType = result.transactionType!;
+          createdat = result.createdat!;
+          bankProvider = result.bankProvider!;
+          nomor = result.nomor!;
+          amount = result.amount.toString();
+          poinAccount = result.poinAccount.toString();
+          poinRedeem = result.poinRedeem.toString();
+          description = result.description!;
+          statusTransaction = result.statusTransaction!;
+          
+        });
   }
 }

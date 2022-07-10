@@ -3,12 +3,12 @@ import 'package:dio/dio.dart';
 
 class TransactionAPI {
 
-  static Future<TransactionModel?> redeemEMoney(String customerId, String bankProvider, String nomor, String anRekening, String amount, String poinRedeem, String token) async {
+  static Future<TransactionModel?> redeemEMoney(String customerId, String bankProvider, String nomor, String anRekening, String amount, String poinRedeem, String token, String pin) async {
     try {
       Dio dio = new Dio();
           dio.options.headers["Authorization"] = "Bearer ${token}";
 
-      final response = await dio.post("https://api-poins-id.herokuapp.com/v1/emoney", data: {"Customer_id": int.parse(customerId), "bank_provider":bankProvider, "nomor":nomor, "an_rekening":anRekening, "amount": int.parse(amount), "poin_redeem": int.parse(poinRedeem)});
+      final response = await dio.post("https://api-poins-id.herokuapp.com/v1/emoney", data: {"Customer_id": int.parse(customerId), "bank_provider":bankProvider, "nomor":nomor, "an_rekening":anRekening, "amount": int.parse(amount), "poin_redeem": int.parse(poinRedeem), "pin":int.parse(pin)});
       final emoney = TransactionModel.fromJson(response.data);
       return emoney;
 
@@ -18,12 +18,12 @@ class TransactionAPI {
     }
   }
 
-  static Future<TransactionModel> redeemPulsa(String customerId, String bankProvider, String nomor, String poinAccount, String poinRedeem, String amount, String token) async {
+  static Future<TransactionModel> redeemPulsa(String customerId, String bankProvider, String nomor, String poinRedeem, String amount, String token, String pin) async {
     try {
       Dio dio = new Dio();
           dio.options.headers["Authorization"] = "Bearer ${token}";
 
-      final response = await dio.post("https://api-poins-id.herokuapp.com/v1/pulsa", data: {"customer_id": int.parse(customerId), "bank_provider":bankProvider, "nomor":nomor, "poin_account": int.parse(poinAccount), "poin_redeem": int.parse(poinRedeem), "amount": int.parse(amount)});
+      final response = await dio.post("https://api-poins-id.herokuapp.com/v1/pulsa", data: {"customer_id": int.parse(customerId), "bank_provider":bankProvider, "nomor":nomor, "poin_redeem": int.parse(poinRedeem), "amount": int.parse(amount), "pin":int.parse(pin)});
       final pulsa = TransactionModel.fromJson(response.data);
       return pulsa;
   
@@ -33,12 +33,12 @@ class TransactionAPI {
     }
   }
 
-  static Future<TransactionModel> redeemPaketData(String customerId, String bankProvider, String nomor, String poinAccount, String poinRedeem, String amount, String token) async {
+  static Future<TransactionModel> redeemPaketData(String customerId, String bankProvider, String nomor, String poinRedeem, String amount, String token, String pin) async {
     try {
       Dio dio = new Dio();
           dio.options.headers["Authorization"] = "Bearer ${token}";
 
-      final response = await dio.post("https://api-poins-id.herokuapp.com/v1/paketdata", data: {"customer_id": int.parse(customerId), "bank_provider":bankProvider, "nomor":nomor, "poin_account": int.parse(poinAccount), "poin_redeem": int.parse(poinRedeem), "amount": int.parse(amount)});
+      final response = await dio.post("https://api-poins-id.herokuapp.com/v1/paketdata", data: {"customer_id": int.parse(customerId), "bank_provider":bankProvider, "nomor":nomor, "poin_redeem": int.parse(poinRedeem), "amount": int.parse(amount), "pin":int.parse(pin)});
       final paketdata = TransactionModel.fromJson(response.data);
       return paketdata;
   
