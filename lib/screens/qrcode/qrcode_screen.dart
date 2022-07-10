@@ -1,5 +1,6 @@
-import 'package:capstone/model/login_model.dart';
-import 'package:capstone/screens/login/login_view_model.dart';
+import 'package:capstone/model/history_model.dart';
+import 'package:capstone/screens/history/detail_transaksi/detail_transaksi_viewmodel.dart';
+import 'package:capstone/screens/history/history_view_model.dart';
 import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -16,17 +17,17 @@ class QRCodeScreen extends StatefulWidget {
 }
 
 class _QRCodeScreenState extends State<QRCodeScreen> {
-  String ids = "";
   String poins = "";
+  String transaksiId = "";
 
   Future getData() async {
     await Future.delayed(Duration(seconds: 2));
     SharedPref sharedPref = SharedPref();
-    String id = await sharedPref.read("id");
     String poin = await sharedPref.read("poin");
+    String idTransaction = await sharedPref.read("id_transaction");
     setState(() {
-      ids = id.replaceAll('"', '');
       poins = poin.replaceAll('"', '');
+      transaksiId = idTransaction.replaceAll('"', '');
     });
     return "done getting data";
   }
@@ -41,8 +42,10 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    DetailHistoryViewModel modelView =
+        Provider.of<DetailHistoryViewModel>(context);
+
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: primaryColor,
         centerTitle: true,
@@ -57,9 +60,9 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children:[
-            const SizedBox(height: 10,),
+            const SizedBox(height: 30,),
             Text("Your Barcode ID"),
-            Text(ids, style: TextStyle(color: Colors.blue),),
+            Text(transaksiId, style: TextStyle(color: Colors.blue),),
             const SizedBox(height: 20,),
             Card(
                   child: ListTile(
@@ -72,7 +75,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
               child: Card(
                   child: BarcodeWidget(
                 barcode: Barcode.aztec(), // Barcode type and settings
-                data: ids, // Content
+                data: transaksiId, // Content
                 width: 200,
                 height: 200,
               )),
