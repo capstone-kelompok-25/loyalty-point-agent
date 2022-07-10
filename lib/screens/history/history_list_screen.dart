@@ -18,9 +18,27 @@ class HistoryScreenList extends StatefulWidget {
 }
 
 class _HistoryScreenListState extends State<HistoryScreenList> {
+   String token = '';
+
+  Future getData() async {
+    // await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String tokens = await sharedPref.read("token");
+
+    setState(() {
+      token = tokens.replaceAll('"', '');
+    });
+
+    return "done getting history";
+  }
+
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3));
+    // TODO: implement initState
+    getData().then((value){
+      print(value);
+    });
     super.initState();
   }
 
@@ -71,7 +89,7 @@ class _HistoryScreenListState extends State<HistoryScreenList> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DetailScreen(idTransaction: _history.idTransaction.toString(),)),
+                        builder: (context) => DetailScreen(idTransaction: _history.idTransaction.toString(), token: token,)),
                   );
                 },
                 child: ListTile(
