@@ -148,6 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _nameController,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                             borderRadius: BorderRadius.all(
@@ -177,6 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _phoneController,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                             borderRadius: BorderRadius.all(
@@ -204,6 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _emailController,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                             borderRadius: BorderRadius.all(
@@ -238,6 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         cursorColor: Colors.black,
                         obscureText: true,
                         decoration: const InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                             borderRadius: BorderRadius.all(
