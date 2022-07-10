@@ -1,4 +1,6 @@
+import 'package:capstone/screens/history/detail_transaksi/detail_transaksi_viewmodel.dart';
 import 'package:capstone/screens/history/history_view_model.dart';
+import 'package:capstone/screens/profile/profile_view_model.dart';
 import 'package:capstone/screens/register/register_view_model.dart';
 import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/splash_screen.dart';
@@ -31,6 +33,12 @@ class MyApp extends StatelessWidget {
          ChangeNotifierProvider(
           create: (context) => RegisterViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => DetailHistoryViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfileViewModel(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
