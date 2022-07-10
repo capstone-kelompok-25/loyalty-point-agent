@@ -11,9 +11,9 @@ class DaftarProvider extends StatefulWidget {
 }
 enum NamaProvider { telkomsel, indosat, smartfren, xl, axis }
 class _DaftarProviderState extends State<DaftarProvider> {
+  NamaProvider? _daftarProvider = NamaProvider.telkomsel;
   @override
   Widget build(BuildContext context) {
-    NamaProvider? _daftarProvider;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -25,7 +25,7 @@ class _DaftarProviderState extends State<DaftarProvider> {
                       context,
                       PageRouteBuilder(pageBuilder:
                           (context, animation, secondaryAnimation) {
-                        return const Pulse_Screen();
+                        return Pulse_Screen(choiceProvider: _daftarProvider.toString().split('.').last,);
                       }, transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         final tween = Tween(begin: 0.0, end: 1.0);
@@ -52,7 +52,7 @@ class _DaftarProviderState extends State<DaftarProvider> {
       children: <Widget>[
         Card(
           child: ListTile(
-            leading: Image.asset("assets/img/telkomsel.png"),
+            leading: Image.asset("assets/img/telkomsel.png", width: 50, height: 50),
             title: const Text('TELKOMSEL'),
             trailing: Radio<NamaProvider>(
               value: NamaProvider.telkomsel,
@@ -67,7 +67,7 @@ class _DaftarProviderState extends State<DaftarProvider> {
         ),
         Card(
           child: ListTile(
-            leading: Image.asset("assets/img/indosat.png"),
+            leading: Image.asset("assets/img/indosat.png", width: 50, height: 50),
             title: const Text('INDOSAT'),
             trailing: Radio<NamaProvider>(
               value: NamaProvider.indosat,
@@ -82,7 +82,7 @@ class _DaftarProviderState extends State<DaftarProvider> {
         ),
         Card(
           child: ListTile(
-            leading: Image.asset("assets/img/smartfren.png"),
+            leading: Image.asset("assets/img/smartfren.png", width: 50, height: 50),
             title: const Text('SMARTFREN'),
             trailing: Radio<NamaProvider>(
               value: NamaProvider.smartfren,
@@ -97,7 +97,7 @@ class _DaftarProviderState extends State<DaftarProvider> {
         ),
         Card(
           child: ListTile(
-            leading: Image.asset("assets/img/xl.png"),
+            leading: Image.asset("assets/img/xl.png", width: 50, height: 50),
             title: const Text('XL'),
             trailing: Radio<NamaProvider>(
               value: NamaProvider.xl,
@@ -112,7 +112,7 @@ class _DaftarProviderState extends State<DaftarProvider> {
         ),
         Card(
           child: ListTile(
-            leading: Image.asset("assets/img/axis.png"),
+            leading: Image.asset("assets/img/axis.png", width: 50, height: 50),
             title: const Text('AXIS'),
             trailing: Radio<NamaProvider>(
               value: NamaProvider.axis,

@@ -1,10 +1,10 @@
-class EMoneyModel {
+class TransactionModel {
   int? code;
   String? messages;
 
-  EMoneyModel({this.code, this.messages});
+  TransactionModel({this.code, this.messages});
 
-  EMoneyModel.fromJson(Map<String, dynamic> json) {
+  TransactionModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     messages = json['messages'];
   }
@@ -16,4 +16,3 @@ class EMoneyModel {
     return data;
   }
 }
-

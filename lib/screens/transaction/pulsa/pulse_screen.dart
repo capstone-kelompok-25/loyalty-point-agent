@@ -1,10 +1,13 @@
 import 'package:capstone/screens/transaction/pulsa/daftar_provider_widget.dart';
 import 'package:capstone/screens/transaction/pulsa/detail_paket_data.dart';
 import 'package:capstone/screens/transaction/pulsa/detail_transaction_pulse.dart';
+import 'package:capstone/screens/widget/bottom_navigation_screen.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 
 class Pulse_Screen extends StatefulWidget {
-  const Pulse_Screen({Key? key}) : super(key: key);
+  String choiceProvider;
+  Pulse_Screen({Key? key, required this.choiceProvider}) : super(key: key);
 
   @override
   State<Pulse_Screen> createState() => _Pulse_ScreenState();
@@ -24,6 +27,8 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
   final _telpController = TextEditingController();
   String telp = '';
   TabController? _tabController;
+  String pulsa = '';
+  String poins = '';
 
   @override
   void initState() {
@@ -34,6 +39,20 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
       });
     });
     super.initState();
+  }
+
+  void _updatePulse(String pulse) {
+    setState(() {
+      pulsa = pulse;
+    });
+    print(pulse);
+  }
+
+  void _updatePoin(String poin) {
+    setState(() {
+      poins = poin;
+    });
+    print(poin);
   }
 
   @override
@@ -52,6 +71,26 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
               fontSize: 17,
             )),
         centerTitle: true,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                return BottomNavigationScreen();
+              }, transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                final tween = Tween(begin: 0.0, end: 1.0);
+                return FadeTransition(
+                    opacity: animation.drive(tween), child: child);
+              }),
+            );
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -60,7 +99,9 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              SizedBox(
+                height: 10,
+              ),
               const Text(
                 'Nomor Ponsel',
                 style: TextStyle(color: Color.fromARGB(255, 75, 75, 75)),
@@ -69,6 +110,7 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
                 controller: _telpController,
                 cursorColor: Colors.black,
                 decoration: const InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     prefixIcon: Icon(Icons.phone,
                         color: Color.fromARGB(255, 75, 75, 75)),
                     hintText: '08xxxxxxxxxx',
@@ -117,8 +159,11 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
                     );
                   },
                   child: ListTile(
-                    leading: Image.asset("assets/img/telkomsel.png"),
-                    title: Text("TELKOMSEL",
+                    leading: Image.asset(
+                        "assets/img/${widget.choiceProvider}.png",
+                        width: 50,
+                        height: 50),
+                    title: Text("${widget.choiceProvider.toUpperCase()}",
                         style: const TextStyle(
                             color: Color.fromARGB(255, 75, 75, 75))),
                     trailing: Icon(Icons.arrow_forward_ios),
@@ -145,7 +190,14 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
               ),
               Expanded(
                 child: TabBarView(
-                  children: [Pulsa_Screen(), PaketData_Screen()],
+                  children: [
+                    Pulsa_Screen(
+                        updatePulse: _updatePulse, updatePoin: _updatePoin),
+                    PaketData_Screen(
+                      updatePulse: _updatePulse,
+                      updatePoin: _updatePoin,
+                    )
+                  ],
                   controller: _tabController,
                 ),
               ),
@@ -155,23 +207,34 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
                   textColor: Color.fromARGB(255, 75, 75, 75),
                   title:
                       Text('Total Penukaran', style: TextStyle(fontSize: 16)),
-                  subtitle: Text("Rp. 300.000"),
-                  trailing: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return DetailTransactionPulseScreen();
-                          }, transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            final tween = Tween(begin: 0.0, end: 1.0);
-                            return FadeTransition(
-                                opacity: animation.drive(tween), child: child);
-                          }),
-                        );
-                      },
-                      child: Text("Next")),
+                  subtitle: Text("$pulsa"),
+                  trailing: (telp == '' && pulsa == '' && poins == '')
+                      ? ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Next"),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(pageBuilder:
+                                  (context, animation, secondaryAnimation) {
+                                return DetailTransactionPulseScreen(
+                                  telp: telp,
+                                  choiceProvider: widget.choiceProvider,
+                                  transaction: pulsa,
+                                  poin: poins,
+                                );
+                              }, transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                final tween = Tween(begin: 0.0, end: 1.0);
+                                return FadeTransition(
+                                    opacity: animation.drive(tween),
+                                    child: child);
+                              }),
+                            );
+                          },
+                          child: Text("Next")),
                 ),
               ),
             ],
@@ -183,14 +246,19 @@ class _Pulse_ScreenState extends State<Pulse_Screen>
 }
 
 class Pulsa_Screen extends StatefulWidget {
-  const Pulsa_Screen({Key? key}) : super(key: key);
+  final ValueChanged<String> updatePulse;
+  final ValueChanged<String> updatePoin;
+  Pulsa_Screen({Key? key, required this.updatePulse, required this.updatePoin})
+      : super(key: key);
 
   @override
   State<Pulsa_Screen> createState() => _Pulsa_ScreenState();
 }
 
 class _Pulsa_ScreenState extends State<Pulsa_Screen> {
-  List<String> cashout = [
+  final ButtonStyle raisedButtonStyle =
+      ElevatedButton.styleFrom(onPrimary: Colors.white, primary: Colors.white);
+  List<String> pulsa = [
     'Rp. 50.000',
     'Rp. 100.000',
     'Rp. 150.000',
@@ -201,40 +269,43 @@ class _Pulsa_ScreenState extends State<Pulsa_Screen> {
     'Rp. 400.000'
   ];
   List<String> poin = [
-    '50.000 poin',
-    '100.000 poin',
-    '150.000 poin',
-    '200.000 poin',
-    '250.000 poin',
-    '300.000 poin',
-    '350.000 poin',
-    '400.000 poin'
+    '50000',
+    '100000',
+    '150000',
+    '200000',
+    '250000',
+    '300000',
+    '350000',
+    '400000'
   ];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: new Container(
-        child: new Center(
+      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+      child: Container(
+        child: Center(
           child: Column(
             children: <Widget>[
               GridView.builder(
                 itemCount: 8,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
                     childAspectRatio: 2),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Card(
-                      child: ListTile(
-                          title: Text(cashout[index],
-                              style: TextStyle(color: Colors.black)),
-                          subtitle: Text(poin[index],
-                              style: TextStyle(color: Colors.blue))),
-                    ),
+                  return ElevatedButton(
+                    style: raisedButtonStyle,
+                    onPressed: () {
+                      widget.updatePulse(pulsa[index]);
+                      widget.updatePoin(poin[index]);
+                    },
+                    child: ListTile(
+                        title: Text(pulsa[index],
+                            style: TextStyle(color: Colors.black)),
+                        subtitle: Text(poin[index],
+                            style: TextStyle(color: Colors.blue))),
                   );
                 },
               )
@@ -247,18 +318,25 @@ class _Pulsa_ScreenState extends State<Pulsa_Screen> {
 }
 
 class PaketData_Screen extends StatefulWidget {
-  const PaketData_Screen({Key? key}) : super(key: key);
+  final ValueChanged<String> updatePulse;
+  final ValueChanged<String> updatePoin;
+  PaketData_Screen(
+      {Key? key, required this.updatePulse, required this.updatePoin})
+      : super(key: key);
 
   @override
   State<PaketData_Screen> createState() => _PaketData_ScreenState();
 }
 
 class _PaketData_ScreenState extends State<PaketData_Screen> {
+  final ButtonStyle raisedButtonStyle =
+      ElevatedButton.styleFrom(onPrimary: Colors.white, primary: Colors.white);
   List<String> paketData = ['15GB', '15GB'];
-  List<String> poinPaketData = ['15.000 poin', '15.000 poin'];
+  List<String> poinPaketData = ['15000', '15000'];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
       child: Center(
         child: Column(
           children: <Widget>[
@@ -266,68 +344,68 @@ class _PaketData_ScreenState extends State<PaketData_Screen> {
                 shrinkWrap: true,
                 itemCount: 2,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Card(
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    child: Text('Internet',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 16)),
-                                    onPressed: () {},
-                                  ),
-                                  TextButton(
-                                      child: Text('Lihat Detail',
-                                          style: TextStyle(color: Colors.blue)),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(pageBuilder:
-                                              (context, animation,
-                                                  secondaryAnimation) {
-                                            return const DetailPaketData();
-                                          }, transitionsBuilder: (context,
-                                              animation,
-                                              secondaryAnimation,
-                                              child) {
-                                            final tween =
-                                                Tween(begin: 0.0, end: 1.0);
-                                            return FadeTransition(
-                                                opacity: animation.drive(tween),
-                                                child: child);
-                                          }),
-                                        );
-                                      }),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                  paketData[index],
-                                  style: TextStyle(color: Colors.black),
+                  return ElevatedButton(
+                    style: raisedButtonStyle,
+                    onPressed: () {
+                      widget.updatePulse(paketData[index]);
+                      widget.updatePoin(poinPaketData[index]);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  child: Text('Internet',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16)),
+                                  onPressed: () {},
                                 ),
+                                TextButton(
+                                    child: Text('Lihat Detail',
+                                        style: TextStyle(color: Colors.blue)),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        PageRouteBuilder(pageBuilder: (context,
+                                            animation, secondaryAnimation) {
+                                          return const DetailPaketData();
+                                        }, transitionsBuilder: (context,
+                                            animation,
+                                            secondaryAnimation,
+                                            child) {
+                                          final tween =
+                                              Tween(begin: 0.0, end: 1.0);
+                                          return FadeTransition(
+                                              opacity: animation.drive(tween),
+                                              child: child);
+                                        }),
+                                      );
+                                    }),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                paketData[index],
+                                style: TextStyle(color: Colors.black),
                               ),
-                              SizedBox(height: 10),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                  poinPaketData[index],
-                                  style: TextStyle(color: Colors.blue),
-                                ),
-                              )
-                            ]),
-                      ),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                poinPaketData[index],
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            )
+                          ]),
                     ),
                   );
                 })

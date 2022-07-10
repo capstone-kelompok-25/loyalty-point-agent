@@ -4,37 +4,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class LastTransactionScreen extends StatelessWidget {
+class LastTransactionScreen extends StatefulWidget {
   const LastTransactionScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LastTransactionScreen> createState() => _LastTransactionScreenState();
+}
+
+class _LastTransactionScreenState extends State<LastTransactionScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // checkLogin();
+    const delay = Duration(seconds: 3);
+    Future.delayed(delay, () => checkTransaksi());
+  }
+
+  checkTransaksi() {
+     Navigator.push(
+        context,
+        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+          return const BottomNavigationScreen();
+        }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final tween = Tween(begin: 0.0, end: 1.0);
+          return FadeTransition(opacity: animation.drive(tween), child: child);
+        }),
+      );
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.push(
-                      context,
-                      PageRouteBuilder(pageBuilder:
-                          (context, animation, secondaryAnimation) {
-                        return BottomNavigationScreen();
-                      }, transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        final tween = Tween(begin: 0.0, end: 1.0);
-                        return FadeTransition(
-                            opacity: animation.drive(tween), child: child);
-                      }),
-                    );
-          },
-          child: const Icon(
-            Icons.close,
-            color: Colors.black,
-          ),
-        ),
-      ),
       body: Container(
         width: double.maxFinite,
         padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -42,7 +44,7 @@ class LastTransactionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 60
+              height: 80
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),

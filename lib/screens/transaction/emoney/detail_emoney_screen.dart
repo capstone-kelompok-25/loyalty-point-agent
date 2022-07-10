@@ -1,4 +1,5 @@
 import 'package:capstone/screens/transaction/emoney/detail_transaction_emoney.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,7 +8,8 @@ class DetailEMoneyScreen extends StatefulWidget {
   String emoney;
   String noTelp;
   String icons;
-  DetailEMoneyScreen({Key? key, required this.emoney, required this.noTelp, required this.icons}) : super(key: key);
+  String name;
+  DetailEMoneyScreen({Key? key, required this.name, required this.emoney, required this.noTelp, required this.icons}) : super(key: key);
 
   @override
   State<DetailEMoneyScreen> createState() => _DetailEMoneyScreenState();
@@ -35,6 +37,7 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
         appBar: AppBar(
           title: Text(
             'E-Money',
@@ -58,7 +61,7 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
                       style: TextStyle(color: Color.fromARGB(255, 75, 75, 75)),
                     ),
                     ListTile(
-                      title: Text('Jack Brown'),
+                      title: Text(widget.name),
                       subtitle: Text('${widget.emoney} - ${widget.noTelp}'),
                       leading: Image.asset(widget.icons)
                     ),
@@ -81,7 +84,7 @@ class _DetailEMoneyScreenState extends State<DetailEMoneyScreen> {
                                   context,
                                   PageRouteBuilder(pageBuilder:
                                       (context, animation, secondaryAnimation) {
-                                    return DetailTransactionEMoneyScreen(emoney: widget.emoney, noTelp: widget.noTelp, poin: poins,);
+                                    return DetailTransactionEMoneyScreen(name: widget.name, emoney: widget.emoney, noTelp: widget.noTelp, poin: poins,);
                                   }, transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     final tween = Tween(begin: 0.0, end: 1.0);
@@ -123,18 +126,19 @@ class _GridEMoneyState extends State<GridEMoney> {
     'Rp. 400.000'
   ];
   List<String> poin = [
-    '50.000 poin',
-    '100.000 poin',
-    '150.000 poin',
-    '200.000 poin',
-    '250.000 poin',
-    '300.000 poin',
-    '350.000 poin',
-    '400.000 poin'
+    '50000',
+    '100000',
+    '150000',
+    '200000',
+    '250000',
+    '300000',
+    '350000',
+    '400000'
   ];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: ScrollPhysics(parent: BouncingScrollPhysics()),
       child: Container(
         child: Center(
           child: Column(
@@ -143,8 +147,8 @@ class _GridEMoneyState extends State<GridEMoney> {
                 itemCount: 8,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
                     childAspectRatio: 2),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -152,13 +156,12 @@ class _GridEMoneyState extends State<GridEMoney> {
                     style: raisedButtonStyle,
                     onPressed: () {
                       widget.updateCashout(cashout[index]);
-                      widget.updatePoin(poin[index]);
-                      
+                      widget.updatePoin(poin[index]);                     
                     },
                     child:  ListTile(
                           title: Text(cashout[index],
                               style: TextStyle(color: Colors.black)),
-                          subtitle: Text(poin[index],
+                          subtitle: Text("${poin[index]} poin",
                               style: TextStyle(color: Colors.blue))),
 
                   );

@@ -1,11 +1,19 @@
+import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/screens/widget/last_transaction_screen.dart';
+import 'package:capstone/screens/widget/preferences.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmPinScreenPulse extends StatefulWidget {
-  const ConfirmPinScreenPulse({Key? key}) : super(key: key);
+  String choiceProvider;
+  String nomor;
+  String amount;
+  
+  ConfirmPinScreenPulse({Key? key, required this.choiceProvider, required this.nomor, required this.amount}) : super(key: key);
 
   @override
   State<ConfirmPinScreenPulse> createState() => _ConfirmPinScreenPulseState();
@@ -14,6 +22,24 @@ class ConfirmPinScreenPulse extends StatefulWidget {
 class _ConfirmPinScreenPulseState extends State<ConfirmPinScreenPulse> {
   final _pinController = TextEditingController();
   String pin = '';
+  String id = '';
+  String poinAcc = "0";
+  String token = '';
+
+  Future getData() async {
+    // await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String idUser = await sharedPref.read("id");
+    String poin = await sharedPref.read("poin");
+    String tokens = await sharedPref.read("token");
+
+    setState(() {
+      id = idUser.replaceAll('"', '');
+      poinAcc = poin.replaceAll('"', '');
+      token = tokens.replaceAll('"', '');
+    });
+    return "done getting data";
+  }
 
   @override
   void dispose() {
@@ -28,12 +54,19 @@ class _ConfirmPinScreenPulseState extends State<ConfirmPinScreenPulse> {
         pin = _pinController.text;
       });
     });
+    getData().then((value) {
+      print(value);
+    });
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+
+    TransactionViewModel viewModel = Provider.of<TransactionViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: backgroundColor,
         centerTitle: true,
         title: Text("Isi Pulsa",
         style: TextStyle(fontSize: 17),),
@@ -58,7 +91,7 @@ class _ConfirmPinScreenPulseState extends State<ConfirmPinScreenPulse> {
                 hasTextBorderColor: Colors.transparent,
                 pinBoxColor: Colors.transparent,
                 // highlightPinBoxColor: Colors.grey,
-                onDone: (text) => getPIN()
+                onDone: (text) => getPIN(viewModel)
                 // highlightColor: Colors.grey,
                 // defaultBorderColor: Colors.black,
                 // maskCharacter: "*",
@@ -69,11 +102,15 @@ class _ConfirmPinScreenPulseState extends State<ConfirmPinScreenPulse> {
       ),
     );
   }
-  getPIN() async {
+  getPIN(TransactionViewModel viewModel) async {
     pin = _pinController.text;
 
     if (pin != false) {
-      Navigator.push(
+
+      final result = await viewModel.postPulsa(id, widget.choiceProvider, widget.nomor, widget.amount, poinAcc, widget.amount, token);
+
+      if(result == "200") {
+        Navigator.push(
         context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
           return const LastTransactionScreen();
@@ -82,6 +119,12 @@ class _ConfirmPinScreenPulseState extends State<ConfirmPinScreenPulse> {
           return FadeTransition(opacity: animation.drive(tween), child: child);
         }),
       );
+      } else {
+        final snackBar = SnackBar(
+          content: Text("Pin yang Anda Masukkan Salah"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     } else {
       print("error");
       final snackBar = SnackBar(

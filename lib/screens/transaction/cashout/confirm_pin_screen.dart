@@ -1,11 +1,19 @@
+import 'package:capstone/screens/transaction/transaction_view_model.dart';
 import 'package:capstone/screens/widget/last_transaction_screen.dart';
+import 'package:capstone/screens/widget/preferences.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmPinScreenCashOut extends StatefulWidget {
-  const ConfirmPinScreenCashOut({Key? key}) : super(key: key);
+  String bankProvider;
+  String nomor;
+  String nama;
+  String amount;
+  ConfirmPinScreenCashOut({Key? key, required this.bankProvider, required this.nomor, required this.nama, required this.amount}) : super(key: key);
 
   @override
   State<ConfirmPinScreenCashOut> createState() => _ConfirmPinScreenCashOutState();
@@ -13,12 +21,25 @@ class ConfirmPinScreenCashOut extends StatefulWidget {
 
 class _ConfirmPinScreenCashOutState extends State<ConfirmPinScreenCashOut> {
   final _pinController = TextEditingController();
+  
   String pin = '';
+  String id = '';
+  String poinAcc = "0";
+  String token = '';
 
-  @override
-  void dispose() {
-    _pinController.dispose();
-    super.dispose();
+  Future getData() async {
+    // await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String idUser = await sharedPref.read("id");
+    String poin = await sharedPref.read("poin");
+    String tokens = await sharedPref.read("token");
+
+    setState(() {
+      id = idUser.replaceAll('"', '');
+      poinAcc = poin.replaceAll('"', '');
+      token = tokens.replaceAll('"', '');
+    });
+    return "done getting data";
   }
 
   @override
@@ -28,11 +49,24 @@ class _ConfirmPinScreenCashOutState extends State<ConfirmPinScreenCashOut> {
         pin = _pinController.text;
       });
     });
+    getData().then((value) {
+      print(value);
+    });
     super.initState();
   }
+
+  @override
+  void dispose() {
+    _pinController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    TransactionViewModel viewModel = Provider.of<TransactionViewModel>(context);
+    
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Cash Out",
@@ -58,7 +92,7 @@ class _ConfirmPinScreenCashOutState extends State<ConfirmPinScreenCashOut> {
                 hasTextBorderColor: Colors.transparent,
                 pinBoxColor: Colors.transparent,
                 // highlightPinBoxColor: Colors.grey,
-                onDone: (text) => getPIN()
+                onDone: (text) => getPIN(viewModel)
                 // highlightColor: Colors.grey,
                 // defaultBorderColor: Colors.black,
                 // maskCharacter: "*",
@@ -69,19 +103,32 @@ class _ConfirmPinScreenCashOutState extends State<ConfirmPinScreenCashOut> {
       ),
     );
   }
-  getPIN() async {
+  getPIN(TransactionViewModel viewModel) async {
     pin = _pinController.text;
 
-    if (pin != false) {
-      Navigator.push(
-        context,
-        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
-          return const LastTransactionScreen();
-        }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final tween = Tween(begin: 0.0, end: 1.0);
-          return FadeTransition(opacity: animation.drive(tween), child: child);
-        }),
-      );
+    if (pin != '') {
+
+      final result  = await viewModel.postCashout(id, widget.bankProvider, widget.nomor, widget.nama, widget.amount, widget.amount, token, pin);
+
+      if(result == '200') {
+        Navigator.push(
+          context,
+          PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+            return const LastTransactionScreen();
+          }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final tween = Tween(begin: 0.0, end: 1.0);
+            return FadeTransition(opacity: animation.drive(tween), child: child);
+          }),
+        );
+      } else {
+        final snackBar = SnackBar(
+          content: Text("Transaksi Gagal"),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+
+      
     } else {
       print("error");
       final snackBar = SnackBar(

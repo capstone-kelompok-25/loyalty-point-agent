@@ -1,13 +1,16 @@
 import 'package:capstone/screens/transaction/cashout/daftar_bank_widget.dart';
 import 'package:capstone/screens/transaction/cashout/detail_transaction_cashout.dart';
 import 'package:capstone/screens/transaction/transaction_view_model.dart';
+import 'package:capstone/screens/widget/bottom_navigation_screen.dart';
+import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class CashOutScreen extends StatefulWidget {
-  const CashOutScreen({Key? key}) : super(key: key);
+  String choiceBank;
+  CashOutScreen({Key? key, required this.choiceBank}) : super(key: key);
 
   @override
   State<CashOutScreen> createState() => _CashOutScreenState();
@@ -28,6 +31,22 @@ class _CashOutScreenState extends State<CashOutScreen> {
   final _daftarBank = TextEditingController();
   String namaRek = '';
   String nomorRek = '';
+  String cashouts = '';
+  String poins = '';
+
+  void _updateCashout(String cashout) {
+    setState(() {
+      cashouts = cashout;
+    });
+    print(cashouts);
+  }
+
+  void _updatePoin(String poin) {
+    setState(() {
+      poins = poin;
+    });
+    print(poin);
+  }
 
   @override
   void initState() {
@@ -60,6 +79,26 @@ class _CashOutScreenState extends State<CashOutScreen> {
             style: TextStyle(color: Colors.white, fontSize: 17),
           ),
           centerTitle: true,
+           leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                  return BottomNavigationScreen();
+                }, transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                  final tween = Tween(begin: 0.0, end: 1.0);
+                  return FadeTransition(
+                      opacity: animation.drive(tween), child: child);
+                }),
+              );
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          ),
         ),
         body: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -70,7 +109,7 @@ class _CashOutScreenState extends State<CashOutScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     const Text(
                       'A.N Rekening',
@@ -80,7 +119,8 @@ class _CashOutScreenState extends State<CashOutScreen> {
                       controller: _namaRekening,
                       cursorColor: Colors.black,
                       decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.phone,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                          prefixIcon: Icon(Icons.people,
                               color: Color.fromARGB(255, 75, 75, 75)),
                           hintText: 'Jack Brown',
                           enabledBorder: OutlineInputBorder(
@@ -105,17 +145,18 @@ class _CashOutScreenState extends State<CashOutScreen> {
                       },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     const Text(
                       'Nomor Rekening',
                       style: TextStyle(color: Color.fromARGB(255, 75, 75, 75)),
                     ),
                     TextFormField(
-                      controller: _namaRekening,
+                      controller: _nomorRekening, 
                       cursorColor: Colors.black,
                       decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.phone,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                          prefixIcon: Icon(Icons.credit_card,
                               color: Color.fromARGB(255, 75, 75, 75)),
                           hintText: '0711xxxxxxxxx',
                           enabledBorder: OutlineInputBorder(
@@ -140,7 +181,7 @@ class _CashOutScreenState extends State<CashOutScreen> {
                       },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     const Text(
                       'BANK',
@@ -164,29 +205,30 @@ class _CashOutScreenState extends State<CashOutScreen> {
                           );
                         },
                         child: ListTile(
-                          leading: Image.asset("assets/img/bni.png"),
-                          title: Text("BNI",
+                          leading: Image.asset("assets/img/${widget.choiceBank}.png", width: 50, height:50),
+                          title: Text("${widget.choiceBank.toUpperCase()}",
                               style: const TextStyle(
                                   color: Color.fromARGB(255, 75, 75, 75))),
                           trailing: Icon(Icons.arrow_forward_ios),
                         )),
-                    SizedBox(height: 5),
-                    Expanded(child: GridCashOut()),
-                    SizedBox(height: 5),
+                    SizedBox(height: 15),
+                    Expanded(child: GridCashOut(updateCashout: _updateCashout, updatePoin: _updatePoin, )),
+                    SizedBox(height: 0),
                     Divider(),
                     Container(
                       child: ListTile(
                         textColor: Color.fromARGB(255, 75, 75, 75),
                         title: Text('Total Penukaran',
                             style: TextStyle(fontSize: 16)),
-                        subtitle: Text("Rp. 300.000"),
-                        trailing: ElevatedButton(
+                        subtitle: Text("$cashouts"),
+                        trailing: (namaRek == '' && nomorRek == '' && cashouts == '' && poins == '') ? ElevatedButton(onPressed: (){}, child: Text("Next"),) : 
+                        ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   PageRouteBuilder(pageBuilder:
                                       (context, animation, secondaryAnimation) {
-                                    return DetailScreenCashOut();
+                                    return DetailScreenCashOut(namaRek: namaRek, nomorRek: nomorRek, poin: poins, choiceBank: widget.choiceBank,);
                                   }, transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     final tween = Tween(begin: 0.0, end: 1.0);
@@ -204,13 +246,19 @@ class _CashOutScreenState extends State<CashOutScreen> {
 }
 
 class GridCashOut extends StatefulWidget {
-  const GridCashOut({Key? key}) : super(key: key);
+  final ValueChanged<String> updateCashout;
+  final ValueChanged<String> updatePoin;
+  const GridCashOut({Key? key, required this.updateCashout, required this.updatePoin}) : super(key: key);
 
   @override
   State<GridCashOut> createState() => _GridCashOutState();
 }
 
 class _GridCashOutState extends State<GridCashOut> {
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    onPrimary: Colors.white,
+    primary: Colors.white
+  );
   List<String> cashout = [
     'Rp. 50.000',
     'Rp. 100.000',
@@ -222,40 +270,45 @@ class _GridCashOutState extends State<GridCashOut> {
     'Rp. 400.000'
   ];
   List<String> poin = [
-    '50.000 poin',
-    '100.000 poin',
-    '150.000 poin',
-    '200.000 poin',
-    '250.000 poin',
-    '300.000 poin',
-    '350.000 poin',
-    '400.000 poin'
+    '50000',
+    '100000',
+    '150000',
+    '200000',
+    '250000',
+    '300000',
+    '350000',
+    '400000'
   ];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        child: Center(
+      controller: ScrollController(),
+      scrollDirection: Axis.vertical,
+      physics: ScrollPhysics(),
+      child: Center(
+        child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               GridView.builder(
                 itemCount: 8,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
                     childAspectRatio: 2),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Card(
+                  return ElevatedButton(
+                    style: raisedButtonStyle,
+                    onPressed: () {
+                      widget.updateCashout(cashout[index]);
+                      widget.updatePoin(poin[index]); 
+                    },
                       child: ListTile(
                           title: Text(cashout[index],
                               style: TextStyle(color: Colors.black)),
-                          subtitle: Text(poin[index],
+                          subtitle: Text('${poin[index]} poin',
                               style: TextStyle(color: Colors.blue))),
-                    ),
                   );
                 },
               )

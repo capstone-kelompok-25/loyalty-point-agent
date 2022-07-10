@@ -1,16 +1,47 @@
 import 'package:capstone/screens/transaction/pulsa/confirm_pin_screen.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 
-class DetailTransactionPulseScreen extends StatelessWidget {
-  const DetailTransactionPulseScreen({Key? key}) : super(key: key);
+class DetailTransactionPulseScreen extends StatefulWidget {
+  String telp;
+  String choiceProvider;
+  String transaction;
+  String poin;
+  DetailTransactionPulseScreen({Key? key, required this.telp, required this.choiceProvider, required this.transaction, required this.poin}) : super(key: key);
 
+  @override
+  State<DetailTransactionPulseScreen> createState() => _DetailTransactionPulseScreenState();
+}
+
+class _DetailTransactionPulseScreenState extends State<DetailTransactionPulseScreen> {
+  String poins = "0";
+
+  Future getData() async {
+    await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String poin = await sharedPref.read("poin");
+    setState(() {
+      poins = poin.replaceAll('"', '');
+    });
+    return "done getting data";
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData().then((value) {
+      print(value);
+    });
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
-    primary: Colors.green,
-    minimumSize: const Size(40, 30),
+    primary: Colors.lightGreen,
+    minimumSize: const Size(40, 35),
     padding: const EdgeInsets.symmetric(horizontal: 10),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -42,35 +73,29 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold))),
                   SizedBox(height: 10),
-                  // Center(
-                  //     child: Text('29 MEI 2022 03.00 WIB',
-                  //         style: TextStyle(color: Colors.grey,fontSize: 12))),
                   SizedBox(height: 20),
                   Text('Transaksi Berlangsung',
                         style: TextStyle(color: Colors.blue, fontSize: 16)),
                   SizedBox(height: 20),
                   Column(
                       children: [
-                        Wrap(
-                          spacing: 200,
-                          runSpacing: 200,
-                          children: const [
+                        Row(
+                          children: [
                           Text('Paket Data', 
                               style: TextStyle( 
                                   fontSize: 16)),
-                            
-                          Text('Telkomsel - 15GB',
+                          Spacer(),
+                          Text('${widget.choiceProvider} - ${widget.transaction}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
-                        Wrap(
-                          spacing: 200,
-                          runSpacing: 200,
-                          children: const [
+                        Row(
+                          children: [
                           Text('Nomor Ponsel', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16)),
-                          Text('081288812345',
+                          Spacer(),
+                          Text('${widget.telp}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
@@ -85,39 +110,37 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Wrap(
-                          spacing: 240,
-                          runSpacing: 240,
-                          children: const [
+                        Row(
+                          children: [
                           Text('POIN Kamu', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text('1.234.000',
+                          Spacer(),
+                          Text('${widget.poin}',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),
-                        Wrap(
-                          spacing: 160,
-                          runSpacing: 160,
-                          children: const [
+                        Row(
+                          children: [
                           Text('Total Poin yang ditukar', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16)),
-                          Text('50.000',
+                          Spacer(),
+                          Text('${widget.poin}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
-                        Wrap(
-                          spacing: 250,
-                          runSpacing: 250,
-                          children: const [
+                        Row(
+                          children: [
                           Text('Sisa POIN', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text('1.184.000',
+                          Spacer(),
+                          Text('${(int.parse(poins) - int.parse(widget.poin))}',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),
+                        SizedBox(height: 80,)
                       ],
                   ),
                 ]),
@@ -128,7 +151,7 @@ class DetailTransactionPulseScreen extends StatelessWidget {
                                   context,
                                   PageRouteBuilder(pageBuilder:
                                       (context, animation, secondaryAnimation) {
-                                    return ConfirmPinScreenPulse();
+                                    return ConfirmPinScreenPulse(choiceProvider: widget.choiceProvider, nomor: widget.telp, amount: widget.poin);
                                   }, transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     final tween = Tween(begin: 0.0, end: 1.0);

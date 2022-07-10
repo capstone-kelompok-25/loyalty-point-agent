@@ -6,6 +6,7 @@ import 'package:capstone/screens/history/history_view_model.dart';
 import 'package:capstone/screens/home/home_screen.dart';
 import 'package:capstone/screens/profile/profile_screen.dart';
 import 'package:capstone/screens/qrcode/qrcode_screen.dart';
+import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -20,6 +21,32 @@ class BottomNavigationScreen extends StatefulWidget {
 }
 
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
+  String id = '';
+  String token = '';
+
+  Future getData() async {
+    // await Future.delayed(Duration(seconds: 2));
+    SharedPref sharedPref = SharedPref();
+    String idUser = await sharedPref.read("id");
+    String tokens = await sharedPref.read("token");
+
+    setState(() {
+      id = idUser.replaceAll('"', '');
+      token = tokens.replaceAll('"', '');
+    });
+    return "done getting data";
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData().then((value){
+      print(value);
+    });
+    super.initState();
+  }
+
+
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -32,6 +59,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final modelView = Provider.of<HistoryViewModel>(context, listen: false);
+
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -91,6 +120,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
           setState(() {
             _selectedIndex = index;
           });
+          
+          if(id != '' && token != '') {
+            modelView.getHistory(id, token); 
+          }
+          
         },
       ),
     );

@@ -7,16 +7,17 @@ class DetailTransactionEMoneyScreen extends StatefulWidget {
   String emoney;
   String noTelp;
   String poin;
-
-  DetailTransactionEMoneyScreen({Key? key, required this.emoney, required this.noTelp, required this.poin }): super(key: key);
+  String name;
+  DetailTransactionEMoneyScreen({Key? key, required this.name, required this.emoney, required this.noTelp, required this.poin }): super(key: key);
 
   @override
   State<DetailTransactionEMoneyScreen> createState() => _DetailTransactionEMoneyScreenState();
 }
 
 class _DetailTransactionEMoneyScreenState extends State<DetailTransactionEMoneyScreen> {
-  String poins = "";
+  String poins = "0";
   
+
   Future getData() async {
     await Future.delayed(Duration(seconds: 2));
     SharedPref sharedPref = SharedPref();
@@ -40,8 +41,8 @@ class _DetailTransactionEMoneyScreenState extends State<DetailTransactionEMoneyS
   Widget build(BuildContext context) {
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
-    primary: Colors.green,
-    minimumSize: const Size(40, 30),
+    primary: Colors.lightGreen,
+    minimumSize: const Size(40, 35),
     padding: const EdgeInsets.symmetric(horizontal: 10),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -82,29 +83,32 @@ class _DetailTransactionEMoneyScreenState extends State<DetailTransactionEMoneyS
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Wrap(
-                          spacing: 260,
-                          runSpacing: 260,
-                          alignment: WrapAlignment.spaceEvenly,
-                          runAlignment: WrapAlignment.spaceEvenly,
+                        Row(
                           children: [
                           Text('E-Money', 
                               style: TextStyle( 
                                   fontSize: 16)),
-                            
+                            Spacer(),
                           Text('${widget.emoney}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
-                        Wrap(
-                          spacing: 200,
-                          runSpacing: 200,
-                          alignment: WrapAlignment.spaceEvenly,
-                          runAlignment: WrapAlignment.spaceEvenly,
+                        Row(
+                          children: [
+                          Text('Nama Pengguna', textAlign: TextAlign.justify,
+                              style: TextStyle( 
+                                  fontSize: 16)),
+                                  Spacer(),
+                          Text('${widget.name}',
+                              style: TextStyle(
+                                  fontSize: 16)),
+                        ]),
+                        Row(
                           children: [
                           Text('Nomor Pengguna', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16)),
+                                  Spacer(),
                           Text('${widget.noTelp}',
                               style: TextStyle(
                                   fontSize: 16)),
@@ -120,45 +124,37 @@ class _DetailTransactionEMoneyScreenState extends State<DetailTransactionEMoneyS
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Wrap(
-                          spacing: 240,
-                          runSpacing: 240,
-                          alignment: WrapAlignment.spaceBetween,
-                          runAlignment: WrapAlignment.spaceBetween,
+                        Row(
                           children: [
                           Text('POIN Kamu', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16, fontWeight: FontWeight.bold)),
+                          Spacer(),
                           Text(poins,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),
-                        Wrap(
-                          spacing: 160,
-                          runSpacing: 160,
-                          alignment: WrapAlignment.spaceBetween,
-                          runAlignment: WrapAlignment.spaceBetween,
+                        Row(
                           children: [
                           Text('Total Poin yang ditukar', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16)),
+                          Spacer(),
                           Text('${widget.poin}',
                               style: TextStyle(
                                   fontSize: 16)),
                         ]),
-                        Wrap(
-                          spacing: 250,
-                          runSpacing: 250,
-                          alignment: WrapAlignment.spaceBetween,
-                          runAlignment: WrapAlignment.spaceBetween,
+                        Row(
                           children: [
                           Text('Sisa POIN', textAlign: TextAlign.justify,
                               style: TextStyle( 
                                   fontSize: 16, fontWeight: FontWeight.bold)),
+                         Spacer(),
                           Text('${(int.parse(poins) - int.parse(widget.poin))}',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                         ]),
+                        SizedBox(height: 80,)
                       ],
                   ),
                 ]),
@@ -169,7 +165,7 @@ class _DetailTransactionEMoneyScreenState extends State<DetailTransactionEMoneyS
                                   context,
                                   PageRouteBuilder(pageBuilder:
                                       (context, animation, secondaryAnimation) {
-                                    return ConfirmPinScreenEMoney();
+                                    return ConfirmPinScreenEMoney(choiceProvider: widget.emoney, nama: widget.name, nomor: widget.noTelp, amount: widget.poin);
                                   }, transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     final tween = Tween(begin: 0.0, end: 1.0);

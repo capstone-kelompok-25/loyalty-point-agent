@@ -1,11 +1,12 @@
-import 'package:capstone/model/api/history_api.dart';
-import 'package:capstone/model/history_model.dart';
+
+import 'package:capstone/model/api/detail_history.dart';
+import 'package:capstone/model/detail_history_model.dart';
 import 'package:capstone/model/view_state.dart';
 import 'package:flutter/cupertino.dart';
 
-class HistoryViewModel with ChangeNotifier{
-  List<Result> _history = [];
-  List<Result> get history => _history;
+class DetailHistoryViewModel with ChangeNotifier{
+  Result? _detailHistory;
+  Result? get detailHistory => _detailHistory;
 
   ViewState _state = ViewState.none;
   ViewState get state => _state;
@@ -15,12 +16,12 @@ class HistoryViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  getHistory(String id, String token) async {
+  getDetailHistory(String idTransaction, String token) async {
     changeState(ViewState.loading);
 
     try {
-      final h = await HistoryAPI.getHistory(id, token);
-      _history = h!;
+      final dh = await DetailHistoryAPI.detailHistory(idTransaction, token);
+      _detailHistory = dh!;
       changeState(ViewState.none);
       notifyListeners();
       // return h;
