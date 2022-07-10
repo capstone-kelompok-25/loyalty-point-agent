@@ -1,5 +1,6 @@
 import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/screens/profile/profile_screen.dart';
+import 'package:capstone/screens/profile/profile_view_model.dart';
 import 'package:capstone/screens/widget/preferences.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:email_validator/email_validator.dart';
@@ -16,9 +17,9 @@ class AturProfileScreen extends StatefulWidget {
 }
 
 class _AturProfileScreenState extends State<AturProfileScreen> {
-  final _namaController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _telpController = TextEditingController();
+  late TextEditingController _namaController;
+  late TextEditingController _emailController;
+  late TextEditingController _telpController;
 
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
@@ -50,29 +51,19 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
 
   @override
   void initState() {
+    _namaController = TextEditingController();
+    _emailController = TextEditingController();
+    _telpController = TextEditingController();
+    _loadData();
     super.initState();
+  }
 
-    getData().then((value){
-      print(value);
-    });
-
-    _namaController.addListener(() {
-      setState(() {
-        nama = _namaController.text;
-      });
-     });
-
-     _emailController.addListener(() {
-      setState(() {
-        email = _emailController.text;
-      });
-     });
-
-     _telpController.addListener(() {
-      setState(() {
-        telp = _telpController.text;
-      });
-     });
+  void _loadData(){
+    ProfileViewModel modelView = Provider.of<ProfileViewModel>(context);
+    // var profile = await getData();
+    _namaController.text = modelView.profile!.name!;
+    _emailController.text = modelView.profile!.email!;
+    _telpController.text = modelView.profile!.noHp!;
   }
 
   @override
@@ -85,8 +76,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LoginViewModel modelView = Provider.of<LoginViewModel>(context);
-    final userItem = modelView.login;
+    ProfileViewModel modelView = Provider.of<ProfileViewModel>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -106,13 +96,14 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
                 SizedBox(height: 20,),
                  const Text('Nama Lengkap'),
               TextFormField(
-                controller: _namaController..text = nama,
-                initialValue: nama,
+                controller: _namaController,
+                // initialValue: nama,
                 cursorColor: Colors.black,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
                     // prefixIcon: Icon(Icons.email),
                     // hintText: 'Email Address',
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(
@@ -136,12 +127,13 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
               ),
                 const Text('Email'),
               TextFormField(
-                controller: _emailController..text = email,
+                controller: _emailController,
                 cursorColor: Colors.black,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
                     // prefixIcon: Icon(Icons.email),
                     // hintText: 'Email Address',
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(
@@ -168,12 +160,13 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
               ),
               const Text('Nomor Handphone'),
               TextFormField(
-                  controller: _telpController..text = telp,
+                  controller: _telpController,
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
                       // prefixIcon: Icon(Icons.lock),
                       // hintText: 'Password',
+                      contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
                         borderRadius: BorderRadius.all(
@@ -204,6 +197,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
                     style: TextStyle(fontFamily: 'OpenSans'),
                   ),
                   onPressed: () {
+                    final update = modelView.updateProfile(_namaController.text, _emailController.text, _telpController.text);
                     Navigator.push(
                           context,
                           MaterialPageRoute(
