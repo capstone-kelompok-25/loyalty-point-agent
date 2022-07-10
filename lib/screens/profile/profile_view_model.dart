@@ -1,5 +1,5 @@
-import 'package:capstone/model/api/customer_api.dart';
-import 'package:capstone/model/customer_model.dart';
+import 'package:capstone/model/api/profile_api.dart';
+import 'package:capstone/model/profile_model.dart';
 import 'package:capstone/model/view_state.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -16,12 +16,12 @@ class ProfileViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<String?> updateProfile(String name, String email, String noHp) async {
+  Future<String?> updateProfile(String id, String name, String email, String noHp, String password, String token) async {
     changeState(ViewState.loading);
 
     try {
       print("testpostlogin");
-      final p = await CustomerAPI.updateCustomer(name, email, noHp);
+      final p = await ProfileAPI.updateCustomer(id, name, email, noHp, password, token);
       _profile = p;
       print(_profile);
       changeState(ViewState.none);

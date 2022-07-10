@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: secondaryColor,
-    minimumSize: const Size(350, 45),
+    minimumSize: const Size(400, 45),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -34,8 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // final user = UserPreferences.myUser;
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Column(
+    return Center(
+      child: Column(
         children: <Widget>[
         HeaderProfileScreen(size: size),
         buildProfile(context),
@@ -46,136 +46,136 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buildProfile(BuildContext context) {
     // final user = viewModel.profile;
     return Container(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          Card(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const QRCodeScreen()));
-              },
-              child: const ListTile(
-                title: Text('Tunjukkan QR Code Member',
-                    style: TextStyle(fontSize: 16)),
-                subtitle: Text('Gunakan saat belanja untuk dapat poin',
-                    style: TextStyle(fontSize: 10)),
-                trailing: Icon(Icons.qr_code),
+        padding: const EdgeInsets.all(8),
+        child: Wrap(
+          children: [
+            Card(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const QRCodeScreen()));
+                },
+                child: const ListTile(
+                  title: Text('Tunjukkan QR Code Member',
+                      style: TextStyle(fontSize: 16)),
+                  subtitle: Text('Gunakan saat belanja untuk dapat poin',
+                      style: TextStyle(fontSize: 10)),
+                  trailing: Icon(Icons.qr_code),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Card(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                    return const AturProfileScreen();
-                  }, transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                    final tween = Tween(begin: 0.0, end: 1.0);
-                    return FadeTransition(
-                        opacity: animation.drive(tween), child: child);
-                  }),
-                );
-              },
-              child: ListTile(
+            const SizedBox(height: 4),
+            Card(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                      return const AturProfileScreen();
+                    }, transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                      final tween = Tween(begin: 0.0, end: 1.0);
+                      return FadeTransition(
+                          opacity: animation.drive(tween), child: child);
+                    }),
+                  );
+                },
+                child: ListTile(
+                    iconColor: Color.fromARGB(255, 75, 75, 75),
+                    textColor: Color.fromARGB(255, 75, 75, 75),
+                    title: Text('Atur Profile', style: TextStyle(fontSize: 16)),
+                    leading: Icon(Icons.person)),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Card(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                      return const EditPINScreen();
+                    }, transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                      final tween = Tween(begin: 0.0, end: 1.0);
+                      return FadeTransition(
+                          opacity: animation.drive(tween), child: child);
+                    }),
+                  );
+                },
+                child: ListTile(
                   iconColor: Color.fromARGB(255, 75, 75, 75),
                   textColor: Color.fromARGB(255, 75, 75, 75),
-                  title: Text('Atur Profile', style: TextStyle(fontSize: 16)),
-                  leading: Icon(Icons.person)),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Card(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                    return const EditPINScreen();
-                  }, transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                    final tween = Tween(begin: 0.0, end: 1.0);
-                    return FadeTransition(
-                        opacity: animation.drive(tween), child: child);
-                  }),
-                );
-              },
-              child: ListTile(
-                iconColor: Color.fromARGB(255, 75, 75, 75),
-                textColor: Color.fromARGB(255, 75, 75, 75),
-                title: Text('Ubah Kode PIN', style: TextStyle(fontSize: 16)),
-                leading: Icon(Icons.lock),
+                  title: Text('Ubah Kode PIN', style: TextStyle(fontSize: 16)),
+                  leading: Icon(Icons.lock),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Card(
-            child: GestureDetector(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                    return const SyaratScreen();
-                  }, transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                    final tween = Tween(begin: 0.0, end: 1.0);
-                    return FadeTransition(
-                        opacity: animation.drive(tween), child: child);
-                  }),
-                );
-              },
-              child: ListTile(
-                iconColor: Color.fromARGB(255, 75, 75, 75),
-                textColor: Color.fromARGB(255, 75, 75, 75),
-                title: Text('Syarat & Ketentuan',
-                    style: const TextStyle(fontSize: 16)),
-                leading: Icon(Icons.library_books),
+            const SizedBox(height: 4),
+            Card(
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                      return const SyaratScreen();
+                    }, transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                      final tween = Tween(begin: 0.0, end: 1.0);
+                      return FadeTransition(
+                          opacity: animation.drive(tween), child: child);
+                    }),
+                  );
+                },
+                child: ListTile(
+                  iconColor: Color.fromARGB(255, 75, 75, 75),
+                  textColor: Color.fromARGB(255, 75, 75, 75),
+                  title: Text('Syarat & Ketentuan',
+                      style: const TextStyle(fontSize: 16)),
+                  leading: Icon(Icons.library_books),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Card(
-            child: GestureDetector(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                    return const KebijakanScreen();
-                  }, transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                    final tween = Tween(begin: 0.0, end: 1.0);
-                    return FadeTransition(
-                        opacity: animation.drive(tween), child: child);
-                  }),
-                );
-              },
-              child: ListTile(
-                iconColor: Color.fromARGB(255, 75, 75, 75),
-                textColor: Color.fromARGB(255, 75, 75, 75),
-                title: Text('Kebijakan & Privasi',
-                    style: const TextStyle(fontSize: 16)),
-                leading: Icon(Icons.shield),
+            const SizedBox(height: 4),
+            Card(
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                      return const KebijakanScreen();
+                    }, transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                      final tween = Tween(begin: 0.0, end: 1.0);
+                      return FadeTransition(
+                          opacity: animation.drive(tween), child: child);
+                    }),
+                  );
+                },
+                child: ListTile(
+                  iconColor: Color.fromARGB(255, 75, 75, 75),
+                  textColor: Color.fromARGB(255, 75, 75, 75),
+                  title: Text('Kebijakan & Privasi',
+                      style: const TextStyle(fontSize: 16)),
+                  leading: Icon(Icons.shield),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 140,
-          ),
-          ElevatedButton(
-              style: raisedButtonStyle,
-              onPressed: () => logout(),
-              child: const Text("Log Out"))
-        ],
-      ),
+            const SizedBox(
+              height: 140,
+            ),
+            ElevatedButton(
+                style: raisedButtonStyle,
+                onPressed: () => logout(),
+                child: const Text("Log Out"))
+          ],
+        ),
     );
   }
 
