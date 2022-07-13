@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:capstone/model/login_model.dart';
-import 'package:capstone/screens/widget/preferences.dart';
+import 'package:capstone/screens/customer/widget/preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

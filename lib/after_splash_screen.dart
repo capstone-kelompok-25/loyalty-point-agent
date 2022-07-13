@@ -1,6 +1,6 @@
-import 'package:capstone/screens/login/login_screen.dart';
-import 'package:capstone/screens/register/register_screen.dart';
-import 'package:capstone/screens/register/register_view_model.dart';
+import 'package:capstone/screens/customer/login/login_screen.dart';
+import 'package:capstone/screens/customer/register/register_screen.dart';
+import 'package:capstone/screens/customer/register/register_view_model.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,13 +1,7 @@
-import 'dart:developer';
-
 import 'package:capstone/after_splash_screen.dart';
-import 'package:capstone/model/login_model.dart';
-import 'package:capstone/screens/login/login_view_model.dart';
-import 'package:capstone/screens/widget/bottom_navigation_screen.dart';
-import 'package:capstone/screens/widget/preferences.dart';
+import 'package:capstone/screens/customer/widget/bottom_navigation_screen.dart';
+import 'package:capstone/screens/customer/widget/preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

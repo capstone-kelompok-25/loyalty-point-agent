@@ -1,5 +1,5 @@
 import 'package:capstone/model/history_model.dart';
-import 'package:capstone/screens/widget/preferences.dart';
+import 'package:capstone/screens/customer/widget/preferences.dart';
 import 'package:dio/dio.dart';
 
 class HistoryAPI {

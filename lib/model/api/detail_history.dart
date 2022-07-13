@@ -1,5 +1,4 @@
 import 'package:capstone/model/detail_history_model.dart';
-import 'package:capstone/screens/widget/preferences.dart';
 import 'package:dio/dio.dart';
 
 class DetailHistoryAPI{

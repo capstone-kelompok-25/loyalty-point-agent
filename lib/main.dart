@@ -1,10 +1,10 @@
-import 'package:capstone/screens/history/detail_transaksi/detail_transaksi_viewmodel.dart';
-import 'package:capstone/screens/history/history_view_model.dart';
-import 'package:capstone/screens/profile/profile_view_model.dart';
-import 'package:capstone/screens/register/register_view_model.dart';
-import 'package:capstone/screens/transaction/transaction_view_model.dart';
+import 'package:capstone/screens/customer/history/detail_transaksi/detail_transaksi_viewmodel.dart';
+import 'package:capstone/screens/customer/history/history_view_model.dart';
+import 'package:capstone/screens/customer/login/login_view_model.dart';
+import 'package:capstone/screens/customer/profile/profile_view_model.dart';
+import 'package:capstone/screens/customer/register/register_view_model.dart';
+import 'package:capstone/screens/customer/transaction/transaction_view_model.dart';
 import 'package:capstone/splash_screen.dart';
-import 'package:capstone/screens/login/login_view_model.dart';
 import 'package:capstone/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
