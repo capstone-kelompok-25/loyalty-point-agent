@@ -324,7 +324,10 @@ class _PaketData_ScreenState extends State<PaketData_Screen> {
   List<String> poinPaketData = ['15000', '15000'];
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 10);
+                },
                 shrinkWrap: true,
                 itemCount: 2,
                 itemBuilder: (context, index) {

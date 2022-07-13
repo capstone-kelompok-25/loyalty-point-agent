@@ -69,7 +69,7 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
                     child: const Text(
                       'Sign In',
                       style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.bold),
+                          color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(

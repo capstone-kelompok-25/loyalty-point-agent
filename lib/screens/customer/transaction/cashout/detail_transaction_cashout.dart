@@ -56,7 +56,7 @@ class _DetailScreenCashOutState extends State<DetailScreenCashOut> {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          backgroundColor: primaryColor,
+          backgroundColor: secondaryColor,
           title: const Text(
             "Detail Transaction",
             style: TextStyle(fontSize: 17, fontFamily: 'Merriweather'),

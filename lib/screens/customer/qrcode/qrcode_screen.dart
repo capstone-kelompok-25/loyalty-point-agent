@@ -46,7 +46,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: secondaryColor,
         centerTitle: true,
         title: const Text(
           "My QR Code",

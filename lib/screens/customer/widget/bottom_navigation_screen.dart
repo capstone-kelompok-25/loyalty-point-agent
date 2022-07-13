@@ -68,7 +68,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             label: 'Home',
             activeIcon: Icon(
               Icons.home,
-              color: primaryColor,
+              color: secondaryColor,
             ),
             icon: Icon(
               Icons.home,
@@ -79,7 +79,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             label: 'History',
             activeIcon: Icon(
               Icons.history,
-              color: primaryColor,
+              color: secondaryColor,
             ),
             icon: Icon(
               Icons.history,
@@ -90,7 +90,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             label: 'FAQ',
             activeIcon: Icon(
               Icons.question_mark,
-              color: primaryColor,
+              color: secondaryColor,
             ),
             icon: Icon(
               Icons.question_mark,
@@ -101,7 +101,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             label: 'Profile',
             activeIcon: Icon(
               Icons.person,
-              color: primaryColor,
+              color: secondaryColor,
             ),
             icon: Icon(
               Icons.person,
@@ -112,7 +112,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         currentIndex: _selectedIndex,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedItemColor: primaryColor,
+        selectedItemColor: secondaryColor,
         onTap: (index) {
           setState(() {
             _selectedIndex = index;

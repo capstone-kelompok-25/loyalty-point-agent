@@ -22,7 +22,7 @@ class HeaderHistoryTransaction extends StatelessWidget {
             ),
             height: size.height * 0.2 - 27,
             decoration: const BoxDecoration(
-              color: primaryColor,
+              color: secondaryColor,
             ),
             child: Center(
               child: Text(

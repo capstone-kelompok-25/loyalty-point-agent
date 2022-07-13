@@ -1,6 +1,8 @@
 import 'package:capstone/after_splash_screen.dart';
 import 'package:capstone/model/api/login_api.dart';
 import 'package:capstone/model/login_model.dart';
+import 'package:capstone/screens/admin/dashboard/dashboard_screen.dart';
+import 'package:capstone/screens/admin/login/admin_login_view_model.dart';
 import 'package:capstone/screens/customer/login/login_view_model.dart';
 import 'package:capstone/screens/customer/register/register_screen.dart';
 import 'package:capstone/screens/customer/widget/bottom_navigation_screen.dart';
@@ -99,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     LoginViewModel modelView = Provider.of<LoginViewModel>(context);
-
+    AdminLoginViewModel viewModel = Provider.of<AdminLoginViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -214,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Sign In',
                   style: TextStyle(fontFamily: 'OpenSans'),
                 ),
-                onPressed: () => getButtonLogin(modelView),
+                onPressed: () => (email == "admin@gmail.com") ? getButtonLoginAdmin(viewModel) : getButtonLoginCustomer(modelView),
               ),
               const SizedBox(
                 height: 100,
@@ -238,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text(
                       'Sign Up',
                       style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.bold),
+                          color: secondaryColor, fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
@@ -274,23 +276,49 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: const Text(
         'Sign Up',
-        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+        style: TextStyle(color: secondaryColor, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  getButtonLogin(LoginViewModel modelView) async {
+  getButtonLoginCustomer(LoginViewModel modelView) async {
     print('di klik');
 
     email = _emailController.text;
     password = _passwordController.text;
 
-    final message = await modelView.postLogin(email, password);
+    final message = await modelView.postLoginCustomer(email, password);
     if (message == null) {
       Navigator.push(
         context,
         PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
           return const BottomNavigationScreen();
+        }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final tween = Tween(begin: 0.0, end: 1.0);
+          return FadeTransition(opacity: animation.drive(tween), child: child);
+        }),
+      );
+    }else{
+       print("error $message");
+      final snackBar = SnackBar(
+        content: Text("$message"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  getButtonLoginAdmin(AdminLoginViewModel modelView) async {
+    print('di klik');
+
+    email = _emailController.text;
+    password = _passwordController.text;
+
+    final message = await modelView.postLoginAdmin(email, password);
+    if (message == null) {
+      Navigator.push(
+        context,
+        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+          return const DashboardScreen();
         }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
           final tween = Tween(begin: 0.0, end: 1.0);
           return FadeTransition(opacity: animation.drive(tween), child: child);

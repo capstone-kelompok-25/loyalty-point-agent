@@ -293,7 +293,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: const Text(
                               'Sign In',
                               style: TextStyle(
-                                  color: primaryColor,
+                                  color: secondaryColor,
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
@@ -340,7 +340,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       },
       child: const Text(
         'Sign In',
-        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+        style: TextStyle(color: secondaryColor, fontWeight: FontWeight.bold),
       ),
     );
   }

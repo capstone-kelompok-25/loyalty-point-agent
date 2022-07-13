@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:capstone/model/admin/api/adminlogin_api.dart';
 import 'package:capstone/model/api/login_api.dart';
 import 'package:capstone/model/login_model.dart';
 import 'package:capstone/model/view_state.dart';
@@ -20,7 +21,7 @@ class LoginViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<String?> postLogin(String email, String password) async {
+  Future<String?> postLoginCustomer(String email, String password) async {
     changeState(ViewState.loading);
 
     try {
