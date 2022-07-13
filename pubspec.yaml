@@ -47,6 +47,7 @@ dependencies:
   fluttertoast: ^8.0.9
   swagger_dart_code_generator: ^2.5.8
   carousel_slider: ^4.1.1
+  fl_chart: ^0.55.0
 
 dev_dependencies:
   flutter_test:

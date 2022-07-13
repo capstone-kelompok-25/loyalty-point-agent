@@ -1,3 +1,5 @@
+import 'package:capstone/screens/admin/dashboard/dashboard_view_model.dart';
+import 'package:capstone/screens/admin/login/admin_login_view_model.dart';
 import 'package:capstone/screens/customer/history/detail_transaksi/detail_transaksi_viewmodel.dart';
 import 'package:capstone/screens/customer/history/history_view_model.dart';
 import 'package:capstone/screens/customer/login/login_view_model.dart';
@@ -38,13 +40,19 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ProfileViewModel(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AdminLoginViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DashboardViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Point.ID',
         theme: ThemeData(
-          primarySwatch: primaryColor,
+          primaryColor: primaryColor
         ),
         home: const SplashScreen(),
       ),
