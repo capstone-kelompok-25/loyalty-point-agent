@@ -48,28 +48,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ),
   );
 
-  // void initial() async {
-  // Function(UserModel) onCreate;
-  // logindata = await SharedPreferences.getInstance();
-  // newUser = logindata.getBool('register') ?? true;
-  // setState(() {
-  //   username = logindata.getString('username').toString();
-  //   email = logindata.getString('email').toString();
-  //   password = logindata.getString('password').toString();
-  //   phone = logindata.getString('phone').toString();
-  //   birth = logindata.getString('birth').toString();
-  //   address = logindata.getString('address').toString();
-  // });
-  // newUser = logindata.getBool('register') ?? true;
-  // if (newUser == false) {
-  // Navigator.pushAndRemoveUntil(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => LoginScreen(onCreate: (user) {
+  bool _isHidePassword = true;
 
-  //     },)),
-  //     (route) => false);
-  // }
-  // }
+  void _togglePasswordVisibility(){
+    setState(() {
+      _isHidePassword = !_isHidePassword;
+    });
+  }
 
   @override
   void initState() {
@@ -145,7 +130,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const Text('Full Name'),
                       TextFormField(
+                        autofocus: false,
                         controller: _nameController,
+                        keyboardType: TextInputType.name,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
@@ -175,7 +162,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const Text('Phone Number'),
                       TextFormField(
+                        autofocus: false,
                         controller: _phoneController,
+                        keyboardType: TextInputType.phone,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
@@ -203,6 +192,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 16),
                       const Text('Email address'),
                       TextFormField(
+                        autofocus: false,
+                        keyboardType: TextInputType.emailAddress,
                         controller: _emailController,
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
@@ -237,10 +228,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const Text('Password'),
                       TextFormField(
+                        autofocus: false,
+                        keyboardType: TextInputType.visiblePassword,
                         controller: _passwordController,
                         cursorColor: Colors.black,
-                        obscureText: true,
-                        decoration: const InputDecoration(
+                        obscureText: _isHidePassword,
+                        decoration: InputDecoration(
+                          suffixIcon: GestureDetector(
+                            onTap: (){
+                              _togglePasswordVisibility();
+                            },
+                            child: Icon(_isHidePassword ? Icons.visibility_off : Icons.visibility, 
+                            color: _isHidePassword? Colors.grey : Colors.blue),
+                          ),
+                          isDense: true,
                           contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),

@@ -32,12 +32,21 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
     ),
   );
 
+  bool _isHidePassword = true;
+
+  void _togglePasswordVisibility(){
+    setState(() {
+      _isHidePassword = !_isHidePassword;
+    });
+  }
+
   String id = '';
   String nama = '';
   String email = '';
   String telp = '';
   String password = '';
   String token = '';
+  String pin = '';
 
   Future getData() async {
     await Future.delayed(Duration(seconds: 2));
@@ -48,6 +57,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
     String noPhone = await sharedPref.read("no_hp");
     String passwords = await sharedPref.read("password");
     String tokens = await sharedPref.read("token");
+    String pins = await sharedPref.read("pin");
     setState(() {
       id = idUser.replaceAll('"', '');
       nama = fname.replaceAll('"', '');
@@ -55,6 +65,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
       telp = noPhone.replaceAll('"', '');
       password = passwords.replaceAll('"', '');
       token = tokens.replaceAll('"', '');
+      pin = pins.replaceAll('"', '');
     });
 
     _namaController.text = fname.replaceAll('"', '');
@@ -73,14 +84,6 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
     getData();
     super.initState();
   }
-
-  // void _loadData(){
-  //   ProfileViewModel modelView = Provider.of<ProfileViewModel>(context);
-  //   // var profile = await getData();
-  //   _namaController.text = modelView.profile!.name!;
-  //   _emailController.text = modelView.profile!.email!;
-  //   _telpController.text = modelView.profile!.noHp!;
-  // }
 
   @override
   void dispose() {
@@ -116,13 +119,12 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
                   ),
                   const Text('Nama Lengkap'),
                   TextFormField(
+                    autofocus: false,
+                    keyboardType: TextInputType.name,
                     controller: _namaController,
-                    // initialValue: nama,
                     cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(
-                        // prefixIcon: Icon(Icons.email),
-                        // hintText: 'Email Address',
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 15.0, horizontal: 10.0),
                         enabledBorder: OutlineInputBorder(
@@ -148,12 +150,12 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
                   ),
                   const Text('Email'),
                   TextFormField(
+                    autofocus: false,
+                    keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
                     cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(
-                        // prefixIcon: Icon(Icons.email),
-                        // hintText: 'Email Address',
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 15.0, horizontal: 10.0),
                         enabledBorder: OutlineInputBorder(
@@ -182,6 +184,8 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
                   ),
                   const Text('Nomor Handphone'),
                   TextFormField(
+                      autofocus: false,
+                      keyboardType: TextInputType.phone,
                       controller: _telpController,
                       cursorColor: Colors.black,
                       style: const TextStyle(color: Colors.black),
@@ -215,12 +219,21 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
                   ),
                   const Text('Password'),
                   TextFormField(
+                      autofocus: false,
+                      obscureText: _isHidePassword,
+                      keyboardType: TextInputType.visiblePassword,
                       controller: _passwordController,
                       cursorColor: Colors.black,
                       style: const TextStyle(color: Colors.black),
-                      decoration: const InputDecoration(
-                          // prefixIcon: Icon(Icons.lock),
-                          // hintText: 'Password',
+                      decoration: InputDecoration(
+                          suffixIcon: GestureDetector(
+                            onTap: (){
+                              _togglePasswordVisibility();
+                            },
+                            child: Icon(_isHidePassword ? Icons.visibility_off : Icons.visibility, 
+                            color: _isHidePassword? Colors.grey : Colors.blue),
+                          ),
+                          isDense: true,
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 15.0, horizontal: 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -272,7 +285,7 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
     String editPass = _passwordController.text;
 
     if (editPass == '') {
-      final message = await modelView.updateProfile(id, editNama, editEmail, editTelp, password, token);
+      final message = await modelView.updateProfile(id, editNama, editEmail, editTelp, password, pin, token);
       if (message == null) {
         Navigator.push(
           context,
@@ -294,13 +307,13 @@ class _AturProfileScreenState extends State<AturProfileScreen> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     } else {
-      final message = await modelView.updateProfile(id, editNama, editEmail, editTelp, editPass, token);
+      final message = await modelView.updateProfile(id, editNama, editEmail, editTelp, editPass, pin, token);
       if (message == null) {
         Navigator.push(
           context,
           PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) {
-            return const ProfileScreen();
+            return const BottomNavigationScreen();
           }, transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
             final tween = Tween(begin: 0.0, end: 1.0);

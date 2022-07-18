@@ -25,23 +25,30 @@ class HeaderPinScreen extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
+                Flexible(
+                  child: Text(
                   'Buat PIN',
                   style: Theme.of(context).textTheme.headline5?.copyWith(
                       fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
                 ),
+                ),
+                SizedBox(height: 10),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 40, left: 20),
-            child: const Text(
+            padding: const EdgeInsets.only(top: 70, left: 20),
+            child: Row(
+              children: <Widget> [
+                SizedBox(height:15),
+                Flexible(
+                  child: const Text(
               'Silahkan buat 4 Digit PIN anda untuk keamanan transaksi',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 14),
             ),
+                )
+              ]
+            )
           ),
           const SizedBox(
             height: 40

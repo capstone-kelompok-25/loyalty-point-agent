@@ -114,22 +114,6 @@ class _AfterSplashScreenState extends State<AfterSplashScreen> {
     );
   }
 
-  // Widget getLogin(BuildContext context) {
-  //   return ElevatedButton(
-  //     style: raisedButtonStyle,
-  //     onPressed: () {
-  //       Navigator.of(context)
-  //           .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-  //         return const LoginScreen();
-  //       }));
-  //     },
-  //     child: const Text('Sign In',
-  //         style: TextStyle(
-  //           fontFamily: 'Merriweather',
-  //         )),
-  //   );
-  // }
-
 
   Widget getRegister(BuildContext context) {
     final modelView = Provider.of<RegisterViewModel>(context, listen: false);

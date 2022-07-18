@@ -16,12 +16,12 @@ class ProfileViewModel with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<String?> updateProfile(String id, String name, String email, String noHp, String password, String token) async {
+  Future<String?> updateProfile(String id, String name, String email, String noHp, String password, String pin, String token) async {
     changeState(ViewState.loading);
 
     try {
       print("testpostlogin");
-      final p = await ProfileAPI.updateCustomer(id, name, email, noHp, password, token);
+      final p = await ProfileAPI.updateCustomer(id, name, email, noHp, password, pin, token);
       _profile = p;
       print(_profile);
       changeState(ViewState.none);

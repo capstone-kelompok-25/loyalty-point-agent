@@ -41,6 +41,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final formKey = GlobalKey<FormState>();
 
+  bool _isHidePassword = true;
+
+  void _togglePasswordVisibility(){
+    setState(() {
+      _isHidePassword = !_isHidePassword;
+    });
+  }
+
   checkLogin() async {
     logindata = await SharedPreferences.getInstance();
     setState(() {
@@ -60,14 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     Provider.of<LoginViewModel>(context, listen: false).getLogin();
-  //   });
-  // }
 
   @override
   void initState() {
@@ -147,6 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
               TextFormField(
                 controller: _emailController,
                 cursorColor: Colors.black,
+                autofocus: false,
+                keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
                     // prefixIcon: Icon(Icons.email),
@@ -179,13 +181,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text('Password'),
               TextFormField(
                   controller: _passwordController,
-                  obscureText: true,
-                  // maxLines: maxLines,
+                  obscureText: _isHidePassword,
+                  autofocus: false,
+                  keyboardType: TextInputType.visiblePassword,
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
-                  decoration: const InputDecoration(
-                      // prefixIcon: Icon(Icons.lock),
-                      // hintText: 'Password',
+                  decoration: InputDecoration(
+                      suffixIcon: GestureDetector(
+                        onTap:() {
+                          _togglePasswordVisibility();
+                        },
+                        child: Icon(_isHidePassword ? Icons.visibility_off : Icons.visibility,
+                        color: _isHidePassword ? Colors.grey : Colors.blue,),
+                        ),    
+                        isDense: true,                  
                       contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),

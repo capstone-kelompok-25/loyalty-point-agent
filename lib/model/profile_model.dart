@@ -29,8 +29,10 @@ class Result {
   String? email;
   String? password;
   String? noHp;
+  int? pin;
 
-  Result({this.id, this.fullname, this.email, this.password, this.noHp});
+  Result(
+      {this.id, this.fullname, this.email, this.password, this.noHp, this.pin});
 
   Result.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -38,6 +40,7 @@ class Result {
     email = json['email'];
     password = json['password'];
     noHp = json['no_hp'];
+    pin = json['pin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +50,7 @@ class Result {
     data['email'] = this.email;
     data['password'] = this.password;
     data['no_hp'] = this.noHp;
+    data['pin'] = this.pin;
     return data;
   }
 }
