@@ -14,7 +14,6 @@ class SharedPref {
   save(dynamic value, String key) async {
     prefs = await SharedPreferences.getInstance();
     prefs.setString(key, json.encode(value));
-    print("berhasil di save");
   }
 
   remove(String key) async {

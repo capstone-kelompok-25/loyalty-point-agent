@@ -1,12 +1,14 @@
 import 'package:capstone/model/api/login_api.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:test/test.dart';
 
+@GenerateMocks([LoginAPI])
 void main() {
-  test('post login return result ', () async {
-      String? email;
-      String? password;
-      var login = await LoginAPI.postLogin(email!, password!);
-      expect(login!.email, true);
-      expect(login.password, true);
-    }); 
+  group('LoginAPI', (){
+    test('post login', () async {
+      var logins = await LoginAPI.postLogin('nuruslaily@gmail.com', "testpassword");
+      expect(logins!.email, 'nuruslaily@gmail.com');
+      expect(logins.password, "\$2a\$10\$/pc09JO.pJv2BTYmCWQt0.AQ/FW1QKAvOlbc3O7hzYMpN9Yklakfe");
+    });
+  }); 
 }

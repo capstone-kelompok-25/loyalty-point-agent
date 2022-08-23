@@ -3,18 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
     test('post register return result ', () async {
-      String? email; 
-      String? password; 
-      String? fullname; 
-      String? noHp; 
-      int? pin;
-      var register = await RegisterAPI.postRegisterAPI(
-          email!, password!, fullname!, noHp!, pin!);
-      expect(register!.email, true);
-      expect(register.password, true);
-      expect(register.fullname, true);
-      expect(register.noHp, true);
-      expect(register.pin, true);
+      var register = await RegisterAPI.postRegisterAPI('nuruslaily00@gmail.com', 'password123', 'Nurus Laily Aprilia', '08816254736', 4321);
+      expect(register!.email, 'nuruslaily00@gmail.com');
+      expect(register.password, 'password123');
+      expect(register.fullname, 'Nurus Laily Aprilia');
+      expect(register.noHp, '08816254736');
+      expect(register.pin, 4321);
     });
   
 }
